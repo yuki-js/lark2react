@@ -1,6 +1,10 @@
 import React, {useState} from 'react'
 
-function InputTextArea() {
+interface InputTextAreaProps {
+  onConvert: (inputText: string) => void;
+}
+
+function InputTextArea({ onConvert }: InputTextAreaProps) {
 
   const [jsonInput, setJsonInput] = useState("");
 
@@ -20,7 +24,9 @@ function InputTextArea() {
                 height: "400px"
             }}
         />
-        <p>{jsonInput}</p>
+        <div>
+          <button onClick={() => onConvert(jsonInput)}>Convert to React</button>
+        </div>
     </div>
   )
 }
