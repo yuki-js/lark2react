@@ -11,6 +11,7 @@ function OutputTextArea({output}: OutputTextAreaProps) {
     <div>
         <textarea
             value={output}
+            readOnly
             style={{
                 padding: "10px",
                 width: "70%",
