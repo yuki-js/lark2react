@@ -8,7 +8,7 @@ function InputTextArea({ onConvert }: InputTextAreaProps) {
 
   const [jsonInput, setJsonInput] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: any; }; }) => {
       setJsonInput(event.target.value)
   };
 
