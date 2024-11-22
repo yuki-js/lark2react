@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react'
+import { StrictMode} from 'react'
 import { createRoot } from 'react-dom/client'
 import InputTextArea from './components/InputTextArea'
 import OutputTextArea from './components/OutputTextArea';
@@ -6,7 +6,7 @@ import { convertJsonToReactComponent } from './utils/ConvertJsonToReactComponent
 
 
 function App() {
-  const [output, setOutput] = useState("");
+  //const [output, setOutput] = useState("");
 
 
   const handleConvert = (inputText: string) => {
@@ -21,7 +21,7 @@ function App() {
     <div>
       <h1>JSON to React Component</h1>
       <InputTextArea onConvert={handleConvert} />
-      <OutputTextArea output={output}/>
+      <OutputTextArea output={""}/>
     </div>
   )
 }
