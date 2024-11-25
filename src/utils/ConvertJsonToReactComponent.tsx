@@ -40,51 +40,19 @@ function genHashBlockId(items): Record<string, any>{
 }
 
 
-//親子関係を作成する
-type Block = {
-    block_id: string;
-    children: string[];
-}
 
 function buildTree(items){
     const hashTable = genHashBlockId(items);
-    const Tree: Record<string, Block[]> = {};
+    const Tree: Record<string, string[]> = {};
 
-    
-
-    function addChildren(parentBlock: Block){
-        
-        if (!parentBlock.children || parentBlock.children.length === 0) return;
-
-        parentBlock.children.forEach(childId => {
-            const childData = hashTable[childId];
-            if (childData){
-                if (!Tree[parentBlock.block_id]){
-                    Tree[parentBlock.block_id] = [];
-                }
-
-                const childBlock: Block ={
-                    block_id : childData.block_id,
-                    children : childData.children ? childData.children : []
-                };
-
-
-                Tree[parentBlock.block_id].push(childBlock)
-
-
-                //childrenの子も再帰的に追加
-                addChildren(childBlock);
-            }
-        })
-    }
-
-    const firstBlock: Block ={
-        block_id : items[0].block_id,
-        children : items[0].children
-    };
-
-    addChildren(firstBlock);
-    
+    items.forEach(item => {
+        if(item.children){
+            Tree[item.block_id] = item.children;
+        }
+        else{
+            Tree[item.block_id] = [];
+        }
+    })
 
     return Tree;
 }
