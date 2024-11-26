@@ -1,30 +1,34 @@
 import {useState} from 'react'
+import { Id2Component } from '../utils/ConvertJsonToReactComponent'
 
-
-export function Page(props) {
+export function Page({blockData, hash}) {
   return (
     <div>
-        {props.componentArr}
+      {blockData.children.map((childId, index) => (
+        <div key={index}>
+          {Id2Component(childId, hash)}
+        </div>
+      ))}
     </div>
   )
 }
 
 
-export function Heading1(props){
+export function Heading1({blockData, hash}){
   return(
-    <h1>{props.name}</h1>
+    <h1>見出し1</h1>
   )
 }
 
-export function Heading2(props){
+export function Heading2({blockData, hash}){
   return(
-    <h2>{props.name}</h2>
+    <h2>見出し2</h2>
   )
 }
 
 
-export function Heading3(props){
+export function Heading3({blockData, hash}){
   return(
-    <h2>{props.name}</h2>
+    <h2>見出し3</h2>
   )
 }

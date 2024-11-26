@@ -1,3 +1,14 @@
+import * as Components from "../block-componets/blocks";
+import ReactDOMServer from 'react-dom/server';
+
+const blockType2Component = {
+    1 : "Page",
+    3 : "Heading1",
+    4 : "Heading2",
+    5 : "Heading3",
+}
+
+
 
 export function convertJsonToReactComponent(jsonString: string){
     try{
@@ -11,9 +22,13 @@ export function convertJsonToReactComponent(jsonString: string){
         const items = jsonObject.data.items
         
         const tree = buildTree(items)
-        console.log("tree")
-        console.log(tree)
+        const hash = genHashBlockId(items)
         
+        
+        
+        const block_id = items[0].block_id;
+        console.log("aaa")
+        console.log(ReactDOMServer.renderToStaticMarkup(Id2Component(block_id,hash)))
         
         
 
@@ -28,6 +43,9 @@ export function convertJsonToReactComponent(jsonString: string){
 
 
 
+
+
+
 //block_idと、block_idに対応したデータのハッシュ表
 function genHashBlockId(items): Record<string, any>{
     const hash: Record<string, any> = {};
@@ -39,8 +57,7 @@ function genHashBlockId(items): Record<string, any>{
     return hash;
 }
 
-
-
+//今のところこれ必要ないかも
 function buildTree(items){
     const hashTable = genHashBlockId(items);
     const Tree: Record<string, string[]> = {};
@@ -55,4 +72,17 @@ function buildTree(items){
     })
 
     return Tree;
+}
+
+
+//block_idから対応したfunction componentを取得
+//e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
+export function Id2Component(block_id, hash){
+    const blockData = hash[block_id];
+    
+    const blockType = blockData.block_type;
+    const Component = Components[blockType2Component[blockType]]
+
+    
+    return  <Component blockData={blockData} hash={hash} />;
 }
