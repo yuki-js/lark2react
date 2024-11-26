@@ -43,9 +43,6 @@ export function convertJsonToReactComponent(jsonString: string){
 
 
 
-
-
-
 //block_idと、block_idに対応したデータのハッシュ表
 function genHashBlockId(items): Record<string, any>{
     const hash: Record<string, any> = {};

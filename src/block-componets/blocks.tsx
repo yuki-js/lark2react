@@ -2,8 +2,12 @@ import {useState} from 'react'
 import { Id2Component } from '../utils/ConvertJsonToReactComponent'
 
 export function Page({blockData, hash}) {
+
+  
+  const title = blockData.page.elements[0].text_run.content;
   return (
     <div>
+      <div>{title}</div>
       {blockData.children.map((childId, index) => (
         <div key={index}>
           {Id2Component(childId, hash)}
@@ -15,20 +19,29 @@ export function Page({blockData, hash}) {
 
 
 export function Heading1({blockData, hash}){
+
+  const title = blockData.heading1.elements[0].text_run.content;
+
   return(
-    <h1>見出し1</h1>
+    <h1>{title}</h1>
   )
 }
 
 export function Heading2({blockData, hash}){
+
+  const title = blockData.heading2.elements[0].text_run.content;
+  
   return(
-    <h2>見出し2</h2>
+    <h2>{title}</h2>
   )
 }
 
 
 export function Heading3({blockData, hash}){
+
+  const title = blockData.heading3.elements[0].text_run.content;
+
   return(
-    <h2>見出し3</h2>
+    <h3>{title}</h3>
   )
 }
