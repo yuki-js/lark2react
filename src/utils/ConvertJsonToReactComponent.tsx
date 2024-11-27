@@ -3,9 +3,11 @@ import ReactDOMServer from 'react-dom/server';
 
 const blockType2Component = {
     1 : "Page",
+    2 : "Text",
     3 : "Heading1",
     4 : "Heading2",
     5 : "Heading3",
+    6 : "Heading4"
 }
 
 
@@ -79,7 +81,6 @@ export function Id2Component(block_id, hash){
     
     const blockType = blockData.block_type;
     const Component = Components[blockType2Component[blockType]]
-
     
     return  <Component blockData={blockData} hash={hash} />;
 }
