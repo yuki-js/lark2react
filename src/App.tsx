@@ -7,10 +7,14 @@ function App() {
   const [items, setItems] = useState<any[]>([]); 
 
   const handleConvert = (inputText: string) => {
-    //TODO:変換処理を書く ここでstringをjsonにしてもいいかもしれない
-    const jsonObject = JSON.parse(inputText);
-    const items = jsonObject.data.items;
-    setItems(items);
+    try {
+      const jsonObject = JSON.parse(inputText);
+
+      const items = jsonObject.data.items;
+      setItems(items);
+    }catch (error){
+      console.log(`エラー: ${(error as Error).message}`);
+    }
   };
 
   

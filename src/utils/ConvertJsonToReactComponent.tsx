@@ -16,41 +16,6 @@ const blockType2Component = {
 
 
 
-
-
-export function convertJsonToReactComponent(jsonString: string){
-    try{
-        const jsonObject = JSON.parse(jsonString)
-
-        if(typeof jsonObject !== "object" || jsonObject === null){
-            throw new Error("JSONを入力してください")
-        }
-
-        
-        const items = jsonObject.data.items
-        
-        const tree = buildTree(items)
-        const hash = genHashBlockId(items)
-        
-        
-        
-        const blockId = items[0].block_id;
-        console.log("aaa")
-        console.log(ReactDOMServer.renderToStaticMarkup(id2Component(blockId,hash)))
-        
-        
-
-        //最終的に出力するのは、reactConponentか、それをstring
-        return (result);
-
-    }catch (error){
-        return  `エラー: ${(error as Error).message}`;
-    }
-    
-}
-
-
-
 //block_idと、block_idに対応したデータのハッシュ表
 export function genHashBlockId(items): Record<string, any>{
     const hash: Record<string, any> = {};
