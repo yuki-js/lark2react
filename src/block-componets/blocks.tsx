@@ -46,12 +46,7 @@ export function Heading3({blockData, hash}){
   )
 }
 
-export function Heading3({blockData, hash}){
-  const title = blockData.heading3.elements[0].text_run.content;
-  return(
-    <h3>{title}</h3>
-  )
-}
+
 
 export function Heading4({blockData, hash}){
   const title = blockData.heading4.elements[0].text_run.content;
