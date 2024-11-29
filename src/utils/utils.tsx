@@ -1,19 +1,4 @@
-import * as Components from "../components/blocks/blocks";
-import ReactDOMServer from 'react-dom/server';
-import { Page } from "../components/blocks/Page";
-import { Text } from "../components/blocks/Text";
-import { Heading1, Heading2, Heading3, Heading4 } from "../components/blocks/Heading";
-
-
-const blockType2Component = {
-    1 : Page,
-    2 : Text,
-    3 : Heading1,
-    4 : Heading2,
-    5 : Heading3,
-    6 : Heading4
-}
-
+import {BLOCK_TYPE_TO_COMPONENT} from "./blockTypeMapping";
 
 //block_idと、block_idに対応したデータのハッシュ表
 export function genHashBlockId(items): Record<string, any>{
@@ -51,7 +36,7 @@ export function id2Component(blockId, hash){
     const blockData = hash[blockId];
     
     const blockType = blockData.block_type;
-    const Component = blockType2Component[blockType]
+    const Component = BLOCK_TYPE_TO_COMPONENT[blockType]
     
     return  <Component blockData={blockData} hash={hash} />;
 }
