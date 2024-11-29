@@ -15,7 +15,6 @@ const blockType2Component = {
 }
 
 
-
 //block_idと、block_idに対応したデータのハッシュ表
 export function genHashBlockId(items): Record<string, any>{
     const hash: Record<string, any> = {};
@@ -26,6 +25,7 @@ export function genHashBlockId(items): Record<string, any>{
 
     return hash;
 }
+
 
 //今のところこれ必要ないかも
 function buildTree(items){

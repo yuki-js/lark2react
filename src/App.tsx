@@ -1,6 +1,6 @@
 import InputTextArea from './components/InputTextArea'
 import { Converter } from './components/Converter';
-import { convertJsonToReactComponent } from './utils/ConvertJsonToReactComponent';
+import { convertJsonToReactComponent } from './utils/utils';
 import React, { useState } from 'react';
 
 function App() {

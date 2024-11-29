@@ -1,4 +1,4 @@
-import { id2Component, genHashBlockId } from "../utils/ConvertJsonToReactComponent"
+import { id2Component, genHashBlockId } from "../utils/utils"
 
 export function Converter({ items }: { items: any[] }){
 

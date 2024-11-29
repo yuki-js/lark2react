@@ -1,4 +1,4 @@
-import { id2Component } from '../../utils/ConvertJsonToReactComponent'
+import { id2Component } from '../../utils/utils'
 
 export function Page({blockData, hash}) {
     const title = blockData.page.elements[0].text_run.content;
