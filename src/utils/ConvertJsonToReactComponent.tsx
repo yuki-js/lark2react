@@ -1,4 +1,4 @@
-import * as Components from "../block-componets/blocks";
+import * as Components from "../components/blocks/blocks";
 import ReactDOMServer from 'react-dom/server';
 
 const blockType2Component = {

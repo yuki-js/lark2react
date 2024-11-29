@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Id2Component } from '../utils/ConvertJsonToReactComponent'
+import { Id2Component } from '../../utils/ConvertJsonToReactComponent'
 
 export function Page({blockData, hash}) {
   const title = blockData.page.elements[0].text_run.content;

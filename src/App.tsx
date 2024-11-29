@@ -6,7 +6,6 @@ import { convertJsonToReactComponent } from './utils/ConvertJsonToReactComponent
 function App() {
   //const [output, setOutput] = useState("");
 
-
   const handleConvert = (inputText: string) => {
     //TODO:変換処理を書く
     console.log(convertJsonToReactComponent(inputText));
@@ -22,7 +21,7 @@ function App() {
       <OutputTextArea output={""}/>
     </div>
   )
-  
+
 }
 
 export default App
