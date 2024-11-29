@@ -1,13 +1,17 @@
 import * as Components from "../components/blocks/blocks";
 import ReactDOMServer from 'react-dom/server';
+import { Page } from "../components/blocks/Page";
+import { Text } from "../components/blocks/Text";
+import { Heading1, Heading2, Heading3, Heading4 } from "../components/blocks/Heading";
+
 
 const blockType2Component = {
-    1 : "Page",
-    2 : "Text",
-    3 : "Heading1",
-    4 : "Heading2",
-    5 : "Heading3",
-    6 : "Heading4"
+    1 : Page,
+    2 : Text,
+    3 : Heading1,
+    4 : Heading2,
+    5 : Heading3,
+    6 : Heading4
 }
 
 
@@ -30,7 +34,7 @@ export function convertJsonToReactComponent(jsonString: string){
         
         const block_id = items[0].block_id;
         console.log("aaa")
-        console.log(ReactDOMServer.renderToStaticMarkup(Id2Component(block_id,hash)))
+        console.log(ReactDOMServer.renderToStaticMarkup(id2Component(block_id,hash)))
         
         
 
@@ -76,11 +80,11 @@ function buildTree(items){
 
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
-export function Id2Component(block_id, hash){
-    const blockData = hash[block_id];
+export function id2Component(blockId, hash){
+    const blockData = hash[blockId];
     
     const blockType = blockData.block_type;
-    const Component = Components[blockType2Component[blockType]]
+    const Component = blockType2Component[blockType]
     
     return  <Component blockData={blockData} hash={hash} />;
 }
