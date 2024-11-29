@@ -1,7 +1,16 @@
+import { css } from '@emotion/css'
+
+
 export function Heading1({blockData, hash}){
     const title = blockData.heading1.elements[0].text_run.content;
+    
+    //todo: blockDataの情報から、cssの各パラメータを指定
+    const cssStyle = css({
+      color: "red",
+    });
+    
     return(
-      <h1>{title}</h1>
+      <h1 className={cssStyle}>{title}</h1>
     )
   }
 
