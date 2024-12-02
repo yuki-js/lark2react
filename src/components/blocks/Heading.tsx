@@ -1,16 +1,41 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { FONT_COLOR } from '../../design/fontColor';
+import { FONT_BACKGROUND_COLOR } from '../../design/fontBackgroundColor'; 
 
+function Heading({blockData, hash, tag}){
 
-export function Heading1({blockData, hash}){
-    const elements = blockData.heading1.elements;
+    let elements;
+    switch(tag){
+      case 1:
+        elements = blockData.heading1.elements;
+        break;
+      case 2:
+        elements = blockData.heading2.elements;
+        break;
+      case 3:
+        elements = blockData.heading3.elements;
+        break;
+      case 4:
+        elements = blockData.heading4.elements;
+        break;
+      case 5:
+        elements = blockData.heading5.elements;
+        break;
+    }
+    
     
     return(
       <div>
         {elements.map((element, index)=>{
 
-          const fontColor = element.text_run.text_element_style.text_color ? FONT_COLOR[element.text_run.text_element_style.text_color] : "black";
+          const elementTextColor = element.text_run.text_element_style.text_color;
+          const elementBackgroundColor = element.text_run.text_element_style.background_color;
+
+          const fontColor = elementTextColor ? FONT_COLOR[elementTextColor] : "black";
+          const backgroundColor = elementBackgroundColor ? FONT_BACKGROUND_COLOR[elementBackgroundColor] : "transparent";
+          
+          
           const bold = element.text_run.text_element_style.bold ? "bold" : "normal";
           const inlineCode = element.text_run.text_element_style.inline_code ? "monospace" : "inherit";
           const italic = element.text_run.text_element_style.italic ? "italic" : "normal";
@@ -31,12 +56,33 @@ export function Heading1({blockData, hash}){
             fontFamily: inlineCode,
             fontStyle: italic,
             textDecoration: decoration,
+            backgroundColor: backgroundColor,
             display: "inline-block",
           });
 
-          return(
-            <h1 key={index} css={cssStyle}>{element.text_run.content}</h1>
-          )
+        
+          switch(tag){
+            case 1:
+              return(
+                <h1 key={index} css={cssStyle}>{element.text_run.content}</h1>
+              )
+            case 2:
+              return(
+                <h2 key={index} css={cssStyle}>{element.text_run.content}</h2>
+              )
+            case 3:
+              return(
+                <h3 key={index} css={cssStyle}>{element.text_run.content}</h3>
+              )
+            case 4:
+              return(
+                <h4 key={index} css={cssStyle}>{element.text_run.content}</h4>
+              )
+            case 5:
+              return(
+                <h5 key={index} css={cssStyle}>{element.text_run.content}</h5>
+              )
+          }
           
         })}
       </div>
@@ -44,33 +90,36 @@ export function Heading1({blockData, hash}){
   }
 
 
+export function Heading1({blockData, hash}){
+  return(
+    <Heading blockData={blockData} hash={hash} tag={1}></Heading>
+  )
+}  
+
+
 export function Heading2({blockData, hash}){
-  const title = blockData.heading2.elements[0].text_run.content;
-  
   return(
-    <h2>{title}</h2>
+    <Heading blockData={blockData} hash={hash} tag={2}></Heading>
   )
 }
 
 
-export function Heading3({blockData, hash}){
-  const title = blockData.heading3.elements[0].text_run.content;
+export function Heading3({blockData, hash}){ 
   return(
-    <h3>{title}</h3>
+    <Heading blockData={blockData} hash={hash} tag={3}></Heading>
   )
 }
 
 
-export function Heading4({blockData, hash}){
-  const title = blockData.heading4.elements[0].text_run.content;
+export function Heading4({blockData, hash}){ 
   return(
-    <h4>{title}</h4>
+    <Heading blockData={blockData} hash={hash} tag={4}></Heading>
   )
 }
 
-export function Heading5({blockData, hash}){
-  const title = blockData.heading4.elements[0].text_run.content;
+
+export function Heading5({blockData, hash}){ 
   return(
-    <h5>{title}</h5>
+    <Heading blockData={blockData} hash={hash} tag={5}></Heading>
   )
 }
