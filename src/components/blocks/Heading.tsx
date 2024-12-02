@@ -1,4 +1,5 @@
-import { css } from '@emotion/css'
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
 import { FONT_COLOR } from '../../design/fontColor';
 
 
@@ -34,7 +35,7 @@ export function Heading1({blockData, hash}){
           });
 
           return(
-            <h1 key={index} className={cssStyle}>{element.text_run.content}</h1>
+            <h1 key={index} css={cssStyle}>{element.text_run.content}</h1>
           )
           
         })}
@@ -45,6 +46,7 @@ export function Heading1({blockData, hash}){
 
 export function Heading2({blockData, hash}){
   const title = blockData.heading2.elements[0].text_run.content;
+  
   return(
     <h2>{title}</h2>
   )
