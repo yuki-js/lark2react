@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { FONT_COLOR } from '../../design/fontColor'
 import { FONT_BACKGROUND_COLOR } from '../../design/fontBackgroundColor'
