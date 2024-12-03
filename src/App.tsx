@@ -1,21 +1,21 @@
-import InputTextArea from './components/InputTextArea'
-import { Converter } from './components/Converter'
-import { convertJsonToReactComponent } from './utils/utils'
-import React, { useState } from 'react'
+import InputTextArea from "./components/InputTextArea";
+import { Converter } from "./components/Converter";
+import { convertJsonToReactComponent } from "./utils/utils";
+import React, { useState } from "react";
 
 function App() {
-  const [items, setItems] = useState<any[]>([])
+  const [items, setItems] = useState<any[]>([]);
 
   const handleConvert = (inputText: string) => {
     try {
-      const jsonObject = JSON.parse(inputText)
+      const jsonObject = JSON.parse(inputText);
 
-      const items = jsonObject.data.items
-      setItems(items)
+      const items = jsonObject.data.items;
+      setItems(items);
     } catch (error) {
-      console.log(`エラー: ${(error as Error).message}`)
+      console.log(`エラー: ${(error as Error).message}`);
     }
-  }
+  };
 
   return (
     <div>
@@ -23,7 +23,7 @@ function App() {
       <InputTextArea onConvert={handleConvert} />
       {items.length > 0 && <Converter items={items} />}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

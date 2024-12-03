@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 interface InputTextAreaProps {
-  onConvert: (inputText: string) => void
+  onConvert: (inputText: string) => void;
 }
 
 function InputTextArea({ onConvert }: InputTextAreaProps) {
-  const [jsonInput, setJsonInput] = useState('')
+  const [jsonInput, setJsonInput] = useState("");
 
   const handleChange = (event: { target: { value: any } }) => {
-    setJsonInput(event.target.value)
-  }
+    setJsonInput(event.target.value);
+  };
 
   return (
     <div>
@@ -18,16 +18,16 @@ function InputTextArea({ onConvert }: InputTextAreaProps) {
         onChange={handleChange}
         placeholder="ここにJSONを入力"
         style={{
-          padding: '10px',
-          width: '70%',
-          height: '400px',
+          padding: "10px",
+          width: "70%",
+          height: "400px",
         }}
       />
       <div>
         <button onClick={() => onConvert(jsonInput)}>Convert to React</button>
       </div>
     </div>
-  )
+  );
 }
 
-export default InputTextArea
+export default InputTextArea;
