@@ -3,7 +3,6 @@ import { FONT_COLOR } from "../../design/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../design/fontBackgroundColor";
 
 export function Text({ blockData, hash }) {
-
   const elements = blockData.text.elements;
 
   return (
@@ -24,12 +23,14 @@ export function Text({ blockData, hash }) {
           ? "bold"
           : "normal";
 
-        {/* todo inline codeでは、ボーダーラインなども表示させた方がいい*/}
+        {
+          /* todo inline codeでは、ボーダーラインなども表示させた方がいい*/
+        }
         const inlineCode = element.text_run.text_element_style.inline_code
           ? "monospace"
           : "inherit";
-        
-          const italic = element.text_run.text_element_style.italic
+
+        const italic = element.text_run.text_element_style.italic
           ? "italic"
           : "normal";
 
@@ -58,7 +59,7 @@ export function Text({ blockData, hash }) {
           display: "inline-block",
         });
 
-        return(
+        return (
           <div key={index} css={cssStyle}>
             {element.text_run.content}
           </div>
@@ -66,7 +67,4 @@ export function Text({ blockData, hash }) {
       })}
     </div>
   );
-
-
-  
 }

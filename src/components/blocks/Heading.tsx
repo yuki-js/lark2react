@@ -20,6 +20,18 @@ function Heading({ blockData, hash, level: level }) {
     case 5:
       elements = blockData.heading5.elements;
       break;
+    case 6:
+      elements = blockData.heading6.elements;
+      break;
+    case 7:
+      elements = blockData.heading7.elements;
+      break;
+    case 8:
+      elements = blockData.heading8.elements;
+      break;
+    case 9:
+      elements = blockData.heading9.elements;
+      break;
   }
 
   return (
@@ -102,6 +114,30 @@ function Heading({ blockData, hash, level: level }) {
                 {element.text_run.content}
               </h5>
             );
+          case 6:
+            return (
+              <h6 key={index} css={cssStyle}>
+                {element.text_run.content}
+              </h6>
+            );
+          case 7:
+            return (
+              <h6 key={index} css={cssStyle}>
+                {element.text_run.content}
+              </h6>
+            );
+          case 8:
+            return (
+              <h6 key={index} css={cssStyle}>
+                {element.text_run.content}
+              </h6>
+            );
+          case 9:
+            return (
+              <h6 key={index} css={cssStyle}>
+                {element.text_run.content}
+              </h6>
+            );
         }
       })}
     </div>
@@ -126,4 +162,20 @@ export function Heading4({ blockData, hash }) {
 
 export function Heading5({ blockData, hash }) {
   return <Heading blockData={blockData} hash={hash} level={5}></Heading>;
+}
+
+export function Heading6({ blockData, hash }) {
+  return <Heading blockData={blockData} hash={hash} level={6}></Heading>;
+}
+
+export function Heading7({ blockData, hash }) {
+  return <Heading blockData={blockData} hash={hash} level={7}></Heading>;
+}
+
+export function Heading8({ blockData, hash }) {
+  return <Heading blockData={blockData} hash={hash} level={8}></Heading>;
+}
+
+export function Heading9({ blockData, hash }) {
+  return <Heading blockData={blockData} hash={hash} level={9}></Heading>;
 }

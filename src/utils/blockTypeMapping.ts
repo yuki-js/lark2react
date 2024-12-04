@@ -6,6 +6,10 @@ import {
   Heading3,
   Heading4,
   Heading5,
+  Heading6,
+  Heading7,
+  Heading8,
+  Heading9,
 } from "../components/blocks/Heading";
 
 export const BLOCK_TYPE_TO_COMPONENT = {
@@ -16,4 +20,8 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   5: Heading3,
   6: Heading4,
   7: Heading5,
+  8: Heading6,
+  9: Heading7,
+  10: Heading8,
+  11: Heading9,
 };
