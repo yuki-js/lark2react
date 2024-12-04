@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
-import { FONT_COLOR } from "../../design/fontColor";
-import { FONT_BACKGROUND_COLOR } from "../../design/fontBackgroundColor";
+import { FONT_COLOR } from "../../styles/fontColor";
+import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
 export function Text({ blockData, hash }) {
   const elements = blockData.text.elements;

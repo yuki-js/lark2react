@@ -1,4 +1,75 @@
 import { css } from "@emotion/react";
 import { id2Component } from "../../utils/utils";
 
-export function UnorderedList({ blockData, hash }) {}
+export function UnorderedList({ blockData, hash }) {
+  const elements = blockData.bullet.elements;
+
+  return (
+    <div>
+      <ul>
+        <li>
+          {elements.map((element, index) => {
+            const elementTextColor =
+              element.text_run.text_element_style.text_color;
+            const elementBackgroundColor =
+              element.text_run.text_element_style.background_color;
+
+            const fontColor = elementTextColor
+              ? FONT_COLOR[elementTextColor]
+              : "black";
+            const backgroundColor = elementBackgroundColor
+              ? FONT_BACKGROUND_COLOR[elementBackgroundColor]
+              : "transparent";
+
+            const bold = element.text_run.text_element_style.bold
+              ? "bold"
+              : "normal";
+
+            {
+              /* todo inline codeでは、ボーダーラインなども表示させた方がいい*/
+            }
+            const inlineCode = element.text_run.text_element_style.inline_code
+              ? "monospace"
+              : "inherit";
+
+            const italic = element.text_run.text_element_style.italic
+              ? "italic"
+              : "normal";
+
+            const strikeThrough = element.text_run.text_element_style
+              .strikethrough
+              ? "line-through"
+              : "none";
+            const underline = element.text_run.text_element_style.underline
+              ? "underline"
+              : "none";
+
+            const decoration =
+              [
+                strikeThrough === "line-through" && "line-through",
+                underline === "underline" && "underline",
+              ]
+                .filter(Boolean)
+                .join(" ") || "none";
+
+            const cssStyle = css({
+              color: fontColor,
+              fontWeight: bold,
+              fontFamily: inlineCode,
+              fontStyle: italic,
+              textDecoration: decoration,
+              backgroundColor: backgroundColor,
+              display: "inline-block",
+            });
+
+            return (
+              <div key={index} css={cssStyle}>
+                {element.text_run.content}
+              </div>
+            );
+          })}
+        </li>
+      </ul>
+    </div>
+  );
+}
