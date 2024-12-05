@@ -1,8 +1,16 @@
 import { css } from "@emotion/react";
 import { id2Component } from "../../utils/utils";
+import { FONT_COLOR } from "../../styles/fontColor";
+import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
+
 
 export function UnorderedList({ blockData, hash }) {
   const elements = blockData.bullet.elements;
+
+
+  const ulStyle = css({
+    paddingLeft: "0px",
+  });
 
   return (
     <div>
@@ -69,6 +77,11 @@ export function UnorderedList({ blockData, hash }) {
             );
           })}
         </li>
+        <ul css={ulStyle}>
+          {blockData.children && blockData.children.map((childId, index) => (
+            <div key={index}>{id2Component(childId, hash)}</div>
+          ))}
+        </ul>
       </ul>
     </div>
   );
