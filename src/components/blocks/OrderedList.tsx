@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { id2Component } from "../../utils/utils";
+import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
@@ -15,7 +15,7 @@ export function OrderedList({ blockData, hash }) {
 
   return (
     <div>
-      <ol start={1}>
+      <ol>
         <li>
           {elements.map((element, index) => {
             const elementTextColor =
@@ -79,9 +79,7 @@ export function OrderedList({ blockData, hash }) {
           })}
         </li>
         <div>
-          {blockData.children && blockData.children.map((childId, index) => (
-            <div key={index}>{id2Component(childId, hash)}</div>
-          ))}
+            {displayChildComponent(blockData, hash)}
         </div>
       </ol>
     </div>

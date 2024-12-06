@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { id2Component } from "../../utils/utils";
+import { id2Component , displayChildComponent} from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
@@ -78,9 +78,7 @@ export function UnorderedList({ blockData, hash }) {
           })}
         </li>
         <div>
-          {blockData.children && blockData.children.map((childId, index) => (
-            <div key={index}>{id2Component(childId, hash)}</div>
-          ))}
+          {displayChildComponent(blockData, hash)}
         </div>
       </ul>
     </div>

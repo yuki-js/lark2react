@@ -37,3 +37,45 @@ export function id2Component(blockId, hash) {
 
   return <Component blockData={blockData} hash={hash} />;
 }
+
+
+//親が持つ子要素をコンポーネントとして表示する
+export function displayChildComponent(blockData, hash){
+  return(
+    <div>
+      {blockData.children && blockData.children.map((childId, index) => (
+        <div key={index}>{id2Component(childId, hash)}</div>
+      ))}
+    </div>
+  );
+}
+
+
+
+
+
+// これを関数化する
+// export function kari(blockData, hash){
+
+//   const BlockDataArr: any[][] = [];
+//   let currentGroup: any[] = [];
+
+//   for (let i = 0; i < blockData.children.length - 1; i++) {
+//     const currentChildId = blockData.children[i];
+//     const nextChildId = blockData.children[i + 1];
+//     const currentBlockType = hash[currentChildId].block_type;
+//     const nextBlockType = hash[nextChildId].block_type;
+
+//     if (currentBlockType === nextBlockType && currentBlockType === 13) {
+//       currentGroup.push(hash[currentChildId]);
+//     }else{
+//       if(currentGroup.length > 0){
+//         currentGroup.push(hash[currentChildId]);
+//         BlockDataArr.push(currentGroup);
+//         currentGroup = [];
+//       }else{
+//         BlockDataArr.push([hash[currentChildId]]);
+//       }
+//     }
+//   }
+// }
