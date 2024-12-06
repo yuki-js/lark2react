@@ -29,53 +29,85 @@ function buildTree(items) {
 
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
-export function id2Component(blockId, hash) {
-  const blockData = hash[blockId];
+export function id2Component(blockIdArr, hash) {
+  //blockIdArrは、グループ化されている(連続でorderlist)のときは
+  //要素が複数あるので、要素の個数で条件分岐
+  if (blockIdArr.length > 1){
+    const blockDataArr = [];
+    for (let i = 0; i < blockIdArr.length; i++){
+      const blockData = hash[blockIdArr[i]];
+      blockDataArr.push(blockData);
+    }
+    console.log(blockDataArr)
+    const blockType = blockDataArr[0].block_type;
+    const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+    //orderlistに限り、blockDataの配列を渡す
+    return <Component blockData={blockDataArr} hash={hash} />;
 
-  const blockType = blockData.block_type;
-  const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+  }else{
+    const blockData = hash[blockIdArr[0]];
 
-  return <Component blockData={blockData} hash={hash} />;
+    const blockType = blockData.block_type;
+    const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+
+    return <Component blockData={blockData} hash={hash} />;
+  }
+  
 }
 
 
 //親が持つ子要素をコンポーネントとして表示する
 export function displayChildComponent(blockData, hash){
-  return(
-    <div>
-      {blockData.children && blockData.children.map((childId, index) => (
-        <div key={index}>{id2Component(childId, hash)}</div>
-      ))}
-    </div>
-  );
+  if (blockData.children){
+    const groupingDataArr = groupingBlockData(blockData, hash);
+
+      return(
+        <div>
+          {groupingDataArr.map((childIdArr, index) => (
+            <div key={index}>{id2Component(childIdArr, hash)}</div>
+          ))}
+        </div>
+      )
+  }
 }
 
 
+// 同じblockTypeが連続している場合、グループ化をする関数
+// 1Data は blockTypeが1のdataBlock
+// blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]] 
+// 番号付きリストを連番で表示するのに今のところ使用
+function groupingBlockData(blockData, hash){
 
+  const orderdListBlockType = 13;
+  const groupingDataArr: string[][] = [];
+  let currentGroup: string[] = [];
 
+  for (let i = 0; i < blockData.children.length - 1; i++) {
+    const currentChildId = blockData.children[i];
+    const nextChildId = blockData.children[i + 1];
+    const currentBlockType = hash[currentChildId].block_type;
+    const nextBlockType = hash[nextChildId].block_type;
 
-// これを関数化する
-// export function kari(blockData, hash){
-
-//   const BlockDataArr: any[][] = [];
-//   let currentGroup: any[] = [];
-
-//   for (let i = 0; i < blockData.children.length - 1; i++) {
-//     const currentChildId = blockData.children[i];
-//     const nextChildId = blockData.children[i + 1];
-//     const currentBlockType = hash[currentChildId].block_type;
-//     const nextBlockType = hash[nextChildId].block_type;
-
-//     if (currentBlockType === nextBlockType && currentBlockType === 13) {
-//       currentGroup.push(hash[currentChildId]);
-//     }else{
-//       if(currentGroup.length > 0){
-//         currentGroup.push(hash[currentChildId]);
-//         BlockDataArr.push(currentGroup);
-//         currentGroup = [];
-//       }else{
-//         BlockDataArr.push([hash[currentChildId]]);
-//       }
-//     }
-//   }
-// }
+    if (currentBlockType === nextBlockType && currentBlockType === orderdListBlockType) {
+      currentGroup.push(currentChildId);
+      if (i === blockData.children.length - 2){
+        currentGroup.push(nextChildId);
+        groupingDataArr.push(currentGroup);
+        currentGroup = [];
+      }
+    }else{
+      if(currentGroup.length > 0){
+        currentGroup.push(currentChildId);
+        groupingDataArr.push(currentGroup);
+        currentGroup = [];
+      }else{
+        groupingDataArr.push([currentChildId]);
+      }
+      if (i === blockData.children.length - 2){
+        groupingDataArr.push([nextChildId]);
+      }
+    }   
+  }
+  
+  return groupingDataArr
+}

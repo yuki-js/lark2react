@@ -6,8 +6,8 @@ import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
 
 export function OrderedList({ blockData, hash }) {
-  const elements = blockData.ordered.elements;
-
+  const elements = blockData[0].ordered.elements;
+    // todo このコンポーネントに限り、blockData配列なので繰り返し、連番で
 
   const olStyle = css({
     paddingLeft: "0px",
