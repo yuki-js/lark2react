@@ -12,6 +12,7 @@ import {
   Heading9,
 } from "../components/blocks/Heading";
 import { UnorderedList } from "../components/blocks/UnorderedList";
+import { OrderedList } from "../components/blocks/OrderedList";
 
 export const BLOCK_TYPE_TO_COMPONENT = {
   1: Page,
@@ -26,4 +27,5 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   10: Heading8,
   11: Heading9,
   12: UnorderedList,
+  13: OrderedList
 };

@@ -77,11 +77,11 @@ export function UnorderedList({ blockData, hash }) {
             );
           })}
         </li>
-        <ul css={ulStyle}>
+        <div>
           {blockData.children && blockData.children.map((childId, index) => (
             <div key={index}>{id2Component(childId, hash)}</div>
           ))}
-        </ul>
+        </div>
       </ul>
     </div>
   );
