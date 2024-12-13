@@ -4,8 +4,8 @@ import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
 
-export function UnorderedList({ blockData, hash }) {
-  const elements = blockData.bullet.elements;
+export function UnorderedList({ blockDataArr, hash }) {
+  const elements = blockDataArr.bullet.elements;
 
 
   const ulStyle = css({
@@ -78,7 +78,7 @@ export function UnorderedList({ blockData, hash }) {
           })}
         </li>
         <div>
-          {displayChildComponent(blockData, hash)}
+          {displayChildComponent(blockDataArr, hash)}
         </div>
       </ul>
     </div>

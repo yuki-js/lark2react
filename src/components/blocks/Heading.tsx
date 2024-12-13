@@ -2,35 +2,35 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
-function Heading({ blockData, hash, level: level }) {
+function Heading({ blockDataArr, hash, level: level }) {
   let elements;
   switch (level) {
     case 1:
-      elements = blockData.heading1.elements;
+      elements = blockDataArr.heading1.elements;
       break;
     case 2:
-      elements = blockData.heading2.elements;
+      elements = blockDataArr.heading2.elements;
       break;
     case 3:
-      elements = blockData.heading3.elements;
+      elements = blockDataArr.heading3.elements;
       break;
     case 4:
-      elements = blockData.heading4.elements;
+      elements = blockDataArr.heading4.elements;
       break;
     case 5:
-      elements = blockData.heading5.elements;
+      elements = blockDataArr.heading5.elements;
       break;
     case 6:
-      elements = blockData.heading6.elements;
+      elements = blockDataArr.heading6.elements;
       break;
     case 7:
-      elements = blockData.heading7.elements;
+      elements = blockDataArr.heading7.elements;
       break;
     case 8:
-      elements = blockData.heading8.elements;
+      elements = blockDataArr.heading8.elements;
       break;
     case 9:
-      elements = blockData.heading9.elements;
+      elements = blockDataArr.heading9.elements;
       break;
   }
 
@@ -144,38 +144,38 @@ function Heading({ blockData, hash, level: level }) {
   );
 }
 
-export function Heading1({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={1}></Heading>;
+export function Heading1({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={1}></Heading>;
 }
 
-export function Heading2({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={2}></Heading>;
+export function Heading2({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={2}></Heading>;
 }
 
-export function Heading3({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={3}></Heading>;
+export function Heading3({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={3}></Heading>;
 }
 
-export function Heading4({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={4}></Heading>;
+export function Heading4({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={4}></Heading>;
 }
 
-export function Heading5({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={5}></Heading>;
+export function Heading5({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={5}></Heading>;
 }
 
-export function Heading6({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={6}></Heading>;
+export function Heading6({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={6}></Heading>;
 }
 
-export function Heading7({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={7}></Heading>;
+export function Heading7({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={7}></Heading>;
 }
 
-export function Heading8({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={8}></Heading>;
+export function Heading8({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={8}></Heading>;
 }
 
-export function Heading9({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={9}></Heading>;
+export function Heading9({ blockDataArr, hash }) {
+  return <Heading blockDataArr={blockDataArr} hash={hash} level={9}></Heading>;
 }
