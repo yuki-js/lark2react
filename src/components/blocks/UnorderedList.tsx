@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
-import { id2Component , displayChildComponent} from "../../utils/utils";
+import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
-
-export function UnorderedList({ blockDataArr, hash }) {
-  const elements = blockDataArr.bullet.elements;
-
+export function UnorderedList({ blockData, hash }) {
+  const elements = blockData.bullet.elements;
 
   const ulStyle = css({
     paddingLeft: "0px",
@@ -77,9 +75,7 @@ export function UnorderedList({ blockDataArr, hash }) {
             );
           })}
         </li>
-        <div>
-          {displayChildComponent(blockDataArr, hash)}
-        </div>
+        <div>{displayChildComponent(blockData, hash)}</div>
       </ul>
     </div>
   );

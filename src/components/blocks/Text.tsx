@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
-export function Text({ blockDataArr, hash }) {
-  const elements = blockDataArr.text.elements;
+export function Text({ blockData, hash }) {
+  const elements = blockData.text.elements;
 
   return (
     <div>

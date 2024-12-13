@@ -27,5 +27,5 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   10: Heading8,
   11: Heading9,
   12: UnorderedList,
-  13: OrderedList
+  13: OrderedList,
 };
