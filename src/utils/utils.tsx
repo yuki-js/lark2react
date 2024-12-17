@@ -2,7 +2,7 @@ import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
 
 
 //グループ化するblockDataのblockType
-const TARGET_BLOCK_TYPES = new Set([13]);
+const TARGET_BLOCK_TYPES = new Set([12,13]);
 
 
 
