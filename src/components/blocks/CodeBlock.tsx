@@ -7,8 +7,15 @@ import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
 
+  const boxStyle = css({
+    backgroundColor: "lightgray",
+    border: "2px solid darkgray",
+    borderRadius: "8px",
+    padding: "15px",
+  })
+
   return (
-    <div>
+    <div css={boxStyle}>
       <pre>
         <code>
           {elements.map((element, index) => {
