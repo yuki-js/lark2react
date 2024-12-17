@@ -13,6 +13,7 @@ import {
 } from "../components/blocks/Heading";
 import { UnorderedList } from "../components/blocks/UnorderedList";
 import { OrderedList } from "../components/blocks/OrderedList";
+import { CodeBlock } from "../components/blocks/CodeBlock";
 
 export const BLOCK_TYPE_TO_COMPONENT = {
   1: Page,
@@ -28,4 +29,5 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   11: Heading9,
   12: UnorderedList,
   13: OrderedList,
+  14: CodeBlock,
 };

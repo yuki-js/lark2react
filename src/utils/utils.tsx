@@ -1,10 +1,7 @@
 import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
 
-
 //グループ化するblockDataのblockType
-const TARGET_BLOCK_TYPES = new Set([12,13]);
-
-
+const TARGET_BLOCK_TYPES = new Set([12, 13]);
 
 //block_idと、block_idに対応したデータのハッシュ表
 export function genHashBlockId(items): Record<string, any> {
@@ -36,12 +33,10 @@ function buildTree(items) {
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
 export function id2Component(blockIdArr, hash) {
-
   //blockIdArrの要素のblockTypeを調べる
   const blockType = hash[blockIdArr[0]].block_type;
 
   if (TARGET_BLOCK_TYPES.has(blockType)) {
-    
     const arr = [];
     for (let i = 0; i < blockIdArr.length; i++) {
       const blockData = hash[blockIdArr[i]];
@@ -50,7 +45,7 @@ export function id2Component(blockIdArr, hash) {
 
     const blockType = arr[0].block_type;
     const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
-    
+
     return <Component blockDataArr={arr} hash={hash} />;
   } else {
     const blockData = hash[blockIdArr[0]];
@@ -81,11 +76,10 @@ export function displayChildComponent(blockData, hash) {
 // blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]]
 // 番号付きリストを連番で表示するのに今のところ使用
 function groupingblockData(blockData, hash) {
-  
   const blockDataArr: string[][] = [];
   let currentGroup: string[] = [];
 
-  if (blockData.children.length === 1){
+  if (blockData.children.length === 1) {
     blockDataArr.push([blockData.children[0]]);
     return blockDataArr;
   }
@@ -119,6 +113,6 @@ function groupingblockData(blockData, hash) {
       }
     }
   }
-  
+
   return blockDataArr;
 }
