@@ -6,7 +6,6 @@ import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 export function OrderedList({ blockDataArr, hash }) {
 
   const startIndex = blockDataArr[0].ordered.style.sequence;
-
   
   const olStyle = css({
     paddingLeft: "0px",

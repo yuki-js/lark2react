@@ -1,5 +1,11 @@
 import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
 
+
+//グループ化するblockDataのblockType
+const TARGET_BLOCK_TYPES = new Set([13]);
+
+
+
 //block_idと、block_idに対応したデータのハッシュ表
 export function genHashBlockId(items): Record<string, any> {
   const hash: Record<string, any> = {};
@@ -30,7 +36,12 @@ function buildTree(items) {
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
 export function id2Component(blockIdArr, hash) {
-  if (blockIdArr.length > 1) {
+
+  //blockIdArrの要素のblockTypeを調べる
+  const blockType = hash[blockIdArr[0]].block_type;
+
+  if (TARGET_BLOCK_TYPES.has(blockType)) {
+    
     const arr = [];
     for (let i = 0; i < blockIdArr.length; i++) {
       const blockData = hash[blockIdArr[i]];
@@ -39,8 +50,7 @@ export function id2Component(blockIdArr, hash) {
 
     const blockType = arr[0].block_type;
     const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
-    //orderlistに限り、blockDataの配列を渡す
- 
+    
     return <Component blockDataArr={arr} hash={hash} />;
   } else {
     const blockData = hash[blockIdArr[0]];
@@ -66,13 +76,19 @@ export function displayChildComponent(blockData, hash) {
 }
 
 // 同じblockTypeが連続している場合、グループ化をする関数
+// 対象blockTypeは、TARGET_BLOCK_TYPES
 // 1Data は blockTypeが1のdataBlock
 // blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]]
 // 番号付きリストを連番で表示するのに今のところ使用
 function groupingblockData(blockData, hash) {
-  const orderdListBlockType = 13;
+  
   const blockDataArr: string[][] = [];
   let currentGroup: string[] = [];
+
+  if (blockData.children.length === 1){
+    blockDataArr.push([blockData.children[0]]);
+    return blockDataArr;
+  }
 
   for (let i = 0; i < blockData.children.length - 1; i++) {
     const currentChildId = blockData.children[i];
@@ -82,7 +98,7 @@ function groupingblockData(blockData, hash) {
 
     if (
       currentBlockType === nextBlockType &&
-      currentBlockType === orderdListBlockType
+      TARGET_BLOCK_TYPES.has(currentBlockType)
     ) {
       currentGroup.push(currentChildId);
       if (i === blockData.children.length - 2) {
@@ -103,6 +119,6 @@ function groupingblockData(blockData, hash) {
       }
     }
   }
-
+  
   return blockDataArr;
 }
