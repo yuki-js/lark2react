@@ -2,20 +2,27 @@ import { css } from "@emotion/react";
 import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
-
+import { CODE_LANGUAGE } from "../../code_language/codeLanguage";
 
 export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
+  const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
 
   const boxStyle = css({
-    backgroundColor: "lightgray",
+    backgroundColor: "whitesmoke",
     border: "2px solid darkgray",
     borderRadius: "8px",
     padding: "15px",
   })
 
+  const codeLanguageStyle = css({
+    fontSize: "12px",
+    color: "gray",
+  })
+
   return (
     <div css={boxStyle}>
+      <div css={codeLanguageStyle}>{codeLanguage}</div>
       <pre>
         <code>
           {elements.map((element, index) => {
