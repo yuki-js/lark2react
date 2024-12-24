@@ -20,10 +20,17 @@ export function CodeBlock({ blockData, hash }) {
     color: "gray",
   })
 
+  const preStyle = css({
+    whiteSpace: "pre-wrap", // 折り返しを有効化
+    wordWrap: "break-word",
+    overflowWrap: "break-word", // 長い単語を折り返し
+    
+  });
+
   return (
     <div css={boxStyle}>
       <div css={codeLanguageStyle}>{codeLanguage}</div>
-      <pre>
+      <pre css={preStyle}>
         <code>
           {elements.map((element, index) => {
             const elementTextColor =
@@ -76,7 +83,8 @@ export function CodeBlock({ blockData, hash }) {
               fontStyle: italic,
               textDecoration: decoration,
               backgroundColor: backgroundColor,
-              display: "inline-block",
+              
+              wordBreak: "break-word",
             });
 
             return (
@@ -88,5 +96,6 @@ export function CodeBlock({ blockData, hash }) {
         </code>
       </pre>
     </div>
+    
   );
 }

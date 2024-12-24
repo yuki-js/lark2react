@@ -57,6 +57,7 @@ export function Text({ blockData, hash }) {
           textDecoration: decoration,
           backgroundColor: backgroundColor,
           display: "inline-block",
+          wordBreak: "break-word",
         });
 
         return (
