@@ -13,18 +13,17 @@ export function CodeBlock({ blockData, hash }) {
     border: "2px solid darkgray",
     borderRadius: "8px",
     padding: "15px",
-  })
+  });
 
   const codeLanguageStyle = css({
     fontSize: "12px",
     color: "gray",
-  })
+  });
 
   const preStyle = css({
     whiteSpace: "pre-wrap", // 折り返しを有効化
     wordWrap: "break-word",
     overflowWrap: "break-word", // 長い単語を折り返し
-    
   });
 
   return (
@@ -83,7 +82,7 @@ export function CodeBlock({ blockData, hash }) {
               fontStyle: italic,
               textDecoration: decoration,
               backgroundColor: backgroundColor,
-              
+
               wordBreak: "break-word",
             });
 
@@ -96,6 +95,5 @@ export function CodeBlock({ blockData, hash }) {
         </code>
       </pre>
     </div>
-    
   );
 }
