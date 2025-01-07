@@ -73,6 +73,7 @@ export function OrderedList({ blockDataArr, hash }) {
                     textDecoration: decoration,
                     backgroundColor: backgroundColor,
                     display: "inline-block",
+                    wordBreak: "break-word"
                   });
 
                   return (

@@ -81,6 +81,7 @@ function Heading({ blockData, hash, level: level }) {
           textDecoration: decoration,
           backgroundColor: backgroundColor,
           display: "inline-block",
+          wordBreak: "break-word"
         });
 
         switch (level) {
