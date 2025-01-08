@@ -3,6 +3,7 @@ import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
+//FIXME: 番号の位置を左側にずらしたい
 export function OrderedList({ blockDataArr, hash }) {
   const startIndex = blockDataArr[0].ordered.style.sequence;
 
@@ -13,7 +14,7 @@ export function OrderedList({ blockDataArr, hash }) {
   const staticStyle = css({
     display: "inline-block",
     wordBreak: "break-word",
-  })
+  });
 
   return (
     <div>

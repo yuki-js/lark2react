@@ -3,6 +3,7 @@ import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
+//FIXME: 点の位置を左側にずらしたい
 export function UnorderedList({ blockDataArr, hash }) {
   const ulStyle = css({
     paddingLeft: "0px",

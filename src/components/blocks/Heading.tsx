@@ -3,36 +3,7 @@ import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 
 function Heading({ blockData, hash, level: level }) {
-  let elements;
-  switch (level) {
-    case 1:
-      elements = blockData.heading1.elements;
-      break;
-    case 2:
-      elements = blockData.heading2.elements;
-      break;
-    case 3:
-      elements = blockData.heading3.elements;
-      break;
-    case 4:
-      elements = blockData.heading4.elements;
-      break;
-    case 5:
-      elements = blockData.heading5.elements;
-      break;
-    case 6:
-      elements = blockData.heading6.elements;
-      break;
-    case 7:
-      elements = blockData.heading7.elements;
-      break;
-    case 8:
-      elements = blockData.heading8.elements;
-      break;
-    case 9:
-      elements = blockData.heading9.elements;
-      break;
-  }
+  const elements = blockData[`heading${level}`].elements;
 
   const staticStyle = css({
     display: "inline-block",
@@ -87,99 +58,25 @@ function Heading({ blockData, hash, level: level }) {
           backgroundColor: backgroundColor,
         });
 
-        switch (level) {
-          case 1:
-            return (
-              <h1 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h1>
-            );
-          case 2:
-            return (
-              <h2 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h2>
-            );
-          case 3:
-            return (
-              <h3 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h3>
-            );
-          case 4:
-            return (
-              <h4 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h4>
-            );
-          case 5:
-            return (
-              <h5 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h5>
-            );
-          case 6:
-            return (
-              <h6 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h6>
-            );
-          case 7:
-            return (
-              <h6 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h6>
-            );
-          case 8:
-            return (
-              <h6 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h6>
-            );
-          case 9:
-            return (
-              <h6 key={index} css={[staticStyle, cssStyle]}>
-                {element.text_run.content}
-              </h6>
-            );
-        }
+        //h7,h8,h9タグはhtmlでは存在しないので
+        const HeadingTag = `h${level > 6 ? 6 : level}`;
+
+        return (
+          <HeadingTag key={index} css={[staticStyle, cssStyle]}>
+            {element.text_run.content}
+          </HeadingTag>
+        );
       })}
     </div>
   );
 }
 
-export function Heading1({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={1}></Heading>;
-}
-
-export function Heading2({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={2}></Heading>;
-}
-
-export function Heading3({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={3}></Heading>;
-}
-
-export function Heading4({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={4}></Heading>;
-}
-
-export function Heading5({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={5}></Heading>;
-}
-
-export function Heading6({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={6}></Heading>;
-}
-
-export function Heading7({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={7}></Heading>;
-}
-
-export function Heading8({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={8}></Heading>;
-}
-
-export function Heading9({ blockData, hash }) {
-  return <Heading blockData={blockData} hash={hash} level={9}></Heading>;
-}
+export const Heading1 = (props) => <Heading {...props} level={1} />;
+export const Heading2 = (props) => <Heading {...props} level={2} />;
+export const Heading3 = (props) => <Heading {...props} level={3} />;
+export const Heading4 = (props) => <Heading {...props} level={4} />;
+export const Heading5 = (props) => <Heading {...props} level={5} />;
+export const Heading6 = (props) => <Heading {...props} level={6} />;
+export const Heading7 = (props) => <Heading {...props} level={7} />;
+export const Heading8 = (props) => <Heading {...props} level={8} />;
+export const Heading9 = (props) => <Heading {...props} level={9} />;

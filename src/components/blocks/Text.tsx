@@ -8,7 +8,7 @@ export function Text({ blockData, hash }) {
   const staticStyle = css({
     display: "inline-block",
     wordBreak: "break-word",
-  })
+  });
 
   return (
     <div>

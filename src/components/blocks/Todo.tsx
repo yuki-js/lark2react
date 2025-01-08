@@ -14,7 +14,7 @@ export function Todo({ blockData, hash }) {
     display: "inline-block",
     wordBreak: "break-word",
     textDecoration: "line-through",
-  })
+  });
 
   if (isDone) {
     return (
@@ -70,7 +70,7 @@ export function Todo({ blockData, hash }) {
             });
 
             return (
-              <div key={index} css={[staticStyle,cssStyle]}>
+              <div key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </div>
             );
