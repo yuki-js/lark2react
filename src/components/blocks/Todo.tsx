@@ -10,6 +10,12 @@ export function Todo({ blockData, hash }) {
     display: "inline-flex",
   });
 
+  const staticStyle = css({
+    display: "inline-block",
+    wordBreak: "break-word",
+    textDecoration: "line-through",
+  })
+
   if (isDone) {
     return (
       <label css={labelStyle}>
@@ -64,7 +70,7 @@ export function Todo({ blockData, hash }) {
             });
 
             return (
-              <div key={index} css={cssStyle}>
+              <div key={index} css={[staticStyle,cssStyle]}>
                 {element.text_run.content}
               </div>
             );

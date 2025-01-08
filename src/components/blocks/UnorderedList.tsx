@@ -8,6 +8,11 @@ export function UnorderedList({ blockDataArr, hash }) {
     paddingLeft: "0px",
   });
 
+  const staticStyle = css({
+    display: "inline-block",
+    wordBreak: "break-word",
+  });
+
   return (
     <div>
       <ul>
@@ -70,12 +75,10 @@ export function UnorderedList({ blockDataArr, hash }) {
                     fontStyle: italic,
                     textDecoration: decoration,
                     backgroundColor: backgroundColor,
-                    display: "inline-block",
-                    wordBreak: "break-word",
                   });
 
                   return (
-                    <div key={j} css={cssStyle}>
+                    <div key={j} css={[staticStyle, cssStyle]}>
                       {element.text_run.content}
                     </div>
                   );

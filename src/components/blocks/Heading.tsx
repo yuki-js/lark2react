@@ -34,6 +34,11 @@ function Heading({ blockData, hash, level: level }) {
       break;
   }
 
+  const staticStyle = css({
+    display: "inline-block",
+    wordBreak: "break-word",
+  });
+
   return (
     <div>
       {elements.map((element, index) => {
@@ -80,62 +85,60 @@ function Heading({ blockData, hash, level: level }) {
           fontStyle: italic,
           textDecoration: decoration,
           backgroundColor: backgroundColor,
-          display: "inline-block",
-          wordBreak: "break-word",
         });
 
         switch (level) {
           case 1:
             return (
-              <h1 key={index} css={cssStyle}>
+              <h1 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h1>
             );
           case 2:
             return (
-              <h2 key={index} css={cssStyle}>
+              <h2 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h2>
             );
           case 3:
             return (
-              <h3 key={index} css={cssStyle}>
+              <h3 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h3>
             );
           case 4:
             return (
-              <h4 key={index} css={cssStyle}>
+              <h4 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h4>
             );
           case 5:
             return (
-              <h5 key={index} css={cssStyle}>
+              <h5 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h5>
             );
           case 6:
             return (
-              <h6 key={index} css={cssStyle}>
+              <h6 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h6>
             );
           case 7:
             return (
-              <h6 key={index} css={cssStyle}>
+              <h6 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h6>
             );
           case 8:
             return (
-              <h6 key={index} css={cssStyle}>
+              <h6 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h6>
             );
           case 9:
             return (
-              <h6 key={index} css={cssStyle}>
+              <h6 key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </h6>
             );

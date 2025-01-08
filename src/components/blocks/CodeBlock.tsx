@@ -8,6 +8,10 @@ export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
   const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
 
+  const staticStyle = css({
+    wordBreak: "break-word",
+  });
+
   const boxStyle = css({
     backgroundColor: "whitesmoke",
     border: "2px solid darkgray",
@@ -82,12 +86,10 @@ export function CodeBlock({ blockData, hash }) {
               fontStyle: italic,
               textDecoration: decoration,
               backgroundColor: backgroundColor,
-
-              wordBreak: "break-word",
             });
 
             return (
-              <div key={index} css={cssStyle}>
+              <div key={index} css={[staticStyle, cssStyle]}>
                 {element.text_run.content}
               </div>
             );

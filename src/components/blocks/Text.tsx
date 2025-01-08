@@ -5,6 +5,11 @@ import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 export function Text({ blockData, hash }) {
   const elements = blockData.text.elements;
 
+  const staticStyle = css({
+    display: "inline-block",
+    wordBreak: "break-word",
+  })
+
   return (
     <div>
       {elements.map((element, index) => {
@@ -56,12 +61,10 @@ export function Text({ blockData, hash }) {
           fontStyle: italic,
           textDecoration: decoration,
           backgroundColor: backgroundColor,
-          display: "inline-block",
-          wordBreak: "break-word",
         });
 
         return (
-          <div key={index} css={cssStyle}>
+          <div key={index} css={[staticStyle, cssStyle]}>
             {element.text_run.content}
           </div>
         );
