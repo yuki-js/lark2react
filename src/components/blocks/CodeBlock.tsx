@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
-import { CODE_LANGUAGE } from "../../constance/codeLanguage";
+import { CODE_LANGUAGE } from "../../constants/codeLanguage";
 
 export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
