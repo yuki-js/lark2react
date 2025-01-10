@@ -1,5 +1,6 @@
+// docsだとpinkだが、色が薄いので赤にしている。(Lark上では、「赤」と表記されている)
 export const FONT_COLOR = {
-  1: "pink",
+  1: "red", //pink
   2: "orange",
   3: "yellow",
   4: "green",
