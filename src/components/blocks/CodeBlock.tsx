@@ -3,6 +3,18 @@ import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 import { CODE_LANGUAGE } from "../../constants/codeLanguage";
+import { generateTextStyle } from "../../utils/utils";
+
+interface TextStyle {
+  text_color?: number;
+  background_color?: number;
+  bold: boolean;
+  inline_code: boolean;
+  italic: boolean;
+  strikethrough: boolean;
+  underline: boolean;
+}
+
 
 export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
@@ -17,6 +29,8 @@ export function CodeBlock({ blockData, hash }) {
     border: "2px solid darkgray",
     borderRadius: "8px",
     padding: "15px",
+    marginTop: "10px",
+    marginBottom: "10px",
   });
 
   const codeLanguageStyle = css({
@@ -36,60 +50,13 @@ export function CodeBlock({ blockData, hash }) {
       <pre css={preStyle}>
         <code>
           {elements.map((element, index) => {
-            const elementTextColor =
-              element.text_run.text_element_style.text_color;
-            const elementBackgroundColor =
-              element.text_run.text_element_style.background_color;
+            
+            const style = element.text_run.text_element_style;
+            const dynamicStyle = generateTextStyle(style);
 
-            const fontColor = elementTextColor
-              ? FONT_COLOR[elementTextColor]
-              : "black";
-            const backgroundColor = elementBackgroundColor
-              ? FONT_BACKGROUND_COLOR[elementBackgroundColor]
-              : "transparent";
-
-            const bold = element.text_run.text_element_style.bold
-              ? "bold"
-              : "normal";
-
-            {
-              /* todo inline codeでは、ボーダーラインなども表示させた方がいい*/
-            }
-            const inlineCode = element.text_run.text_element_style.inline_code
-              ? "monospace"
-              : "inherit";
-
-            const italic = element.text_run.text_element_style.italic
-              ? "italic"
-              : "normal";
-
-            const strikeThrough = element.text_run.text_element_style
-              .strikethrough
-              ? "line-through"
-              : "none";
-            const underline = element.text_run.text_element_style.underline
-              ? "underline"
-              : "none";
-
-            const decoration =
-              [
-                strikeThrough === "line-through" && "line-through",
-                underline === "underline" && "underline",
-              ]
-                .filter(Boolean)
-                .join(" ") || "none";
-
-            const cssStyle = css({
-              color: fontColor,
-              fontWeight: bold,
-              fontFamily: inlineCode,
-              fontStyle: italic,
-              textDecoration: decoration,
-              backgroundColor: backgroundColor,
-            });
 
             return (
-              <div key={index} css={[staticStyle, cssStyle]}>
+              <div key={index} css={[staticStyle, dynamicStyle]}>
                 {element.text_run.content}
               </div>
             );

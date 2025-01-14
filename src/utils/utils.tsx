@@ -1,4 +1,7 @@
 import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
+import { css } from "@emotion/react";
+import { FONT_COLOR } from "../styles/fontColor"; 
+import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
 //グループ化するblockDataのblockType
 const TARGET_BLOCK_TYPES = new Set([12, 13]);
@@ -116,3 +119,34 @@ function groupingblockData(blockData, hash) {
 
   return blockDataArr;
 }
+
+
+
+
+export const generateTextStyle = ({
+  text_color,
+  background_color,
+  bold,
+  inline_code,
+  italic,
+  strikethrough,
+  underline,
+}: TextStyle) => {
+  const strikethroughParam = strikethrough ? "line-through" : "none";
+  const underlineParam = underline ? "underline" : "none";
+
+  return css({
+    color: FONT_COLOR[text_color] || "black",
+    fontWeight: bold ? "bold" : "normal",
+    fontFamily: inline_code ? "monospace" : "inherit",
+    fontStyle: italic ? "italic" : "normal",
+    backgroundColor: FONT_BACKGROUND_COLOR[background_color],
+    textDecoration:
+      [
+        strikethroughParam === "line-through" && "line-through",
+        underlineParam === "underline" && "underline",
+      ]
+        .filter(Boolean)
+        .join(" ") || "none",
+  });
+};
