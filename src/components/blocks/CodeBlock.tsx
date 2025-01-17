@@ -42,6 +42,7 @@ export function CodeBlock({ blockData, hash }) {
     whiteSpace: "pre-wrap", // 折り返しを有効化
     wordWrap: "break-word",
     overflowWrap: "break-word", // 長い単語を折り返し
+    lineHeight: "1.6",
   });
 
   return (
