@@ -15,6 +15,7 @@ import { UnorderedList } from "../components/blocks/UnorderedList";
 import { OrderedList } from "../components/blocks/OrderedList";
 import { CodeBlock } from "../components/blocks/CodeBlock";
 import { Todo } from "../components/blocks/Todo";
+import { QuoteContainer } from "../components/blocks/QuoteContainer";
 
 export const BLOCK_TYPE_TO_COMPONENT = {
   1: Page,
@@ -32,4 +33,5 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   13: OrderedList,
   14: CodeBlock,
   17: Todo,
+  34: QuoteContainer,
 };
