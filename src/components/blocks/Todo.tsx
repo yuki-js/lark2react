@@ -13,7 +13,6 @@ interface TextStyle {
   underline: boolean;
 }
 
-
 export function Todo({ blockData, hash }) {
   const isDone: boolean = blockData.todo.style.done;
   const elements = blockData.todo.elements;

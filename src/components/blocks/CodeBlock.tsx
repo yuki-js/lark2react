@@ -15,7 +15,6 @@ interface TextStyle {
   underline: boolean;
 }
 
-
 export function CodeBlock({ blockData, hash }) {
   const elements = blockData.code.elements;
   const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
@@ -51,10 +50,8 @@ export function CodeBlock({ blockData, hash }) {
       <pre css={preStyle}>
         <code>
           {elements.map((element, index) => {
-            
             const style = element.text_run.text_element_style;
             const dynamicStyle = generateTextStyle(style);
-
 
             return (
               <div key={index} css={[staticStyle, dynamicStyle]}>

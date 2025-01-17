@@ -1,9 +1,5 @@
 import { css } from "@emotion/react";
 
-
-export function Divider(){
-    
-    return(
-        <hr color="lightgray" />
-    )
+export function Divider(props: {}) {
+  return <hr color="lightgray" />;
 }

@@ -1,6 +1,6 @@
 import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
 import { css } from "@emotion/react";
-import { FONT_COLOR } from "../styles/fontColor"; 
+import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
 //グループ化するblockDataのblockType
@@ -119,9 +119,6 @@ function groupingblockData(blockData, hash) {
 
   return blockDataArr;
 }
-
-
-
 
 export const generateTextStyle = ({
   text_color,
