@@ -28,20 +28,15 @@ export function Text({ blockData, hash }) {
         const dynamicStyle = generateTextStyle(style);
 
         //linkスタイルが存在する場合、リンクを張る
-        //FIXME : できればリダイレクトされるようにしたい
-        if (style.link) {
-          return (
-            <div key={index} css={[staticStyle, dynamicStyle]}>
-              <a href={style.link.url} target="_self">
-                {element.text_run.content}
-              </a>
-            </div>
-          );
-        }
-
         return (
           <div key={index} css={[staticStyle, dynamicStyle]}>
-            {element.text_run.content}
+            {style.link ? (
+              <a href={style.link.url} target="_blank">
+                {element.text_run.content}
+              </a>
+            ) : (
+              element.text_run.content
+            )}
           </div>
         );
       })}

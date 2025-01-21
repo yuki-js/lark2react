@@ -30,9 +30,16 @@ function Heading({ blockData, hash, level: level }) {
         //h7,h8,h9タグはhtmlでは存在しないので
         const HeadingTag = `h${level > 6 ? 6 : level}`;
 
+        //linkスタイルが存在する場合、リンクを張る
         return (
           <HeadingTag key={index} css={[staticStyle, dynamicStyle]}>
-            {element.text_run.content}
+            {style.link ? (
+              <a href={style.link.url} target="_blank">
+                {element.text_run.content}
+              </a>
+            ) : (
+              element.text_run.content
+            )}
           </HeadingTag>
         );
       })}

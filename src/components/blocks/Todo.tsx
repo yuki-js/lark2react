@@ -35,6 +35,7 @@ export function Todo({ blockData, hash }) {
           const dynamicStyle = generateTextStyle(style);
 
           if (isDone) {
+            //linkスタイルが存在する場合、リンクを張る
             return (
               <div
                 key={index}
@@ -44,13 +45,26 @@ export function Todo({ blockData, hash }) {
                   css({ textDecoration: "line-through" }),
                 ]}
               >
-                {element.text_run.content}
+                {style.link ? (
+                  <a href={style.link.url} target="_blank">
+                    {element.text_run.content}
+                  </a>
+                ) : (
+                  element.text_run.content
+                )}
               </div>
             );
           } else {
+            //linkスタイルが存在する場合、リンクを張る
             return (
               <div key={index} css={[staticStyle, dynamicStyle]}>
-                {element.text_run.content}
+                {style.link ? (
+                  <a href={style.link.url} target="_blank">
+                    {element.text_run.content}
+                  </a>
+                ) : (
+                  element.text_run.content
+                )}
               </div>
             );
           }

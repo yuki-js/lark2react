@@ -40,9 +40,16 @@ export function OrderedList({ blockDataArr, hash }) {
                   const style = element.text_run.text_element_style;
                   const dynamicStyle = generateTextStyle(style);
 
+                  //linkスタイルが存在する場合、リンクを張る
                   return (
                     <div key={j} css={[staticStyle, dynamicStyle]}>
-                      {element.text_run.content}
+                      {style.link ? (
+                        <a href={style.link.url} target="_blank">
+                          {element.text_run.content}
+                        </a>
+                      ) : (
+                        element.text_run.content
+                      )}
                     </div>
                   );
                 })}
