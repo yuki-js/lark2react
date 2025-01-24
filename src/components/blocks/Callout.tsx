@@ -5,17 +5,21 @@ import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
 import { generateTextStyle } from "../../utils/utils";
 
 export function Callout({ blockData, hash }) {
+  const style = blockData.callout;
 
-    const style = blockData.callout
+  const boxStyle = css({
+    backgroundColor: CALLOUT_BACKGROUND_COLOR[style.background_color],
+    border: `2px solid ${CALLOUT_BORDER_COLOR[style.border_color]}`,
+    borderRadius: "8px",
+    padding: "15px",
+    marginTop: "10px",
+    marginBottom: "10px",
+  });
 
-    const boxStyle = css({
-        backgroundColor:  CALLOUT_BACKGROUND_COLOR[style.background_color],
-        border:  `2px solid ${CALLOUT_BORDER_COLOR[style.border_color]}`,
-        borderRadius: "8px",
-        padding: "15px",
-        marginTop: "10px",
-        marginBottom: "10px",
-      });
-
-  return <div css={boxStyle}>{displayChildComponent(blockData, hash)}</div>;
+  return (
+    <div css={boxStyle}>
+      <div></div>
+      {displayChildComponent(blockData, hash)}
+    </div>
+  );
 }
