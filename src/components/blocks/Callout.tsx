@@ -4,8 +4,11 @@ import { CALLOUT_BACKGROUND_COLOR } from "../../styles/calloutBackgroundColor";
 import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
 import { EMOJI } from "../../constants/emoji";
 import { generateTextStyle } from "../../utils/utils";
+import { useContext } from "react";
+import { HashContext } from "../../contexts/DataContext";
 
-export function Callout({ blockData, hash }) {
+export function Callout({ blockData}) {
+  const hash  = useContext(HashContext); 
   const style = blockData.callout;
 
   const emoji = EMOJI[style.emoji_id];

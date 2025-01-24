@@ -1,7 +1,11 @@
 import { css } from "@emotion/react";
 import { id2Component, displayChildComponent } from "../../utils/utils";
+import { useContext } from "react";
+import { HashContext } from "../../contexts/DataContext";
 
-export function Page({ blockData, hash }) {
+export function Page({ blockData}) {
+  const hash  = useContext(HashContext); 
+  
   const title = blockData.page.elements[0].text_run.content;
 
   const cssStyle = css({

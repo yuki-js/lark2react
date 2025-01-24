@@ -3,6 +3,8 @@ import { id2Component, displayChildComponent } from "../../utils/utils";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 import { generateTextStyle } from "../../utils/utils";
+import { useContext } from "react";
+import { HashContext } from "../../contexts/DataContext";
 
 interface TextStyle {
   text_color?: number;
@@ -15,7 +17,8 @@ interface TextStyle {
 }
 
 //FIXME: 番号の位置を左側にずらしたい
-export function OrderedList({ blockDataArr, hash }) {
+export function OrderedList({ blockDataArr}) {
+  const hash  = useContext(HashContext); 
   const startIndex = blockDataArr[0].ordered.style.sequence;
 
   const olStyle = css({

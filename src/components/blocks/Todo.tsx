@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 import { generateTextStyle } from "../../utils/utils";
+import { useContext } from "react";
+import { HashContext } from "../../contexts/DataContext";
 
 interface TextStyle {
   text_color?: number;
@@ -13,7 +15,8 @@ interface TextStyle {
   underline: boolean;
 }
 
-export function Todo({ blockData, hash }) {
+export function Todo({ blockData}) {
+  const hash  = useContext(HashContext); 
   const isDone: boolean = blockData.todo.style.done;
   const elements = blockData.todo.elements;
 
