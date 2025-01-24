@@ -19,6 +19,8 @@ function Heading({ blockData, hash, level: level }) {
   const staticStyle = css({
     display: "inline-block",
     wordBreak: "break-word",
+    padding: "0px",
+    margin: "0px",
   });
 
   return (
