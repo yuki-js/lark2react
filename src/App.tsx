@@ -2,7 +2,7 @@ import InputTextArea from "./components/InputTextArea";
 import { Converter } from "./components/Converter";
 import { convertJsonToReactComponent } from "./utils/utils";
 import React, { useState } from "react";
-import { getJson, getUserId } from "./utils/apiHelper";
+import { getUserId } from "./utils/apiHelper";
 
 function App() {
   const [items, setItems] = useState<any[]>([]);
