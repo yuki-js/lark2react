@@ -8,4 +8,18 @@ export default defineConfig({
       jsxImportSource: "@emotion/react",
     }),
   ],
+
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://open.larksuite.com/open-apis/docx/v1/documents',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  }
 });
+
+
+
