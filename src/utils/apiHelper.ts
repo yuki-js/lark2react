@@ -2,11 +2,8 @@ import { ENV_INFO } from "../env";
 import * as lark from "@larksuiteoapi/node-sdk";
 import axios from 'axios';
 
-export function connectApi(){
+export function connectApi(documentId: string, userAccessToken: string){
     console.log("connect");
-
-    const documentId = "Lqzudvi1DokvIqxBn2rj94udpob"
-    const userAccessToken = "u-eMpvBRUY954ajvojewvyBKYlnPt7k1R9UU0wk4102G81"
 
     const url = `/api/${documentId}/blocks?document_revision_id=-1&page_size=500`;
 
