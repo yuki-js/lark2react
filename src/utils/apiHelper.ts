@@ -1,27 +1,21 @@
 import { ENV_INFO } from "../env";
-import * as lark from "@larksuiteoapi/node-sdk";
 import axios from 'axios';
 
-export function connectApi(documentId: string, userAccessToken: string){
-    console.log("connect");
+export async function connectApi(documentId: string, userAccessToken: string){
 
     const url = `/api/${documentId}/blocks?document_revision_id=-1&page_size=500`;
 
-    var config = {
-        method: 'GET',
-        url: url,
-        headers: {
-          'Authorization': `Bearer ${userAccessToken}`
-        }
-      };
-      
-      axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${userAccessToken}`
+            }
+        });
+        return response.data; 
+    } catch (error) {
         console.error(JSON.stringify(error.response.data, null, 4));
-      });
+        throw error; 
+    }
 }
 
 
