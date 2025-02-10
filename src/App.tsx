@@ -2,7 +2,7 @@ import InputTextArea from "./components/InputTextArea";
 import InputDocumentId from "./components/InputDocumentId";
 import InputUserAccessToken from "./components/InputUserAccessToken";
 import { Converter } from "./components/Converter";
-import { getJson, getTenantAccessToken } from "./utils/apiHelper";
+import { getJson, getTenantAccessToken} from "./utils/apiHelper";
 import React, { useEffect, useState } from "react";
 import { DocumentIdProvider, useDocumentId } from "./contexts/documentIdContext";
 
@@ -20,22 +20,13 @@ function AppContent() {
   const { documentId, setDocumentId } = useDocumentId(); 
 
   const [items, setItems] = useState<any[]>([]);
-
-
-  
-
-  //指定する必要あり
-  const userAccessToken = "u-ecYYbL6W90May1IAgbK1QeYllrZ7k1vFpE0w41102Lt5";
   
   useEffect(() => {
     async function fetchData() {
       try {
-        const json = await getJson(documentId, userAccessToken);
 
-        // テナントアクセストークンを取得できるかテスト
-        const ta = await getTenantAccessToken();
-        console.log(ta);
-
+        const tenantAccessToken = await getTenantAccessToken();
+        const json = await getJson(documentId, tenantAccessToken);
 
         setItems(json.data.items);
       } catch (error) {
@@ -53,7 +44,6 @@ function AppContent() {
     <div>
       <h1>JSON to React Component</h1>
       <InputDocumentId setDocumentId={setDocumentId} /> 
-      <InputUserAccessToken/> 
       {items.length > 0 && <Converter items={items} />}
     </div>
   );

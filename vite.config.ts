@@ -17,12 +17,14 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      '/tenant-api': {
+      '/ta-api': {
         target: 'https://open.larksuite.com/open-apis/auth/v3',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/tenant-api/, ''),
+        rewrite: (path) => path.replace(/^\/ta-api/, ''),
       },
+
+
     },
 
 
