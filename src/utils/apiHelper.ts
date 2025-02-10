@@ -1,7 +1,7 @@
 import { ENV_INFO } from "../env";
 import axios from 'axios';
 
-export async function connectApi(documentId: string, userAccessToken: string){
+export async function getJson(documentId: string, userAccessToken: string){
 
     const url = `/api/${documentId}/blocks?document_revision_id=-1&page_size=500`;
 
@@ -17,6 +17,26 @@ export async function connectApi(documentId: string, userAccessToken: string){
         throw error; 
     }
 }
+
+
+export async function getTenantAccessToken(){
+    
+    const url = '/tenant-api/tenant_access_token/internal';
+
+    try {
+        const response = await axios.post(url, {
+            app_id : ENV_INFO.app_id,
+            app_secret : ENV_INFO.app_secret
+        })
+        
+        return response.data.tenant_access_token;
+        
+    } catch (error){
+        throw error; 
+    }
+}
+
+
 
 
 

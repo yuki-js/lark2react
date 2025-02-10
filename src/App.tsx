@@ -2,7 +2,7 @@ import InputTextArea from "./components/InputTextArea";
 import InputDocumentId from "./components/InputDocumentId";
 import InputUserAccessToken from "./components/InputUserAccessToken";
 import { Converter } from "./components/Converter";
-import { connectApi } from "./utils/apiHelper";
+import { getJson, getTenantAccessToken } from "./utils/apiHelper";
 import React, { useEffect, useState } from "react";
 import { DocumentIdProvider, useDocumentId } from "./contexts/documentIdContext";
 
@@ -30,7 +30,13 @@ function AppContent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const json = await connectApi(documentId, userAccessToken);
+        const json = await getJson(documentId, userAccessToken);
+
+        // テナントアクセストークンを取得できるかテスト
+        const ta = await getTenantAccessToken();
+        console.log(ta);
+
+
         setItems(json.data.items);
       } catch (error) {
         setItems([]);
