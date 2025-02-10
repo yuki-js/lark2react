@@ -7,17 +7,6 @@ import React, { useEffect, useState } from "react";
 import { DocumentIdProvider, useDocumentId } from "./contexts/documentIdContext";
 
 function App() {
-  const [items, setItems] = useState<any[]>([]);
-
-  const handleConvert = (inputText: string) => {
-    try {
-      const jsonObject = JSON.parse(inputText);
-      const items = jsonObject.data.items;
-      setItems(items);
-    } catch (error) {
-      console.log(`エラー: ${(error as Error).message}`);
-    }
-  };
 
   return (
     <DocumentIdProvider>
@@ -36,7 +25,7 @@ function AppContent() {
   
 
   //指定する必要あり
-  const userAccessToken = "u-fLeXJKuhd9tpxx5Y4roSW7Ylnjv7k1_HpE0whl502Kdh";
+  const userAccessToken = "u-ecYYbL6W90May1IAgbK1QeYllrZ7k1vFpE0w41102Lt5";
   
   useEffect(() => {
     async function fetchData() {
