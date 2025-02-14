@@ -17,7 +17,7 @@ interface TextStyle {
 
 function Heading({ blockData, level: level }) {
   const hash  = useContext(HashContext); 
-  const elements = blockData[`heading${level}`].elements;
+  const elements: SomeType[] = blockData[`heading${level}`].elements; 
 
   const staticStyle = css({
     display: "inline-block",
@@ -29,24 +29,29 @@ function Heading({ blockData, level: level }) {
   return (
     <div>
       {elements.map((element, index) => {
-        const style = element.text_run.text_element_style;
-        const dynamicStyle = generateTextStyle(style);
 
-        //h7,h8,h9タグはhtmlでは存在しないので
-        const HeadingTag = `h${level > 6 ? 6 : level}`;
+        //elements配列の中にtext_runを持たない(発言者mention_userプロパティを持つ)ものが存在するので
+        if(element?.text_run){
+          const style = element.text_run.text_element_style;
+          const dynamicStyle = generateTextStyle(style);
 
-        //linkスタイルが存在する場合、リンクを張る
-        return (
-          <HeadingTag key={index} css={[staticStyle, dynamicStyle]}>
-            {style.link ? (
-              <a href={style.link.url} target="_blank">
-                {element.text_run.content}
-              </a>
-            ) : (
-              element.text_run.content
-            )}
-          </HeadingTag>
-        );
+          //h7,h8,h9タグはhtmlでは存在しないので
+          const HeadingTag = `h${level > 6 ? 6 : level}`;
+
+          //linkスタイルが存在する場合、リンクを張る
+          return (
+            <HeadingTag key={index} css={[staticStyle, dynamicStyle]}>
+              {style.link ? (
+                <a href={style.link.url} target="_blank">
+                  {element.text_run.content}
+                </a>
+              ) : (
+                element.text_run.content
+              )}
+            </HeadingTag>
+          );
+        }
+
       })}
     </div>
   );

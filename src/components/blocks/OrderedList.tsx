@@ -40,21 +40,25 @@ export function OrderedList({ blockDataArr}) {
             <div key={i}>
               <li>
                 {elements.map((element, j) => {
-                  const style = element.text_run.text_element_style;
-                  const dynamicStyle = generateTextStyle(style);
+                  
+                  if(element?.text_run){
+                    const style = element.text_run.text_element_style;
+                    const dynamicStyle = generateTextStyle(style);
 
-                  //linkスタイルが存在する場合、リンクを張る
-                  return (
-                    <div key={j} css={[staticStyle, dynamicStyle]}>
-                      {style.link ? (
-                        <a href={style.link.url} target="_blank">
-                          {element.text_run.content}
-                        </a>
-                      ) : (
-                        element.text_run.content
-                      )}
-                    </div>
-                  );
+                    //linkスタイルが存在する場合、リンクを張る
+                    return (
+                      <div key={j} css={[staticStyle, dynamicStyle]}>
+                        {style.link ? (
+                          <a href={style.link.url} target="_blank">
+                            {element.text_run.content}
+                          </a>
+                        ) : (
+                          element.text_run.content
+                        )}
+                      </div>
+                    );
+                  }
+
                 })}
               </li>
               <div>{displayChildComponent(blockData, hash)}</div>

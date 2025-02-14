@@ -42,7 +42,7 @@ function AppContent() {
 
   return (
     <div>
-      <h1>JSON to React Component</h1>
+      <h1>Lark to React</h1>
       <InputDocumentId setDocumentId={setDocumentId} /> 
       {items.length > 0 && <Converter items={items} />}
     </div>
