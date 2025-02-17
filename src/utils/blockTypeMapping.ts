@@ -18,6 +18,7 @@ import { Todo } from "../components/blocks/Todo";
 import { QuoteContainer } from "../components/blocks/QuoteContainer";
 import { Divider } from "../components/blocks/Divider";
 import { Callout } from "../components/blocks/Callout";
+import { Image } from "../components/blocks/Image";
 
 export const BLOCK_TYPE_TO_COMPONENT = {
   1: Page,
@@ -37,5 +38,6 @@ export const BLOCK_TYPE_TO_COMPONENT = {
   17: Todo,
   19: Callout,
   22: Divider,
+  27: Image,
   34: QuoteContainer,
 };
