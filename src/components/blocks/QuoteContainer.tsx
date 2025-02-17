@@ -6,8 +6,8 @@ import { generateTextStyle } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 
-export function QuoteContainer({ blockData}) {
-  const hash  = useContext(HashContext); 
+export function QuoteContainer({ blockData }) {
+  const hash = useContext(HashContext);
   const cssStyle = css({
     borderLeft: "4px solid lightgray",
     paddingLeft: "16px",

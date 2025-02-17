@@ -15,8 +15,8 @@ interface TextStyle {
   underline: boolean;
 }
 
-export function Text({ blockData}) {
-  const hash  = useContext(HashContext); 
+export function Text({ blockData }) {
+  const hash = useContext(HashContext);
   const elements = blockData.text.elements;
 
   const staticStyle = css({
@@ -27,8 +27,7 @@ export function Text({ blockData}) {
   return (
     <div>
       {elements.map((element, index) => {
-
-        if(element?.text_run){
+        if (element?.text_run) {
           const style = element.text_run.text_element_style;
           const dynamicStyle = generateTextStyle(style);
 
@@ -45,7 +44,6 @@ export function Text({ blockData}) {
             </div>
           );
         }
-
       })}
     </div>
   );

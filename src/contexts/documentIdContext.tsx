@@ -6,10 +6,13 @@ interface DocumentIdContextType {
   setDocumentId: (id: string) => void;
 }
 
+const DocumentIdContext = createContext<DocumentIdContextType | undefined>(
+  undefined,
+);
 
-const DocumentIdContext = createContext<DocumentIdContextType | undefined>(undefined);
-
-export const DocumentIdProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const DocumentIdProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [documentId, setDocumentId] = useState("");
 
   return (

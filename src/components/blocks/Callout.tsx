@@ -7,8 +7,8 @@ import { generateTextStyle } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 
-export function Callout({ blockData}) {
-  const hash  = useContext(HashContext); 
+export function Callout({ blockData }) {
+  const hash = useContext(HashContext);
   const style = blockData.callout;
 
   const emoji = EMOJI[style.emoji_id];

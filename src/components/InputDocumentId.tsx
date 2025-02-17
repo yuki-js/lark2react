@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDocumentId } from "../contexts/documentIdContext";
 
 function InputDocumentId() {
-  const {documentId, setDocumentId} = useDocumentId();
+  const { documentId, setDocumentId } = useDocumentId();
 
   const handleChange = (event: { target: { value: any } }) => {
     setDocumentId(event.target.value);

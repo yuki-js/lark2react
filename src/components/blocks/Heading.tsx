@@ -16,8 +16,8 @@ interface TextStyle {
 }
 
 function Heading({ blockData, level: level }) {
-  const hash  = useContext(HashContext); 
-  const elements: SomeType[] = blockData[`heading${level}`].elements; 
+  const hash = useContext(HashContext);
+  const elements: SomeType[] = blockData[`heading${level}`].elements;
 
   const staticStyle = css({
     display: "inline-block",
@@ -29,9 +29,8 @@ function Heading({ blockData, level: level }) {
   return (
     <div>
       {elements.map((element, index) => {
-
         //elements配列の中にtext_runを持たない(発言者mention_userプロパティを持つ)ものが存在するので
-        if(element?.text_run){
+        if (element?.text_run) {
           const style = element.text_run.text_element_style;
           const dynamicStyle = generateTextStyle(style);
 
@@ -51,7 +50,6 @@ function Heading({ blockData, level: level }) {
             </HeadingTag>
           );
         }
-
       })}
     </div>
   );

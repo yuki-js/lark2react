@@ -17,8 +17,8 @@ interface TextStyle {
 }
 
 //FIXME: 番号の位置を左側にずらしたい
-export function OrderedList({ blockDataArr}) {
-  const hash  = useContext(HashContext); 
+export function OrderedList({ blockDataArr }) {
+  const hash = useContext(HashContext);
   const startIndex = blockDataArr[0].ordered.style.sequence;
 
   const olStyle = css({
@@ -40,8 +40,7 @@ export function OrderedList({ blockDataArr}) {
             <div key={i}>
               <li>
                 {elements.map((element, j) => {
-                  
-                  if(element?.text_run){
+                  if (element?.text_run) {
                     const style = element.text_run.text_element_style;
                     const dynamicStyle = generateTextStyle(style);
 
@@ -58,7 +57,6 @@ export function OrderedList({ blockDataArr}) {
                       </div>
                     );
                   }
-
                 })}
               </li>
               <div>{displayChildComponent(blockData, hash)}</div>

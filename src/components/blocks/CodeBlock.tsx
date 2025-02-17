@@ -17,8 +17,8 @@ interface TextStyle {
   underline: boolean;
 }
 
-export function CodeBlock({ blockData}) {
-  const hash  = useContext(HashContext); 
+export function CodeBlock({ blockData }) {
+  const hash = useContext(HashContext);
   const elements = blockData.code.elements;
   const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
 

@@ -15,8 +15,8 @@ interface TextStyle {
   underline: boolean;
 }
 
-export function Todo({ blockData}) {
-  const hash  = useContext(HashContext); 
+export function Todo({ blockData }) {
+  const hash = useContext(HashContext);
   const isDone: boolean = blockData.todo.style.done;
   const elements = blockData.todo.elements;
 

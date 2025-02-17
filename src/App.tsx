@@ -2,12 +2,14 @@ import InputTextArea from "./components/InputTextArea";
 import InputDocumentId from "./components/InputDocumentId";
 import InputUserAccessToken from "./components/InputUserAccessToken";
 import { Converter } from "./components/Converter";
-import { getJson, getTenantAccessToken} from "./utils/apiHelper";
+import { getJson, getTenantAccessToken, getFile } from "./utils/apiHelper";
 import React, { useEffect, useState } from "react";
-import { DocumentIdProvider, useDocumentId } from "./contexts/documentIdContext";
+import {
+  DocumentIdProvider,
+  useDocumentId,
+} from "./contexts/documentIdContext";
 
 function App() {
-
   return (
     <DocumentIdProvider>
       <AppContent />
@@ -15,18 +17,18 @@ function App() {
   );
 }
 
-
 function AppContent() {
-  const { documentId, setDocumentId } = useDocumentId(); 
+  const { documentId, setDocumentId } = useDocumentId();
 
   const [items, setItems] = useState<any[]>([]);
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
-
         const tenantAccessToken = await getTenantAccessToken();
         const json = await getJson(documentId, tenantAccessToken);
+
+        
 
         setItems(json.data.items);
       } catch (error) {
@@ -43,7 +45,7 @@ function AppContent() {
   return (
     <div>
       <h1>Lark to React</h1>
-      <InputDocumentId setDocumentId={setDocumentId} /> 
+      <InputDocumentId setDocumentId={setDocumentId} />
       {items.length > 0 && <Converter items={items} />}
     </div>
   );

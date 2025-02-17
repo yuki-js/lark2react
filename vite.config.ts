@@ -11,25 +11,24 @@ export default defineConfig({
 
   server: {
     proxy: {
-      '/api': {
-        target: 'https://open.larksuite.com/open-apis/docx/v1/documents',
+      "/api": {
+        target: "https://open.larksuite.com/open-apis/docx/v1/documents",
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
-      '/ta-api': {
-        target: 'https://open.larksuite.com/open-apis/auth/v3',
+      "/ta-api": {
+        target: "https://open.larksuite.com/open-apis/auth/v3",
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/ta-api/, ''),
+        rewrite: (path) => path.replace(/^\/ta-api/, ""),
       },
-
-
+      "/get_file_api": {
+        target: "https://open.larksuite.com/open-apis/drive/v1/",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/get_file_api/, ""),
+      },
     },
-
-
-  }
+  },
 });
-
-
-

@@ -17,8 +17,8 @@ interface TextStyle {
 }
 
 //FIXME: 点の位置を左側にずらしたい
-export function UnorderedList({ blockDataArr}) {
-  const hash  = useContext(HashContext); 
+export function UnorderedList({ blockDataArr }) {
+  const hash = useContext(HashContext);
   const ulStyle = css({
     paddingLeft: "0px",
   });
@@ -38,8 +38,7 @@ export function UnorderedList({ blockDataArr}) {
             <div key={i}>
               <li>
                 {elements.map((element, j) => {
-
-                  if(element?.text_run){
+                  if (element?.text_run) {
                     const style = element.text_run.text_element_style;
                     const dynamicStyle = generateTextStyle(style);
 
