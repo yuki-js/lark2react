@@ -46,8 +46,7 @@ export async function getFile(fileToken: string, accessToken: string) {
 
     // バイナリデータをBlobオブジェクトに変換
     const blob = new Blob([response.data], { type: response.headers['content-type'] });
-    console.log("file test");
-    console.log(blob);
+
 
     return blob;
   } catch (error) {
