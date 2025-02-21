@@ -4,6 +4,8 @@ import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 import { generateTextStyle } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
+import { containsUrl } from "../../utils/utils";
+
 
 interface TextStyle {
   text_color?: number;
@@ -58,11 +60,23 @@ export function Todo({ blockData }) {
               </div>
             );
           } else {
+            
+
+            let url;
+            let isUrl = false;
+            if (style.link) {
+              url = decodeURIComponent(style.link.url);
+              isUrl = true;
+            } else if (containsUrl(element.text_run.content)) {
+              url = element.text_run.content;
+              isUrl = true;
+            }
+  
             //linkスタイルが存在する場合、リンクを張る
             return (
               <div key={index} css={[staticStyle, dynamicStyle]}>
-                {style.link ? (
-                  <a href={style.link.url} target="_blank">
+                {isUrl ? (
+                  <a href={url} target="_blank">
                     {element.text_run.content}
                   </a>
                 ) : (

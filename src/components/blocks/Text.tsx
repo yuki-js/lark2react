@@ -36,9 +36,7 @@ export function Text({ blockData }) {
           let url;
           let isUrl = false
           if (style.link) {
-            console.log(style.link.url);
             url = decodeURIComponent(style.link.url);
-            console.log(url);
             isUrl = true;
           } else if (containsUrl(element.text_run.content)) {
             url = element.text_run.content;
