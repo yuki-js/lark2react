@@ -1,7 +1,7 @@
 import { ENV_INFO } from "../env";
 import axios from "axios";
 
-export async function getJson(documentId: string, accessToken: string) {
+export async function getDocumentBlocks(documentId: string, accessToken: string) {
   const url = `/api/${documentId}/blocks?document_revision_id=-1&page_size=500`;
 
   try {
