@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 import { containsUrl } from "../../utils/utils";
 
-
 interface TextStyle {
   text_color?: number;
   background_color?: number;
@@ -60,8 +59,6 @@ export function Todo({ blockData }) {
               </div>
             );
           } else {
-            
-
             let url;
             let isUrl = false;
             if (style.link) {
@@ -71,7 +68,7 @@ export function Todo({ blockData }) {
               url = element.text_run.content;
               isUrl = true;
             }
-  
+
             //linkスタイルが存在する場合、リンクを張る
             return (
               <div key={index} css={[staticStyle, dynamicStyle]}>

@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 import { containsUrl } from "../../utils/utils";
 
-
 interface TextStyle {
   text_color?: number;
   background_color?: number;
@@ -53,7 +52,7 @@ export function UnorderedList({ blockDataArr }) {
                       url = element.text_run.content;
                       isUrl = true;
                     }
-          
+
                     //linkスタイルが存在する場合、リンクを張る
                     return (
                       <div key={j} css={[staticStyle, dynamicStyle]}>

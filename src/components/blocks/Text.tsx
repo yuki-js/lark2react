@@ -32,9 +32,8 @@ export function Text({ blockData }) {
           const style = element.text_run.text_element_style;
           const dynamicStyle = generateTextStyle(style);
 
-
           let url;
-          let isUrl = false
+          let isUrl = false;
           if (style.link) {
             url = decodeURIComponent(style.link.url);
             isUrl = true;

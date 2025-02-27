@@ -157,7 +157,6 @@ export function extractDocId(url: string): string {
   return match[1];
 }
 
-
 //文字列からURLを検出する
 export function containsUrl(text: string): boolean {
   const urlPattern = /\bhttps?:\/\/[^\s]+/g;
