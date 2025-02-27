@@ -51,9 +51,24 @@ export function id2Component(blockIdArr, hash) {
 
     return <Component blockDataArr={arr} hash={hash} />;
   } else {
+
     const blockData = hash[blockIdArr[0]];
     const blockType = blockData.block_type;
     const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+
+    //未実装のblock(コンポーネント)は、表示不可能と表示
+    if (!Component) {
+      return <div style={{
+        fontSize: '18px',
+        padding: '10px',
+        display: 'inline-block',
+        borderRadius: '5px',
+        backgroundColor: '#f8d7da',
+        color: '#721c24',
+        margin: '10px 0'
+      }}>表示できません</div>;
+    }
+
     return <Component blockData={blockData} hash={hash} />;
   }
 }
