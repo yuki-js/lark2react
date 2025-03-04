@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import InputTextArea from "./components/InputTextArea";
 import InputDocumentId from "./components/InputDocumentId";
 import InputUserAccessToken from "./components/InputUserAccessToken";
@@ -12,6 +13,27 @@ import {
   DocumentIdProvider,
   useDocumentId,
 } from "./contexts/documentIdContext";
+
+
+const containerStyle = css({
+  display: "flex",
+});
+
+//DOCを表示する領域
+const mainContentStyle = css({
+  flex: 3,
+  padding: 20,
+});
+
+//コメントを表示する領域
+const sidebarStyle = css({
+  flex: 1,
+  padding: 20,
+  backgroundColor: "#f9f9f9",
+  borderLeft: "1px solid #ddd",
+  overflowY: "auto",
+});
+
 
 function App() {
   return (
@@ -48,7 +70,14 @@ function AppContent() {
     <div>
       <h1>Lark to React</h1>
       <InputDocumentId setDocumentId={setDocumentId} />
-      {items.length > 0 && <Converter items={items} />}
+      <div css={containerStyle}>
+        <div css={mainContentStyle}>
+          {items.length > 0 && <Converter items={items} />}
+        </div>
+        <div css={sidebarStyle}>
+          <div>comment area</div>
+        </div>
+      </div>
     </div>
   );
 }

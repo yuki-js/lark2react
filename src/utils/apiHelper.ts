@@ -42,7 +42,7 @@ export async function getTenantAccessToken(): Promise<string> {
   }
 
   // トークンが存在しないor期限切れの場合は新しいトークンを取得
-  return fetchNewToken();
+  return await fetchNewToken();
 }
 
 // トークンをAPIから取得する関数

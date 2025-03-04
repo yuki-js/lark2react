@@ -32,6 +32,7 @@ export function Text({ blockData }) {
           const style = element.text_run.text_element_style;
           const dynamicStyle = generateTextStyle(style);
 
+          //url処理
           let url;
           let isUrl = false;
           if (style.link) {
@@ -42,7 +43,14 @@ export function Text({ blockData }) {
             isUrl = true;
           }
 
-          //linkスタイルが存在する場合、リンクを張る
+          //comment処理
+          let commentIds = [];
+          let isComment = false;
+          if(style.comment_ids){
+            commentIds = style.comment_ids;
+            isComment = true;
+          }
+
           return (
             <div key={index} css={[staticStyle, dynamicStyle]}>
               {isUrl ? (
