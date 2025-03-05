@@ -10,7 +10,7 @@ interface InputDocumentIdProps {
 const InputDocumentId: FC<InputDocumentIdProps> = ({ setDocumentId }) => {
   const { url, setUrl } = useState("");
 
-  const handleChange = (event: { target: { value: any } }) => {    
+  const handleChange = (event: { target: { value: string } }) => {
     setDocumentId(extractDocId(event.target.value));
   };
 
