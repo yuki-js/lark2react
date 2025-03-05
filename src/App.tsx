@@ -1,14 +1,11 @@
 import { css } from "@emotion/react";
-import InputTextArea from "./components/InputTextArea";
 import InputDocumentId from "./components/InputDocumentId";
-import InputUserAccessToken from "./components/InputUserAccessToken";
 import { Converter } from "./components/Converter";
 import {
   getDocumentBlocks,
   getTenantAccessToken,
-  getFile,
 } from "./utils/apiHelper";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DocumentIdProvider,
   useDocumentId,

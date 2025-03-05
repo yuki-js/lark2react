@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { useDocumentId } from "../contexts/documentIdContext";
 import { extractDocId } from "../utils/utils";
 
-function InputDocumentId() {
-  const { documentId, setDocumentId } = useDocumentId();
+import { FC } from "react";
+
+interface InputDocumentIdProps {
+  setDocumentId: (id: string) => void;
+}
+
+const InputDocumentId: FC<InputDocumentIdProps> = ({ setDocumentId }) => {
   const { url, setUrl } = useState("");
 
-  const handleChange = (event: { target: { value: any } }) => {
+  const handleChange = (event: { target: { value: any } }) => {    
     setDocumentId(extractDocId(event.target.value));
   };
 
@@ -27,3 +31,4 @@ function InputDocumentId() {
 }
 
 export default InputDocumentId;
+
