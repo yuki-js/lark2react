@@ -1,8 +1,5 @@
 import { css } from "@emotion/react";
-import { id2Component, displayChildComponent } from "../../utils/utils";
-import { FONT_COLOR } from "../../styles/fontColor";
-import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
-import { generateTextStyle } from "../../utils/utils";
+import { displayChildComponent } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 

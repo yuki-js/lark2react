@@ -1,9 +1,8 @@
 import { css } from "@emotion/react";
-import { id2Component, displayChildComponent } from "../../utils/utils";
+import { displayChildComponent } from "../../utils/utils";
 import { CALLOUT_BACKGROUND_COLOR } from "../../styles/calloutBackgroundColor";
 import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
 import { EMOJI } from "../../constants/emoji";
-import { generateTextStyle } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 

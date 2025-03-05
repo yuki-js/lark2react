@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { id2Component, displayChildComponent } from "../../utils/utils";
+import { displayChildComponent } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 

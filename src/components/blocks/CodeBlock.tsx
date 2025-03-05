@@ -1,11 +1,6 @@
 import { css } from "@emotion/react";
-import { id2Component, displayChildComponent } from "../../utils/utils";
-import { FONT_COLOR } from "../../styles/fontColor";
-import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
 import { CODE_LANGUAGE } from "../../constants/codeLanguage";
 import { generateTextStyle } from "../../utils/utils";
-import { useContext } from "react";
-import { HashContext } from "../../contexts/DataContext";
 
 interface TextStyle {
   text_color?: number;
@@ -18,7 +13,6 @@ interface TextStyle {
 }
 
 export function CodeBlock({ blockData }) {
-  const hash = useContext(HashContext);
   const elements = blockData.code.elements;
   const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
 

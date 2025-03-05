@@ -1,7 +1,5 @@
 import { css } from "@emotion/react";
-import { id2Component, displayChildComponent } from "../../utils/utils";
-import { FONT_COLOR } from "../../styles/fontColor";
-import { FONT_BACKGROUND_COLOR } from "../../styles/fontBackgroundColor";
+import { displayChildComponent } from "../../utils/utils";
 import { generateTextStyle } from "../../utils/utils";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
@@ -20,9 +18,6 @@ interface TextStyle {
 //FIXME: 点の位置を左側にずらしたい
 export function UnorderedList({ blockDataArr }) {
   const hash = useContext(HashContext);
-  const ulStyle = css({
-    paddingLeft: "0px",
-  });
 
   const staticStyle = css({
     display: "inline-block",
