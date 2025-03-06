@@ -19,7 +19,11 @@ export async function getDocumentBlocks(
     });
     return response.data;
   } catch (error) {
-    console.error(JSON.stringify(error.response.data, null, 4));
+    if (axios.isAxiosError(error)) {
+        console.error(JSON.stringify(error.response?.data, null, 4));
+    } else {
+        console.error(error);
+    }
     throw error;
   }
 }
@@ -64,6 +68,11 @@ export async function fetchNewToken() {
     console.log("ローカルストレージに保存しました");
     return newToken;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+        console.error(JSON.stringify(error.response?.data, null, 4));
+    } else {
+        console.error(error);
+    }
     throw error;
   }
 }
@@ -86,7 +95,11 @@ export async function getFile(fileToken: string, accessToken: string) {
 
     return blob;
   } catch (error) {
-    console.error(JSON.stringify(error.response?.data, null, 4));
+    if (axios.isAxiosError(error)) {
+        console.error(JSON.stringify(error.response?.data, null, 4));
+    } else {
+        console.error(error);
+    }
     throw error;
   }
 }
