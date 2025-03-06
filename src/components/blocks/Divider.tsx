@@ -1,3 +1,7 @@
-export function Divider(props: {}) {
-  return <hr color="lightgray" />;
+interface DividerProps {
+  color?: string;
+}
+
+export function Divider({ color = "lightgray" }: DividerProps) {
+  return <hr color={color} />;
 }
