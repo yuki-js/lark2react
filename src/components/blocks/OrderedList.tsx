@@ -5,21 +5,34 @@ import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 import { containsUrl } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run?: {
+    text_element_style: any;
+    content: string;
+  };
+  [key: string]: any;
+}
+
+interface BlockData {
+  ordered: {
+    elements: Element[];
+    style: {
+      sequence: number;
+    };
+  };
+  [key: string]: any;
+}
+
+// Define the props for the OrderedList component
+interface OrderedListProps {
+  blockDataArr: BlockData[];
 }
 
 //FIXME: 番号の位置を左側にずらしたい
-export function OrderedList({ blockDataArr }) {
+export function OrderedList({ blockDataArr }: OrderedListProps) {
   const hash = useContext(HashContext);
   const startIndex = blockDataArr[0].ordered.style.sequence;
-
 
   const staticStyle = css({
     display: "inline-block",
@@ -73,3 +86,4 @@ export function OrderedList({ blockDataArr }) {
     </div>
   );
 }
+

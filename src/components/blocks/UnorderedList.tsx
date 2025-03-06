@@ -5,18 +5,29 @@ import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 import { containsUrl } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run?: {
+    text_element_style: any;
+    content: string;
+  };
+  [key: string]: any;
+}
+
+interface BlockData {
+  bullet: {
+    elements: Element[];
+  };
+  [key: string]: any;
+}
+
+// Define the props for the UnorderedList component
+interface UnorderedListProps {
+  blockDataArr: BlockData[];
 }
 
 //FIXME: 点の位置を左側にずらしたい
-export function UnorderedList({ blockDataArr }) {
+export function UnorderedList({ blockDataArr }: UnorderedListProps) {
   const hash = useContext(HashContext);
 
   const staticStyle = css({
@@ -71,3 +82,4 @@ export function UnorderedList({ blockDataArr }) {
     </div>
   );
 }
+

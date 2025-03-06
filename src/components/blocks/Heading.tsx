@@ -1,18 +1,32 @@
 import { css } from "@emotion/react";
 import { generateTextStyle } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run: {
+    text_element_style: any;
+    content: string;
+    link?: {
+      url: string;
+    };
+  };
+  [key: string]: any;
 }
 
-function Heading({ blockData, level: level }) {
-  const elements: SomeType[] = blockData[`heading${level}`].elements;
+interface BlockData {
+  [key: string]: {
+    elements: Element[];
+  };
+}
+
+// Define the props for the Heading component
+interface HeadingProps {
+  blockData: BlockData;
+  level: number;
+}
+
+function Heading({ blockData, level }: HeadingProps) {
+  const elements: Element[] = blockData[`heading${level}`].elements;
 
   const staticStyle = css({
     display: "inline-block",
@@ -50,12 +64,13 @@ function Heading({ blockData, level: level }) {
   );
 }
 
-export const Heading1 = (props) => <Heading {...props} level={1} />;
-export const Heading2 = (props) => <Heading {...props} level={2} />;
-export const Heading3 = (props) => <Heading {...props} level={3} />;
-export const Heading4 = (props) => <Heading {...props} level={4} />;
-export const Heading5 = (props) => <Heading {...props} level={5} />;
-export const Heading6 = (props) => <Heading {...props} level={6} />;
-export const Heading7 = (props) => <Heading {...props} level={7} />;
-export const Heading8 = (props) => <Heading {...props} level={8} />;
-export const Heading9 = (props) => <Heading {...props} level={9} />;
+export const Heading1 = (props: HeadingProps) => <Heading {...props} level={1} />;
+export const Heading2 = (props: HeadingProps) => <Heading {...props} level={2} />;
+export const Heading3 = (props: HeadingProps) => <Heading {...props} level={3} />;
+export const Heading4 = (props: HeadingProps) => <Heading {...props} level={4} />;
+export const Heading5 = (props: HeadingProps) => <Heading {...props} level={5} />;
+export const Heading6 = (props: HeadingProps) => <Heading {...props} level={6} />;
+export const Heading7 = (props: HeadingProps) => <Heading {...props} level={7} />;
+export const Heading8 = (props: HeadingProps) => <Heading {...props} level={8} />;
+export const Heading9 = (props: HeadingProps) => <Heading {...props} level={9} />;
+

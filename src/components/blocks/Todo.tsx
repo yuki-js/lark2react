@@ -2,17 +2,34 @@ import { css } from "@emotion/react";
 import { generateTextStyle } from "../../utils/utils";
 import { containsUrl } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run: {
+    text_element_style: any;
+    content: string;
+    link?: {
+      url: string;
+    };
+  };
+  [key: string]: any;
 }
 
-export function Todo({ blockData }) {
+interface BlockData {
+  todo: {
+    style: {
+      done: boolean;
+    };
+    elements: Element[];
+  };
+  [key: string]: any;
+}
+
+// Define the props for the Todo component
+interface TodoProps {
+  blockData: BlockData;
+}
+
+export function Todo({ blockData }: TodoProps) {
   const isDone: boolean = blockData.todo.style.done;
   const elements = blockData.todo.elements;
 
@@ -82,3 +99,4 @@ export function Todo({ blockData }) {
     </label>
   );
 }
+

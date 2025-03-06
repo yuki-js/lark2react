@@ -6,7 +6,19 @@ import { EMOJI } from "../../constants/emoji";
 import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 
-export function Callout({ blockData }) {
+interface CalloutStyle {
+  emoji_id: keyof typeof EMOJI;
+  background_color: keyof typeof CALLOUT_BACKGROUND_COLOR;
+  border_color: keyof typeof CALLOUT_BORDER_COLOR;
+}
+
+interface CalloutProps {
+  blockData: {
+    callout: CalloutStyle;
+  };
+}
+
+export function Callout({ blockData }: CalloutProps) {
   const hash = useContext(HashContext);
   const style = blockData.callout;
 

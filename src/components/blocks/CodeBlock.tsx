@@ -2,17 +2,31 @@ import { css } from "@emotion/react";
 import { CODE_LANGUAGE } from "../../constants/codeLanguage";
 import { generateTextStyle } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run: {
+    text_element_style: any;
+    content: string;
+  };
+  [key: string]: any;
 }
 
-export function CodeBlock({ blockData }) {
+interface BlockData {
+  code: {
+    elements: Element[];
+    style: {
+      language: string;
+    };
+  };
+  [key: string]: any;
+}
+
+// Define the props for the CodeBlock component
+interface CodeBlockProps {
+  blockData: BlockData;
+}
+
+export function CodeBlock({ blockData }: CodeBlockProps) {
   const elements = blockData.code.elements;
   const codeLanguage = CODE_LANGUAGE[blockData.code.style.language];
 

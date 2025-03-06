@@ -2,17 +2,32 @@ import { css } from "@emotion/react";
 import { generateTextStyle } from "../../utils/utils";
 import { containsUrl } from "../../utils/utils";
 
-interface TextStyle {
-  text_color?: number;
-  background_color?: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
+// Define the type for the elements array
+interface Element {
+  text_run: {
+    text_element_style: any;
+    content: string;
+    link?: {
+      url: string;
+    };
+    comment_ids?: string[];
+  };
+  [key: string]: any;
 }
 
-export function Text({ blockData }) {
+interface BlockData {
+  text: {
+    elements: Element[];
+  };
+  [key: string]: any;
+}
+
+// Define the props for the Text component
+interface TextProps {
+  blockData: BlockData;
+}
+
+export function Text({ blockData }: TextProps) {
   const elements = blockData.text.elements;
 
   const staticStyle = css({
@@ -41,7 +56,7 @@ export function Text({ blockData }) {
           //comment処理
           let commentIds = [];
           let isComment = false;
-          if(style.comment_ids){
+          if (style.comment_ids) {
             commentIds = style.comment_ids;
             isComment = true;
           }
@@ -62,3 +77,4 @@ export function Text({ blockData }) {
     </div>
   );
 }
+
