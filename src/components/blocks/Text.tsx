@@ -54,12 +54,12 @@ export function Text({ blockData }: TextProps) {
           }
 
           //comment処理
-          let commentIds = [];
-          let isComment = false;
-          if (style.comment_ids) {
-            commentIds = style.comment_ids;
-            isComment = true;
-          }
+          // let commentIds = [];
+          // let isComment = false;
+          // if (style.comment_ids) {
+          //   commentIds = style.comment_ids;
+          //   isComment = true;
+          // }
 
           return (
             <div key={index} css={[staticStyle, dynamicStyle]}>

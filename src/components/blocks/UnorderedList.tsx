@@ -74,7 +74,7 @@ export function UnorderedList({ blockDataArr }: UnorderedListProps) {
                   }
                 })}
               </li>
-              <div>{displayChildComponent(blockData, hash)}</div>
+              {hash && <div>{displayChildComponent(blockData, hash)}</div>}
             </div>
           );
         })}

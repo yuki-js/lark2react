@@ -15,7 +15,7 @@ interface BlockData {
   code: {
     elements: Element[];
     style: {
-      language: string;
+      language: number;
     };
   };
   [key: string]: any;

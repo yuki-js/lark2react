@@ -1,4 +1,4 @@
-export const CALLOUT_BACKGROUND_COLOR = {
+export const CALLOUT_BACKGROUND_COLOR : Record<number, string> = {
   1: "#FF6347", // Tomato as a valid color code since 'lightred' is not standard
   2: "#FFA07A", // Light salmon as a valid color code since 'lightorange' is not standard
   3: "lightyellow", // This is a valid CSS color name

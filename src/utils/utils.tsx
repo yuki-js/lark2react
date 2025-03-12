@@ -5,12 +5,7 @@ import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
 
 
-
-//グループ化するblockDataのblockType
-const TARGET_BLOCK_TYPES = new Set([12, 13]);
-
-//block_idと、block_idに対応したデータのハッシュ表
-interface BlockItem {
+export interface BlockItem {
   block_id: string;
   block_type: number;
 }
@@ -35,6 +30,9 @@ export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
 
   return hash;
 }
+
+//グループ化するblockDataのblockType
+const TARGET_BLOCK_TYPES = new Set([12, 13]);
 
 
 //block_idから対応したfunction componentを取得
@@ -78,7 +76,22 @@ export function id2Component(blockIdArr: string[], hash: Record<string, BlockIte
 }
 
 //親が持つ子要素をコンポーネントとして表示する
-export function displayChildComponent(blockData: { children: string[] }, hash: Record<string, BlockItem>) {
+interface Element {
+  text_run?: {
+    text_element_style: any;
+    content: string;
+  };
+  [key: string]: any;
+}
+
+interface BlockData {
+  bullet: {
+    elements: Element[];
+  };
+  [key: string]: any;
+}
+
+export function displayChildComponent(blockData: BlockData, hash: Record<string, BlockItem>) {
   if (blockData.children) {
     const blockDataArr = groupingblockData(blockData, hash);
 
@@ -97,7 +110,10 @@ export function displayChildComponent(blockData: { children: string[] }, hash: R
 // 1Data は blockTypeが1のdataBlock
 // blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]]
 // 番号付きリストを連番で表示するのに今のところ使用
-function groupingblockData(blockData: { children: string[] }, hash: Record<string, BlockItem>) {
+function groupingblockData(blockData: BlockData, hash: Record<string, BlockItem>) {
+  if (!blockData.children) {
+    return [];
+  }
   const blockDataArr: string[][] = [];
   let currentGroup: string[] = [];
 
