@@ -38,7 +38,7 @@ export function Page({ blockData }: PageProps) {
   return (
     <div>
       <div css={cssStyle}>{title}</div>
-      {displayChildComponent(blockData, hash)}
+      {hash && displayChildComponent(blockData, hash)}
     </div>
   );
 }

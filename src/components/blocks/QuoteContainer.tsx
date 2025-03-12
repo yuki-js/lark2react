@@ -4,7 +4,18 @@ import { useContext } from "react";
 import { HashContext } from "../../contexts/DataContext";
 
 // Define the type for the blockData parameter
+interface Element {
+  text_run?: {
+    text_element_style: any;
+    content: string;
+  };
+  [key: string]: any;
+}
+
 interface BlockData {
+  bullet: {
+    elements: Element[];
+  };
   [key: string]: any;
 }
 

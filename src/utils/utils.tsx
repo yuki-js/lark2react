@@ -76,18 +76,7 @@ export function id2Component(blockIdArr: string[], hash: Record<string, BlockIte
 }
 
 //親が持つ子要素をコンポーネントとして表示する
-interface Element {
-  text_run?: {
-    text_element_style: any;
-    content: string;
-  };
-  [key: string]: any;
-}
-
 interface BlockData {
-  bullet: {
-    elements: Element[];
-  };
   [key: string]: any;
 }
 

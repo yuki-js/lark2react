@@ -38,7 +38,7 @@ export function Callout({ blockData }: CalloutProps) {
   return (
     <div css={boxStyle}>
       <div style={{ fontSize: "24px" }}>{emoji}</div>
-      <div>{displayChildComponent(blockData, hash)}</div>
+      {hash && <div>{displayChildComponent(blockData, hash)}</div>}
     </div>
   );
 }

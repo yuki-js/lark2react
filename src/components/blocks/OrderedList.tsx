@@ -78,7 +78,7 @@ export function OrderedList({ blockDataArr }: OrderedListProps) {
                   }
                 })}
               </li>
-              <div>{displayChildComponent(blockData, hash)}</div>
+              {hash && <div>{displayChildComponent(blockData, hash)}</div>}
             </div>
           );
         })}
