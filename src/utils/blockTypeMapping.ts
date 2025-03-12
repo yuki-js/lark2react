@@ -20,7 +20,12 @@ import { Divider } from "../components/blocks/Divider";
 import { Callout } from "../components/blocks/Callout";
 import { Image } from "../components/blocks/Image";
 
-export const BLOCK_TYPE_TO_COMPONENT = {
+
+type BlockTypeToComponent = {
+  [key: number]: React.ComponentType<any>;
+};
+
+export const BLOCK_TYPE_TO_COMPONENT : BlockTypeToComponent = {
   1: Page,
   2: Text,
   3: Heading1,

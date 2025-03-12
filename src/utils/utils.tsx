@@ -4,9 +4,6 @@ import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
 
-type BlockTypeToComponent = {
-  [key: number]: React.ComponentType<any>;
-};
 
 
 //グループ化するblockDataのblockType
@@ -19,8 +16,8 @@ interface BlockItem {
 }
 
 interface TextStyle {
-  text_color: string;
-  background_color: string;
+  text_color: number;
+  background_color: number;
   bold: boolean;
   inline_code: boolean;
   italic: boolean;
