@@ -3,12 +3,34 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
+
+type BlockTypeToComponent = {
+  [key: number]: React.ComponentType<any>;
+};
+
+
 //グループ化するblockDataのblockType
 const TARGET_BLOCK_TYPES = new Set([12, 13]);
 
 //block_idと、block_idに対応したデータのハッシュ表
-export function genHashBlockId(items): Record<string, any> {
-  const hash: Record<string, any> = {};
+interface BlockItem {
+  block_id: string;
+  block_type: number;
+}
+
+interface TextStyle {
+  text_color: string;
+  background_color: string;
+  bold: boolean;
+  inline_code: boolean;
+  italic: boolean;
+  strikethrough: boolean;
+  underline: boolean;
+}
+
+
+export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
+  const hash: Record<string, BlockItem> = {};
 
   items.forEach((block) => {
     hash[block.block_id] = block;
@@ -17,25 +39,10 @@ export function genHashBlockId(items): Record<string, any> {
   return hash;
 }
 
-//今のところこれ必要ないかも
-function buildTree(items) {
-  const hashTable = genHashBlockId(items);
-  const Tree: Record<string, string[]> = {};
-
-  items.forEach((item) => {
-    if (item.children) {
-      Tree[item.block_id] = item.children;
-    } else {
-      Tree[item.block_id] = [];
-    }
-  });
-
-  return Tree;
-}
 
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
-export function id2Component(blockIdArr, hash) {
+export function id2Component(blockIdArr: string[], hash: Record<string, BlockItem>) {
   //blockIdArrの要素のblockTypeを調べる
   const blockType = hash[blockIdArr[0]].block_type;
 
@@ -74,7 +81,7 @@ export function id2Component(blockIdArr, hash) {
 }
 
 //親が持つ子要素をコンポーネントとして表示する
-export function displayChildComponent(blockData, hash) {
+export function displayChildComponent(blockData: { children: string[] }, hash: Record<string, BlockItem>) {
   if (blockData.children) {
     const blockDataArr = groupingblockData(blockData, hash);
 
@@ -93,7 +100,7 @@ export function displayChildComponent(blockData, hash) {
 // 1Data は blockTypeが1のdataBlock
 // blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]]
 // 番号付きリストを連番で表示するのに今のところ使用
-function groupingblockData(blockData, hash) {
+function groupingblockData(blockData: { children: string[] }, hash: Record<string, BlockItem>) {
   const blockDataArr: string[][] = [];
   let currentGroup: string[] = [];
 
