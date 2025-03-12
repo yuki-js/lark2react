@@ -31,5 +31,7 @@ export function QuoteContainer({ blockData }: QuoteContainerProps) {
     paddingLeft: "16px",
   });
 
-  return <div css={cssStyle}>{displayChildComponent(blockData, hash || {})}</div>;
+  return (
+    <div css={cssStyle}>{displayChildComponent(blockData, hash || {})}</div>
+  );
 }

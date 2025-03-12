@@ -86,4 +86,3 @@ export function OrderedList({ blockDataArr }: OrderedListProps) {
     </div>
   );
 }
-

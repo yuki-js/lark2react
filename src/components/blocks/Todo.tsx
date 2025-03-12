@@ -99,4 +99,3 @@ export function Todo({ blockData }: TodoProps) {
     </label>
   );
 }
-

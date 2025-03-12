@@ -3,8 +3,6 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
-
-
 export interface BlockItem {
   block_id: string;
   block_type: number;
@@ -20,7 +18,6 @@ interface TextStyle {
   underline: boolean;
 }
 
-
 export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
   const hash: Record<string, BlockItem> = {};
 
@@ -34,10 +31,12 @@ export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
 //グループ化するblockDataのblockType
 const TARGET_BLOCK_TYPES = new Set([12, 13]);
 
-
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
-export function id2Component(blockIdArr: string[], hash: Record<string, BlockItem>) {
+export function id2Component(
+  blockIdArr: string[],
+  hash: Record<string, BlockItem>,
+) {
   //blockIdArrの要素のblockTypeを調べる
   const blockType = hash[blockIdArr[0]].block_type;
 
@@ -53,22 +52,27 @@ export function id2Component(blockIdArr: string[], hash: Record<string, BlockIte
 
     return <Component blockDataArr={arr} hash={hash} />;
   } else {
-
     const blockData = hash[blockIdArr[0]];
     const blockType = blockData.block_type;
     const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
 
     //未実装のblock(コンポーネント)は、表示不可能と表示
     if (!Component) {
-      return <div style={{
-        fontSize: '18px',
-        padding: '10px',
-        display: 'inline-block',
-        borderRadius: '5px',
-        backgroundColor: '#f8d7da',
-        color: '#721c24',
-        margin: '10px 0'
-      }}>表示できません</div>;
+      return (
+        <div
+          style={{
+            fontSize: "18px",
+            padding: "10px",
+            display: "inline-block",
+            borderRadius: "5px",
+            backgroundColor: "#f8d7da",
+            color: "#721c24",
+            margin: "10px 0",
+          }}
+        >
+          表示できません
+        </div>
+      );
     }
 
     return <Component blockData={blockData} hash={hash} />;
@@ -80,7 +84,10 @@ interface BlockData {
   [key: string]: any;
 }
 
-export function displayChildComponent(blockData: BlockData, hash: Record<string, BlockItem>) {
+export function displayChildComponent(
+  blockData: BlockData,
+  hash: Record<string, BlockItem>,
+) {
   if (blockData.children) {
     const blockDataArr = groupingblockData(blockData, hash);
 
@@ -99,7 +106,10 @@ export function displayChildComponent(blockData: BlockData, hash: Record<string,
 // 1Data は blockTypeが1のdataBlock
 // blockDataArr[[13Dataのid, 13Dataのid], [1Dataのid], [5Dataのid], [13Dataのid]]
 // 番号付きリストを連番で表示するのに今のところ使用
-function groupingblockData(blockData: BlockData, hash: Record<string, BlockItem>) {
+function groupingblockData(
+  blockData: BlockData,
+  hash: Record<string, BlockItem>,
+) {
   if (!blockData.children) {
     return [];
   }

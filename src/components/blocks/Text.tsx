@@ -77,4 +77,3 @@ export function Text({ blockData }: TextProps) {
     </div>
   );
 }
-

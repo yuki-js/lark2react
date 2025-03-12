@@ -1,16 +1,12 @@
 import { css } from "@emotion/react";
 import InputDocumentId from "./components/InputDocumentId";
 import { Converter } from "./components/Converter";
-import {
-  getDocumentBlocks,
-  getTenantAccessToken,
-} from "./utils/apiHelper";
+import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
 import { useEffect, useState } from "react";
 import {
   DocumentIdProvider,
   useDocumentId,
 } from "./contexts/documentIdContext";
-
 
 const containerStyle = css({
   display: "flex",
@@ -30,7 +26,6 @@ const sidebarStyle = css({
   borderLeft: "1px solid #ddd",
   overflowY: "auto",
 });
-
 
 function App() {
   return (

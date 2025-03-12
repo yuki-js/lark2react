@@ -1,4 +1,4 @@
-export const CALLOUT_BORDER_COLOR : Record<number, string> = {
+export const CALLOUT_BORDER_COLOR: Record<number, string> = {
   1: "red",
   2: "orange",
   3: "yellow",

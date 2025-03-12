@@ -82,4 +82,3 @@ export function UnorderedList({ blockDataArr }: UnorderedListProps) {
     </div>
   );
 }
-

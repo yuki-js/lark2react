@@ -1,4 +1,4 @@
-export const FONT_BACKGROUND_COLOR : Record<number, string> = {
+export const FONT_BACKGROUND_COLOR: Record<number, string> = {
   1: "lightpink", // This is a valid CSS color name
   2: "#FFA07A", // Light salmon as a valid color code since 'lightorange' is not standard
   3: "lightyellow", // This is a valid CSS color name

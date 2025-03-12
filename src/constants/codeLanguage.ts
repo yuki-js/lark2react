@@ -1,4 +1,4 @@
-export const CODE_LANGUAGE : Record<number, string> = {
+export const CODE_LANGUAGE: Record<number, string> = {
   1: "PlainText",
   2: "ABAP",
   3: "Ada",

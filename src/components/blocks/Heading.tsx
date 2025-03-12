@@ -44,7 +44,8 @@ function Heading({ blockData, level }: HeadingProps) {
           const dynamicStyle = generateTextStyle(style);
 
           //h7,h8,h9タグはhtmlでは存在しないので
-          const HeadingTag = `h${level > 6 ? 6 : level}`;
+          const HeadingTag =
+            `h${level > 6 ? 6 : level}` as keyof JSX.IntrinsicElements;
 
           //linkスタイルが存在する場合、リンクを張る
           return (
@@ -64,13 +65,30 @@ function Heading({ blockData, level }: HeadingProps) {
   );
 }
 
-export const Heading1 = (props: HeadingProps) => <Heading {...props} level={1} />;
-export const Heading2 = (props: HeadingProps) => <Heading {...props} level={2} />;
-export const Heading3 = (props: HeadingProps) => <Heading {...props} level={3} />;
-export const Heading4 = (props: HeadingProps) => <Heading {...props} level={4} />;
-export const Heading5 = (props: HeadingProps) => <Heading {...props} level={5} />;
-export const Heading6 = (props: HeadingProps) => <Heading {...props} level={6} />;
-export const Heading7 = (props: HeadingProps) => <Heading {...props} level={7} />;
-export const Heading8 = (props: HeadingProps) => <Heading {...props} level={8} />;
-export const Heading9 = (props: HeadingProps) => <Heading {...props} level={9} />;
-
+export const Heading1 = (props: HeadingProps) => (
+  <Heading {...props} level={1} />
+);
+export const Heading2 = (props: HeadingProps) => (
+  <Heading {...props} level={2} />
+);
+export const Heading3 = (props: HeadingProps) => (
+  <Heading {...props} level={3} />
+);
+export const Heading4 = (props: HeadingProps) => (
+  <Heading {...props} level={4} />
+);
+export const Heading5 = (props: HeadingProps) => (
+  <Heading {...props} level={5} />
+);
+export const Heading6 = (props: HeadingProps) => (
+  <Heading {...props} level={6} />
+);
+export const Heading7 = (props: HeadingProps) => (
+  <Heading {...props} level={7} />
+);
+export const Heading8 = (props: HeadingProps) => (
+  <Heading {...props} level={8} />
+);
+export const Heading9 = (props: HeadingProps) => (
+  <Heading {...props} level={9} />
+);

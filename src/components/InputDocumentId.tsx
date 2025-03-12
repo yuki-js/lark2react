@@ -30,7 +30,6 @@ const InputDocumentId: FC<InputDocumentIdProps> = ({ setDocumentId }) => {
       />
     </div>
   );
-}
+};
 
 export default InputDocumentId;
-
