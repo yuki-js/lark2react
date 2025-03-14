@@ -7,6 +7,7 @@ import {
   DocumentIdProvider,
   useDocumentId,
 } from "./contexts/documentIdContext";
+import { useCommentIds, CommentIdsProvider } from "./contexts/commentIdsContext";
 
 const containerStyle = css({
   display: "flex",
@@ -30,13 +31,17 @@ const sidebarStyle = css({
 function App() {
   return (
     <DocumentIdProvider>
-      <AppContent />
+      <CommentIdsProvider>
+        <AppContent />
+      </CommentIdsProvider>
     </DocumentIdProvider>
   );
 }
 
 function AppContent() {
   const { documentId, setDocumentId } = useDocumentId();
+  const { commentIdsList, addCommentIds } = useCommentIds();
+
 
   const [items, setItems] = useState<any[]>([]);
 
