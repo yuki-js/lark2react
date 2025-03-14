@@ -8,6 +8,7 @@ import {
   useDocumentId,
 } from "./contexts/documentIdContext";
 import { useCommentIds, CommentIdsProvider } from "./contexts/commentIdsContext";
+import { CommentList } from "./components/blocks/Comment";
 
 const containerStyle = css({
   display: "flex",
@@ -40,7 +41,7 @@ function App() {
 
 function AppContent() {
   const { documentId, setDocumentId } = useDocumentId();
-  const { commentIdsList, addCommentIds } = useCommentIds();
+  const { commentIds } = useCommentIds();
 
 
   const [items, setItems] = useState<any[]>([]);
@@ -63,6 +64,7 @@ function AppContent() {
     }
   }, [documentId]); // `documentId` が変更されたときのみ実行
 
+
   return (
     <div>
       <h1>Lark to React</h1>
@@ -72,7 +74,7 @@ function AppContent() {
           {items.length > 0 && <Converter items={items} />}
         </div>
         <div css={sidebarStyle}>
-          <div>comment area</div>
+          <CommentList commentIdList={commentIds} />
         </div>
       </div>
     </div>

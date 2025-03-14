@@ -8,6 +8,11 @@ export function Comment({ commentId }: CommentProps) {
 
 //idの全体のリストをusestateかなんかで管理して、そのリストを受け渡す
 export function CommentList({ commentIdList }: { commentIdList: string[] }) {
+  
+    
+    if (!commentIdList) {
+        return <div>No comments available</div>;
+    }
     return (
         <div>
             {commentIdList.map((commentId, index) => (

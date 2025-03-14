@@ -56,7 +56,6 @@ export function Text({ blockData }: TextProps) {
 
     if (hasChanged && commentIds.length > 0) {
       addCommentIds(commentIds);
-      console.log("Comment IDs added:", commentIds);
       prevCommentIdsRef.current = commentIds;
     }
   }, [commentIds, addCommentIds]);
