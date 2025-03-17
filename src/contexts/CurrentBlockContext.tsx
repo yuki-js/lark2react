@@ -3,7 +3,6 @@ import { Block, useBlockStore } from "./BlockStoreContext";
 
 interface CurrentBlockContext {
   block: Block;
-  level: number;
   parentBlock?: Block;
 }
 
@@ -27,7 +26,6 @@ interface CurrentBlockProviderProps {
 
 export const CurrentBlockProvider: React.FC<CurrentBlockProviderProps> = ({
   blockId,
-  level = 0,
   children,
 }) => {
   const { blocks } = useBlockStore();
@@ -40,7 +38,7 @@ export const CurrentBlockProvider: React.FC<CurrentBlockProviderProps> = ({
   const parentBlock = block.parent_id ? blocks[block.parent_id] : undefined;
 
   return (
-    <CurrentBlockContext.Provider value={{ block, level, parentBlock }}>
+    <CurrentBlockContext.Provider value={{ block, parentBlock }}>
       {children}
     </CurrentBlockContext.Provider>
   );

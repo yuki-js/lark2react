@@ -1,14 +1,15 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getTenantAccessToken, getFile } from "../../utils/apiHelper";
 
-const imageContainerStyle = css({
+const imageWrapperStyle = css({
   position: "relative",
   marginBottom: "16px",
   maxWidth: "100%",
 });
 
-const imageWrapperStyle = css({
+const containerStyle = css({
   position: "relative",
   overflow: "hidden",
   borderRadius: "4px",
@@ -48,51 +49,68 @@ export const Image: React.FC = () => {
   const { block } = useCurrentBlock();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState("");
 
-  if (!block.image?.token || !block.image.width || !block.image.height) {
+  useEffect(() => {
+    if (!block.image?.token) {
+      return;
+    }
+    async function fetchData() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const tenantAccessToken = await getTenantAccessToken();
+        const blob = await getFile(block.image?.token ?? "", tenantAccessToken);
+        const url = URL.createObjectURL(blob);
+        setImageUrl(url);
+      } catch (err) {
+        console.error("API Error:", err);
+        setError("Failed to load image");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [block.image?.token]);
+
+  if (!block.image) {
     return null;
   }
 
   const { width, height, token } = block.image;
-  const aspectRatio = height / width;
-
-  // In a real implementation, you would construct the image URL using the token
-  // This is a placeholder implementation
-  const imageUrl = `https://your-api-endpoint/images/${token}`;
-
-  const containerStyle = css({
-    paddingBottom: `${aspectRatio * 100}%`,
-  });
-
-  const handleLoad = () => {
-    setIsLoading(false);
-    setError(null);
-  };
-
-  const handleError = () => {
-    setIsLoading(false);
-    setError("Failed to load image");
-  };
+  if (!width || !height || !token) {
+    return null;
+  }
 
   return (
-    <div css={imageContainerStyle}>
-      <div css={imageWrapperStyle}>
-        <div css={containerStyle}>
-          {isLoading && <div css={placeholderStyle}>Loading...</div>}
-          {error ? (
-            <div css={errorStyle}>{error}</div>
-          ) : (
-            <img
-              src={imageUrl}
-              alt=""
-              css={[imageStyle, { opacity: isLoading ? 0 : 1 }]}
-              onLoad={handleLoad}
-              onError={handleError}
-              width={width}
-              height={height}
-            />
-          )}
-        </div>
+    <div css={imageWrapperStyle}>
+      <div css={containerStyle}>
+        {isLoading && <div css={placeholderStyle}>Loading...</div>}
+        {error ? (
+          <div css={errorStyle}>{error}</div>
+        ) : (
+          <img
+            src={imageUrl}
+            alt=""
+            css={[imageStyle, { opacity: isLoading ? 0 : 1 }]}
+            onLoad={() => {
+              setIsLoading(false);
+              setError(null);
+            }}
+            onError={() => {
+              setIsLoading(false);
+              setError("Cannot show image");
+            }}
+            width={width}
+            height={height}
+          />
+        )}
       </div>
     </div>
   );

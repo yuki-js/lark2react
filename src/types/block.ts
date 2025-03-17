@@ -20,8 +20,20 @@ export enum BlockType {
   QuoteContainer = 34,
 }
 
+export interface TextStyle {
+  align?: number; // enum Align
+  done?: boolean;
+  folded?: boolean;
+  language?: string; // enum CodeLanguage
+  wrap?: boolean;
+}
 export interface TextRun {
   content: string;
+  text_element_style?: TextElementStyle;
+  comment_ids?: string[];
+}
+
+export interface TextElementStyle {
   text_color?: number;
   background_color?: number;
   bold?: boolean;
@@ -35,6 +47,16 @@ export interface Element {
   text_run: TextRun;
 }
 
+export interface TextElement extends Element {
+  mention_user?: unknown; // object(MentionUser)
+  mention_doc?: unknown; // object(MentionDoc)
+  reminder?: unknown; // object(Reminder)
+  file?: unknown; // object(InlineFile)
+  inline_block?: unknown; // object(InlineBlock)
+  equation?: unknown; // object(Equation)
+  undefined_element?: unknown; // object(UndefinedElement)
+}
+
 export interface Block {
   block_id: string;
   block_type: BlockType;
@@ -42,7 +64,8 @@ export interface Block {
     elements: Element[];
   };
   text?: {
-    elements: Element[];
+    elements: TextElement[];
+    style?: TextStyle;
   };
   heading?: {
     elements: Element[];

@@ -3,7 +3,7 @@ import { ErrorBoundary } from "../ErrorBoundary";
 import { CurrentBlockProvider } from "../../contexts/CurrentBlockContext";
 import { useBlockStore } from "../../contexts/BlockStoreContext";
 import { Page } from "./Page";
-import { Text } from "./Text";
+import { TextBlock } from "./Text";
 import {
   Heading1,
   Heading2,
@@ -27,7 +27,7 @@ import { css } from "@emotion/react";
 
 const BLOCK_COMPONENTS: Record<number, React.FC> = {
   1: Page, // Page
-  2: Text, // Text
+  2: TextBlock, // Text
   3: Heading1, // Heading1
   4: Heading2, // Heading2
   5: Heading3, // Heading3
@@ -71,13 +71,9 @@ const UnsupportedBlock: React.FC<UnsupportedBlockProps> = ({ type, error }) => (
 
 interface BlockComponentProps {
   blockId: string;
-  level?: number;
 }
 
-const BlockComponentBase: React.FC<BlockComponentProps> = ({
-  blockId,
-  level = 0,
-}) => {
+const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
   const { blocks } = useBlockStore();
   const block = blocks[blockId];
 
@@ -90,16 +86,21 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({
   if (!Component) {
     return <UnsupportedBlock type={block.block_type} />;
   }
-
+  const showDebugInfo = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log("Block ID:", blockId);
+    console.log("Block Data:", block);
+    console.log("Parent Block Data:", blocks[block.parent_id]);
+  };
   return (
-    <CurrentBlockProvider blockId={blockId} level={level}>
-      <ErrorBoundary>
-        <Component />
-        {block.children?.map((childId) => (
-          <BlockComponent key={childId} blockId={childId} level={level + 1} />
-        ))}
-      </ErrorBoundary>
-    </CurrentBlockProvider>
+    <div onClick={showDebugInfo}>
+      <CurrentBlockProvider blockId={blockId}>
+        <ErrorBoundary>
+          <Component />
+        </ErrorBoundary>
+      </CurrentBlockProvider>
+    </div>
   );
 };
 

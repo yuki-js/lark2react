@@ -22,6 +22,7 @@ interface BlockStyle {
   align?: number;
   folded?: boolean;
   done?: boolean;
+  sequence?: number | "auto";
 }
 
 interface BlockContent {
@@ -52,6 +53,7 @@ export interface Block {
   heading8?: BlockContent;
   heading9?: BlockContent;
   bullet?: BlockContent;
+  ordered?: BlockContent;
   code?: BlockContent & {
     language: string;
   };

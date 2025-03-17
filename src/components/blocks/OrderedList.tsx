@@ -1,95 +1,63 @@
-import { css } from "@emotion/react";
+import { useBlockStore } from "../../contexts/BlockStoreContext";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { Element } from "../../contexts/BlockStoreContext";
+import { BlockComponent } from "./BlockComponent";
+import { Text } from "./Text";
 
-const listStyle = css({
-  listStyleType: "decimal",
-  marginLeft: "24px",
-  marginBottom: "16px",
-});
+import { css } from "@emotion/react";
 
-const listItemStyle = css({
-  marginBottom: "8px",
-  "&:last-child": {
-    marginBottom: 0,
+const sty = css({
+  paddingLeft: "24px",
+  position: "relative",
+  "::before": {
+    content: '""',
+    display: "block",
+    // round small dot
+    width: "8px",
+    height: "8px",
+    borderRadius: "50%",
+    backgroundColor: "#000",
+    margin: "0 auto",
+    position: "absolute",
+    top: "0.5em",
+    left: "0px",
   },
 });
 
 export const OrderedList: React.FC = () => {
-  const { block, level } = useCurrentBlock();
+  const { block } = useCurrentBlock();
+  const blockStore = useBlockStore();
 
-  if (!block.bullet?.elements) {
+  if (!block.ordered?.elements) {
     return null;
   }
 
-  const align = block.bullet.style?.align || 1;
+  let seq = block.ordered.style?.sequence;
+  if (seq === "auto") {
+    seq =
+      blockStore.blocks[block.parent_id].children!.findIndex(
+        (childId) => childId === block.block_id,
+      ) + 1;
+  }
 
-  const containerStyle = css({
-    textAlign:
-      align === 1
-        ? "left"
-        : align === 2
-          ? "center"
-          : align === 3
-            ? "right"
-            : "left",
+  const sty = css({
+    paddingLeft: "24px",
+    position: "relative",
+    "::before": {
+      content: `"${seq}"`,
+      display: "block",
+      margin: "0 auto",
+      position: "absolute",
+      top: "0em",
+      left: "0px",
+    },
   });
 
-  const nestedListStyle = css(
-    listStyle,
-    level > 0 && {
-      listStyleType:
-        level % 3 === 1
-          ? "lower-alpha"
-          : level % 3 === 2
-            ? "lower-roman"
-            : "decimal",
-    },
-  );
-
   return (
-    <ol css={[nestedListStyle, containerStyle]}>
-      {block.bullet.elements.map((element: Element, index: number) => {
-        if (!element.text_run) {
-          return null;
-        }
-
-        const style = css({
-          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
-          fontWeight: element.text_run.text_element_style?.bold
-            ? "bold"
-            : "normal",
-          fontStyle: element.text_run.text_element_style?.italic
-            ? "italic"
-            : "normal",
-          textDecoration:
-            [
-              element.text_run.text_element_style?.strikethrough &&
-                "line-through",
-              element.text_run.text_element_style?.underline && "underline",
-            ]
-              .filter(Boolean)
-              .join(" ") || "none",
-          fontFamily: element.text_run.text_element_style?.inline_code
-            ? "monospace"
-            : "inherit",
-          backgroundColor: element.text_run.text_element_style?.inline_code
-            ? "#f6f8fa"
-            : "transparent",
-          padding: element.text_run.text_element_style?.inline_code
-            ? "2px 4px"
-            : "0",
-          borderRadius: element.text_run.text_element_style?.inline_code
-            ? "3px"
-            : "0",
-        });
-
-        return (
-          <li key={index} css={listItemStyle}>
-            <span css={style}>{element.text_run.content}</span>
-          </li>
-        );
-      })}
-    </ol>
+    <div css={sty}>
+      <Text {...block.ordered} />
+      {block.children?.map((childId) => (
+        <BlockComponent key={childId} blockId={childId} />
+      ))}
+    </div>
   );
 };

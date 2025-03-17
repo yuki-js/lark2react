@@ -1,19 +1,14 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { TextElement, TextStyle } from "../../types/block";
 
-const textContainerStyle = css({
-  marginBottom: "16px",
-});
+const textContainerStyle = css({});
 
-export const Text: React.FC = () => {
-  const { block } = useCurrentBlock();
-
-  if (!block.text?.elements) {
-    return null;
-  }
-
-  const align = block.text.style?.align || 1;
-
+export const Text: React.FC<{
+  elements: TextElement[];
+  style?: TextStyle;
+}> = ({ elements, style }) => {
+  const align = style?.align || 1;
   const containerStyle = css({
     textAlign:
       align === 1
@@ -27,7 +22,7 @@ export const Text: React.FC = () => {
 
   return (
     <div css={[textContainerStyle, containerStyle]}>
-      {block.text.elements.map((element, index) => {
+      {elements.map((element, index) => {
         if (!element.text_run) {
           return null;
         }
@@ -73,5 +68,16 @@ export const Text: React.FC = () => {
         );
       })}
     </div>
+  );
+};
+
+export const TextBlock: React.FC = () => {
+  const { block } = useCurrentBlock();
+
+  return (
+    <Text
+      elements={block.text?.elements as unknown as TextElement[]} // todo: safer way
+      style={block.text?.style}
+    />
   );
 };
