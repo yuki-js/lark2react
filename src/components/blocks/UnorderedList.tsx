@@ -1,84 +1,91 @@
 import { css } from "@emotion/react";
-import { displayChildComponent } from "../../utils/utils";
-import { generateTextStyle } from "../../utils/utils";
-import { useContext } from "react";
-import { HashContext } from "../../contexts/DataContext";
-import { containsUrl } from "../../utils/utils";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { Element } from "../../contexts/BlockStoreContext";
 
-// Define the type for the elements array
-interface Element {
-  text_run?: {
-    text_element_style: any;
-    content: string;
-  };
-  [key: string]: any;
-}
+const listStyle = css({
+  listStyleType: "disc",
+  marginLeft: "24px",
+  marginBottom: "16px",
+});
 
-interface BlockData {
-  bullet: {
-    elements: Element[];
-  };
-  [key: string]: any;
-}
+const listItemStyle = css({
+  marginBottom: "8px",
+  "&:last-child": {
+    marginBottom: 0,
+  },
+});
 
-// Define the props for the UnorderedList component
-interface UnorderedListProps {
-  blockDataArr: BlockData[];
-}
+export const UnorderedList: React.FC = () => {
+  const { block, level } = useCurrentBlock();
 
-//FIXME: 点の位置を左側にずらしたい
-export function UnorderedList({ blockDataArr }: UnorderedListProps) {
-  const hash = useContext(HashContext);
+  if (!block.bullet?.elements) {
+    return null;
+  }
 
-  const staticStyle = css({
-    display: "inline-block",
-    wordBreak: "break-word",
+  const align = block.bullet.style?.align || 1;
+
+  const containerStyle = css({
+    textAlign:
+      align === 1
+        ? "left"
+        : align === 2
+          ? "center"
+          : align === 3
+            ? "right"
+            : "left",
   });
 
-  return (
-    <div>
-      <ul>
-        {blockDataArr.map((blockData, i) => {
-          const elements = blockData.bullet.elements;
-
-          return (
-            <div key={i}>
-              <li>
-                {elements.map((element, j) => {
-                  if (element?.text_run) {
-                    const style = element.text_run.text_element_style;
-                    const dynamicStyle = generateTextStyle(style);
-
-                    let url;
-                    let isUrl = false;
-                    if (style.link) {
-                      url = decodeURIComponent(style.link.url);
-                      isUrl = true;
-                    } else if (containsUrl(element.text_run.content)) {
-                      url = element.text_run.content;
-                      isUrl = true;
-                    }
-
-                    //linkスタイルが存在する場合、リンクを張る
-                    return (
-                      <div key={j} css={[staticStyle, dynamicStyle]}>
-                        {isUrl ? (
-                          <a href={url} target="_blank">
-                            {element.text_run.content}
-                          </a>
-                        ) : (
-                          element.text_run.content
-                        )}
-                      </div>
-                    );
-                  }
-                })}
-              </li>
-              {hash && <div>{displayChildComponent(blockData, hash)}</div>}
-            </div>
-          );
-        })}
-      </ul>
-    </div>
+  const nestedListStyle = css(
+    listStyle,
+    level > 0 && {
+      listStyleType:
+        level % 3 === 1 ? "circle" : level % 3 === 2 ? "square" : "disc",
+    },
   );
-}
+
+  return (
+    <ul css={[nestedListStyle, containerStyle]}>
+      {block.bullet.elements.map((element: Element, index: number) => {
+        if (!element.text_run) {
+          return null;
+        }
+
+        const style = css({
+          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
+          fontWeight: element.text_run.text_element_style?.bold
+            ? "bold"
+            : "normal",
+          fontStyle: element.text_run.text_element_style?.italic
+            ? "italic"
+            : "normal",
+          textDecoration:
+            [
+              element.text_run.text_element_style?.strikethrough &&
+                "line-through",
+              element.text_run.text_element_style?.underline && "underline",
+            ]
+              .filter(Boolean)
+              .join(" ") || "none",
+          fontFamily: element.text_run.text_element_style?.inline_code
+            ? "monospace"
+            : "inherit",
+          backgroundColor: element.text_run.text_element_style?.inline_code
+            ? "#f6f8fa"
+            : "transparent",
+          padding: element.text_run.text_element_style?.inline_code
+            ? "2px 4px"
+            : "0",
+          borderRadius: element.text_run.text_element_style?.inline_code
+            ? "3px"
+            : "0",
+        });
+
+        return (
+          <li key={index} css={listItemStyle}>
+            <span css={style}>{element.text_run.content}</span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+};

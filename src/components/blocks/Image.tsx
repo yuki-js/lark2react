@@ -1,66 +1,99 @@
-import { useState, useEffect } from "react";
-import { getTenantAccessToken, getFile } from "../../utils/apiHelper";
-import { HORIZONTAL_ALIGN } from "../../styles/horizontalAlign";
+import { css } from "@emotion/react";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { useState } from "react";
 
-// Define the type for the blockData parameter
-interface ImageData {
-  token: string;
-  height: number;
-  width: number;
-  align: keyof typeof HORIZONTAL_ALIGN;
-}
+const imageContainerStyle = css({
+  position: "relative",
+  marginBottom: "16px",
+  maxWidth: "100%",
+});
 
-interface BlockData {
-  image: ImageData;
-}
+const imageWrapperStyle = css({
+  position: "relative",
+  overflow: "hidden",
+  borderRadius: "4px",
+});
 
-// Define the props for the Image component
-interface ImageProps {
-  blockData: BlockData;
-}
+const imageStyle = css({
+  display: "block",
+  maxWidth: "100%",
+  height: "auto",
+  transition: "opacity 0.3s ease",
+});
 
-export function Image({ blockData }: ImageProps) {
-  const token = blockData.image.token;
-  const imageHeight = blockData.image.height;
-  const imageWidth = blockData.image.width;
-  const alignType = HORIZONTAL_ALIGN[blockData.image.align];
+const placeholderStyle = css({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#f0f0f0",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#666",
+  fontSize: "14px",
+});
 
-  const [imageUrl, setImageUrl] = useState("");
+const errorStyle = css({
+  padding: "16px",
+  backgroundColor: "#fff3f3",
+  color: "#dc3545",
+  borderRadius: "4px",
+  fontSize: "14px",
+  textAlign: "center",
+});
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const tenantAccessToken = await getTenantAccessToken();
-        const blob = await getFile(token, tenantAccessToken);
-        const url = URL.createObjectURL(blob);
-        setImageUrl(url);
+export const Image: React.FC = () => {
+  const { block } = useCurrentBlock();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-        //メモリリークを防ぐため
-        return () => URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("API Error:", error);
-      }
-    }
-    fetchData();
-  }, [token]);
+  if (!block.image?.token || !block.image.width || !block.image.height) {
+    return null;
+  }
+
+  const { width, height, token } = block.image;
+  const aspectRatio = height / width;
+
+  // In a real implementation, you would construct the image URL using the token
+  // This is a placeholder implementation
+  const imageUrl = `https://your-api-endpoint/images/${token}`;
+
+  const containerStyle = css({
+    paddingBottom: `${aspectRatio * 100}%`,
+  });
+
+  const handleLoad = () => {
+    setIsLoading(false);
+    setError(null);
+  };
+
+  const handleError = () => {
+    setIsLoading(false);
+    setError("Failed to load image");
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: alignType,
-      }}
-    >
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt="image"
-          height={imageHeight}
-          width={imageWidth}
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+    <div css={imageContainerStyle}>
+      <div css={imageWrapperStyle}>
+        <div css={containerStyle}>
+          {isLoading && <div css={placeholderStyle}>Loading...</div>}
+          {error ? (
+            <div css={errorStyle}>{error}</div>
+          ) : (
+            <img
+              src={imageUrl}
+              alt=""
+              css={[imageStyle, { opacity: isLoading ? 0 : 1 }]}
+              onLoad={handleLoad}
+              onError={handleError}
+              width={width}
+              height={height}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
-}
+};

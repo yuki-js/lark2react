@@ -1,44 +1,36 @@
 import { css } from "@emotion/react";
-import { displayChildComponent } from "../../utils/utils";
-import { useContext } from "react";
-import { HashContext } from "../../contexts/DataContext";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 
-// Define the type for the elements array
-interface TextRun {
-  content: string;
-}
+const titleStyle = css({
+  fontWeight: "bold",
+  fontSize: "36px",
+  marginBottom: "24px",
+});
 
-interface Element {
-  text_run: TextRun;
-  [key: string]: any;
-}
+export const Page: React.FC = () => {
+  const { block } = useCurrentBlock();
 
-interface BlockData {
-  page: {
-    elements: Element[];
-  };
-  [key: string]: any;
-}
+  if (!block.page?.elements[0]?.text_run) {
+    return null;
+  }
 
-// Define the props for the Page component
-interface PageProps {
-  blockData: BlockData;
-}
+  const title = block.page.elements[0].text_run.content;
+  const align = block.page.style?.align || 1;
 
-export function Page({ blockData }: PageProps) {
-  const hash = useContext(HashContext);
-
-  const title = blockData.page.elements[0].text_run.content;
-
-  const cssStyle = css({
-    fontWeight: "bold",
-    fontSize: "36px",
+  const containerStyle = css({
+    textAlign:
+      align === 1
+        ? "left"
+        : align === 2
+          ? "center"
+          : align === 3
+            ? "right"
+            : "left",
   });
 
   return (
-    <div>
-      <div css={cssStyle}>{title}</div>
-      {hash && displayChildComponent(blockData, hash)}
+    <div css={containerStyle}>
+      <div css={titleStyle}>{title}</div>
     </div>
   );
-}
+};
