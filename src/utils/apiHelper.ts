@@ -10,7 +10,7 @@ export async function getDocumentBlocks(
   accessToken: string,
 ) {
   const url = `/api/${documentId}/blocks?document_revision_id=-1&page_size=500`;
-
+  
   try {
     const response = await axios.get(url, {
       headers: {

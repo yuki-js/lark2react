@@ -45,6 +45,8 @@ export default function App() {
   const [items, setItems] = useState<Block[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+
+
   useEffect(() => {
     async function fetchData() {
       if (!documentId) {
@@ -54,11 +56,13 @@ export default function App() {
       }
 
       try {
+        
         const tenantAccessToken = await getTenantAccessToken();
         const json = (await getDocumentBlocks(
           documentId,
           tenantAccessToken,
         )) as ApiResponse;
+
 
         // Ensure all required fields are present
         const validatedItems = json.data.items.map((item) => ({
