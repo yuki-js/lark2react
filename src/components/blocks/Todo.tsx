@@ -1,101 +1,121 @@
 import { css } from "@emotion/react";
-import { generateTextStyle } from "../../utils/utils";
-import { containsUrl } from "../../utils/utils";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { Element } from "../../contexts/BlockStoreContext";
 
-// Define the type for the elements array
-interface Element {
-  text_run: {
-    text_element_style: any;
-    content: string;
-    link?: {
-      url: string;
-    };
-  };
-  [key: string]: any;
-}
+const todoContainerStyle = css({
+  display: "flex",
+  alignItems: "flex-start",
+  marginBottom: "8px",
+  gap: "8px",
+});
 
-interface BlockData {
-  todo: {
-    style: {
-      done: boolean;
-    };
-    elements: Element[];
-  };
-  [key: string]: any;
-}
+const checkboxStyle = css({
+  width: "16px",
+  height: "16px",
+  marginTop: "4px",
+  appearance: "none",
+  border: "2px solid #666",
+  borderRadius: "3px",
+  position: "relative",
+  cursor: "pointer",
+  "&:checked": {
+    backgroundColor: "#1a73e8",
+    borderColor: "#1a73e8",
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      left: "4px",
+      top: "1px",
+      width: "4px",
+      height: "8px",
+      border: "solid white",
+      borderWidth: "0 2px 2px 0",
+      transform: "rotate(45deg)",
+    },
+  },
+  "&:focus": {
+    outline: "none",
+    boxShadow: "0 0 0 2px rgba(26, 115, 232, 0.2)",
+  },
+});
 
-// Define the props for the Todo component
-interface TodoProps {
-  blockData: BlockData;
-}
+const contentStyle = css({
+  flex: 1,
+});
 
-export function Todo({ blockData }: TodoProps) {
-  const isDone: boolean = blockData.todo.style.done;
-  const elements = blockData.todo.elements;
+const doneTextStyle = css({
+  textDecoration: "line-through",
+  color: "#666",
+});
 
-  const labelStyle = css({
-    display: "inline-flex",
-  });
+export const Todo: React.FC = () => {
+  const { block } = useCurrentBlock();
 
-  const staticStyle = css({
-    display: "inline-block",
-    wordBreak: "break-word",
+  if (!block.todo?.elements) {
+    return null;
+  }
+
+  const isDone = block.todo.style?.done || false;
+  const align = block.todo.style?.align || 1;
+
+  const containerStyle = css({
+    textAlign:
+      align === 1
+        ? "left"
+        : align === 2
+          ? "center"
+          : align === 3
+            ? "right"
+            : "left",
   });
 
   return (
-    <label css={labelStyle}>
-      <input type="checkbox" defaultChecked={isDone} />
-      <div>
-        {elements.map((element, index) => {
-          const style = element.text_run.text_element_style;
-          const dynamicStyle = generateTextStyle(style);
-
-          if (isDone) {
-            //linkスタイルが存在する場合、リンクを張る
-            return (
-              <div
-                key={index}
-                css={[
-                  staticStyle,
-                  dynamicStyle,
-                  css({ textDecoration: "line-through" }),
-                ]}
-              >
-                {style.link ? (
-                  <a href={style.link.url} target="_blank">
-                    {element.text_run.content}
-                  </a>
-                ) : (
-                  element.text_run.content
-                )}
-              </div>
-            );
-          } else {
-            let url;
-            let isUrl = false;
-            if (style.link) {
-              url = decodeURIComponent(style.link.url);
-              isUrl = true;
-            } else if (containsUrl(element.text_run.content)) {
-              url = element.text_run.content;
-              isUrl = true;
-            }
-
-            //linkスタイルが存在する場合、リンクを張る
-            return (
-              <div key={index} css={[staticStyle, dynamicStyle]}>
-                {isUrl ? (
-                  <a href={url} target="_blank">
-                    {element.text_run.content}
-                  </a>
-                ) : (
-                  element.text_run.content
-                )}
-              </div>
-            );
+    <div css={[todoContainerStyle, containerStyle]}>
+      <input type="checkbox" checked={isDone} css={checkboxStyle} readOnly />
+      <div css={[contentStyle, isDone && doneTextStyle]}>
+        {block.todo.elements.map((element: Element, index: number) => {
+          if (!element.text_run) {
+            return null;
           }
+
+          const style = css({
+            color: element.text_run.text_element_style?.bold ? "#000" : "#333",
+            fontWeight: element.text_run.text_element_style?.bold
+              ? "bold"
+              : "normal",
+            fontStyle: element.text_run.text_element_style?.italic
+              ? "italic"
+              : "normal",
+            textDecoration:
+              [
+                isDone && "line-through",
+                element.text_run.text_element_style?.strikethrough &&
+                  "line-through",
+                element.text_run.text_element_style?.underline && "underline",
+              ]
+                .filter(Boolean)
+                .join(" ") || "none",
+            fontFamily: element.text_run.text_element_style?.inline_code
+              ? "monospace"
+              : "inherit",
+            backgroundColor: element.text_run.text_element_style?.inline_code
+              ? "#f6f8fa"
+              : "transparent",
+            padding: element.text_run.text_element_style?.inline_code
+              ? "2px 4px"
+              : "0",
+            borderRadius: element.text_run.text_element_style?.inline_code
+              ? "3px"
+              : "0",
+          });
+
+          return (
+            <span key={index} css={style}>
+              {element.text_run.content}
+            </span>
+          );
         })}
       </div>
-    </label>
+    </div>
   );
-}
+};

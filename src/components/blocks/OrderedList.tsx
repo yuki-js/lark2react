@@ -1,88 +1,63 @@
+import { useBlockStore } from "../../contexts/BlockStoreContext";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockComponent } from "./BlockComponent";
+import { Text } from "./Text";
+
 import { css } from "@emotion/react";
-import { displayChildComponent } from "../../utils/utils";
-import { generateTextStyle } from "../../utils/utils";
-import { useContext } from "react";
-import { HashContext } from "../../contexts/DataContext";
-import { containsUrl } from "../../utils/utils";
 
-// Define the type for the elements array
-interface Element {
-  text_run?: {
-    text_element_style: any;
-    content: string;
-  };
-  [key: string]: any;
-}
+const sty = css({
+  paddingLeft: "24px",
+  position: "relative",
+  "::before": {
+    content: '""',
+    display: "block",
+    // round small dot
+    width: "8px",
+    height: "8px",
+    borderRadius: "50%",
+    backgroundColor: "#000",
+    margin: "0 auto",
+    position: "absolute",
+    top: "0.5em",
+    left: "0px",
+  },
+});
 
-interface BlockData {
-  ordered: {
-    elements: Element[];
-    style: {
-      sequence: number;
-    };
-  };
-  [key: string]: any;
-}
+export const OrderedList: React.FC = () => {
+  const { block } = useCurrentBlock();
+  const blockStore = useBlockStore();
 
-// Define the props for the OrderedList component
-interface OrderedListProps {
-  blockDataArr: BlockData[];
-}
+  if (!block.ordered?.elements) {
+    return null;
+  }
 
-//FIXME: 番号の位置を左側にずらしたい
-export function OrderedList({ blockDataArr }: OrderedListProps) {
-  const hash = useContext(HashContext);
-  const startIndex = blockDataArr[0].ordered.style.sequence;
+  let seq = block.ordered.style?.sequence;
+  if (seq === "auto") {
+    seq =
+      blockStore.blocks[block.parent_id].children!.findIndex(
+        (childId) => childId === block.block_id,
+      ) + 1;
+  }
 
-  const staticStyle = css({
-    display: "inline-block",
-    wordBreak: "break-word",
+  const sty = css({
+    paddingLeft: "24px",
+    position: "relative",
+    "::before": {
+      content: `"${seq}"`,
+      display: "block",
+      margin: "0 auto",
+      position: "absolute",
+      top: "0em",
+      left: "0px",
+    },
   });
 
   return (
-    <div>
-      <ol start={startIndex}>
-        {blockDataArr.map((blockData, i) => {
-          const elements = blockData.ordered.elements;
-
-          return (
-            <div key={i}>
-              <li>
-                {elements.map((element, j) => {
-                  if (element?.text_run) {
-                    const style = element.text_run.text_element_style;
-                    const dynamicStyle = generateTextStyle(style);
-
-                    let url;
-                    let isUrl = false;
-                    if (style.link) {
-                      url = decodeURIComponent(style.link.url);
-                      isUrl = true;
-                    } else if (containsUrl(element.text_run.content)) {
-                      url = element.text_run.content;
-                      isUrl = true;
-                    }
-
-                    //linkスタイルが存在する場合、リンクを張る
-                    return (
-                      <div key={j} css={[staticStyle, dynamicStyle]}>
-                        {isUrl ? (
-                          <a href={url} target="_blank">
-                            {element.text_run.content}
-                          </a>
-                        ) : (
-                          element.text_run.content
-                        )}
-                      </div>
-                    );
-                  }
-                })}
-              </li>
-              {hash && <div>{displayChildComponent(blockData, hash)}</div>}
-            </div>
-          );
-        })}
-      </ol>
+    <div css={sty}>
+      <Text {...block.ordered} />
+      {block.children?.map((childId) => (
+        <BlockComponent key={childId} blockId={childId} />
+      ))}
     </div>
   );
-}
+};

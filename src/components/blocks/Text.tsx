@@ -1,109 +1,83 @@
 import { css } from "@emotion/react";
-import { generateTextStyle } from "../../utils/utils";
-import { containsUrl } from "../../utils/utils";
-import { useCommentIds } from "../../contexts/commentIdsContext";
-import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { TextElement, TextStyle } from "../../types/block";
 
-// Define the type for the elements array
-interface Element {
-  text_run: {
-    text_element_style: any;
-    content: string;
-    link?: {
-      url: string;
-    };
-    comment_ids?: string[];
-  };
-  [key: string]: any;
-}
+const textContainerStyle = css({});
 
-interface BlockData {
-  text: {
-    elements: Element[];
-  };
-  [key: string]: any;
-}
-
-// Define the props for the Text component
-interface TextProps {
-  blockData: BlockData;
-}
-
-export function Text({ blockData }: TextProps) {
-  const elements = blockData.text.elements;
-  const { commentIdsList, addCommentIds } = useCommentIds();
-  
-  const prevCommentIdsRef = useRef<string[] | null>(null);
-  
-
-
-  const commentIds = useMemo(() => {
-    let ids: string[] = [];
-    elements.forEach((element) => {
-      if (element.text_run?.text_element_style.comment_ids) {
-        ids = ids.concat(element.text_run.text_element_style.comment_ids);
-      }
-    });
-    return ids;
-  }, [elements]);
-
-  const addCommentIdsIfChanged = useCallback(() => {
-    const prevCommentIds = prevCommentIdsRef.current;
-    const hasChanged =
-      !prevCommentIds ||
-      commentIds.some((id) => !prevCommentIds.includes(id)) ||
-      prevCommentIds.some((id) => !commentIds.includes(id));
-
-    if (hasChanged && commentIds.length > 0) {
-      addCommentIds(commentIds);
-      prevCommentIdsRef.current = commentIds;
-    }
-  }, [commentIds, addCommentIds]);
-
-  useEffect(() => {
-    addCommentIdsIfChanged();
-  }, [commentIds, addCommentIdsIfChanged]);
-
-  const staticStyle = css({
-    display: "inline-block",
-    wordBreak: "break-word",
+export const Text: React.FC<{
+  elements: TextElement[];
+  style?: TextStyle;
+}> = ({ elements, style }) => {
+  const align = style?.align || 1;
+  const containerStyle = css({
+    textAlign:
+      align === 1
+        ? "left"
+        : align === 2
+          ? "center"
+          : align === 3
+            ? "right"
+            : "left",
   });
 
-  useEffect(() => {
-    addCommentIdsIfChanged();
-  }, [commentIds, addCommentIdsIfChanged]);
-
   return (
-    <div>
+    <div css={[textContainerStyle, containerStyle]}>
       {elements.map((element, index) => {
-        if (element?.text_run) {
-          const style = element.text_run.text_element_style;
-          const dynamicStyle = generateTextStyle(style);
-
-          // URL 処理
-          let url;
-          let isUrl = false;
-          if (style.link) {
-            url = decodeURIComponent(style.link.url);
-            isUrl = true;
-          } else if (containsUrl(element.text_run.content)) {
-            url = element.text_run.content;
-            isUrl = true;
-          }
-
-          return (
-            <div key={index} css={[staticStyle, dynamicStyle]}>
-              {isUrl ? (
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                  {element.text_run.content}
-                </a>
-              ) : (
-                element.text_run.content
-              )}
-            </div>
-          );
+        if (!element.text_run) {
+          return null;
         }
+
+        const style = css({
+          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
+          fontWeight: element.text_run.text_element_style?.bold
+            ? "bold"
+            : "normal",
+          fontStyle: element.text_run.text_element_style?.italic
+            ? "italic"
+            : "normal",
+          textDecoration:
+            [
+              element.text_run.text_element_style?.strikethrough &&
+                "line-through",
+              element.text_run.text_element_style?.underline && "underline",
+            ]
+              .filter(Boolean)
+              .join(" ") || "none",
+          fontFamily: element.text_run.text_element_style?.inline_code
+            ? "monospace"
+            : "inherit",
+          backgroundColor: element.text_run.text_element_style?.inline_code
+            ? "#f6f8fa"
+            : "transparent",
+          padding: element.text_run.text_element_style?.inline_code
+            ? "2px 4px"
+            : "0",
+          borderRadius: element.text_run.text_element_style?.inline_code
+            ? "3px"
+            : "0",
+        });
+
+        return (
+          <span
+            key={index}
+            css={style}
+            data-comment-ids={element.text_run.comment_ids?.join(",")}
+          >
+            {element.text_run.content}
+          </span>
+        );
       })}
     </div>
   );
-}
+};
+
+export const TextBlock: React.FC = () => {
+  const { block } = useCurrentBlock();
+
+  return (
+    <Text
+      elements={block.text?.elements as unknown as TextElement[]} // todo: safer way
+      style={block.text?.style}
+    />
+  );
+};

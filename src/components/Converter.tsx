@@ -1,13 +1,23 @@
-import { id2Component, genHashBlockId } from "../utils/utils";
-import { HashContext } from "../contexts/DataContext";
+import { BlockComponent } from "./blocks/BlockComponent";
+import { Block, BlockStoreProvider } from "../contexts/BlockStoreContext";
 
-export function Converter({ items }: { items: any[] }) {
-  const firstBlockId = items[0].block_id;
-  const hash = genHashBlockId(items);
+interface ConverterProps {
+  items: Block[];
+}
+
+export const Converter: React.FC<ConverterProps> = ({ items }) => {
+  // Find the root block (usually a Page block with no parent)
+  const rootId =
+    items.find((block) => block.block_type === 1)?.block_id ||
+    items[0]?.block_id;
+
+  if (!rootId) {
+    return null;
+  }
 
   return (
-    <HashContext.Provider value={hash}>
-      <div>{id2Component([firstBlockId], hash)}</div>
-    </HashContext.Provider>
+    <BlockStoreProvider items={items}>
+      <BlockComponent blockId={rootId} />
+    </BlockStoreProvider>
   );
-}
+};

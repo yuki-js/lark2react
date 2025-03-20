@@ -1,94 +1,103 @@
 import { css } from "@emotion/react";
-import { generateTextStyle } from "../../utils/utils";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 
-// Define the type for the elements array
-interface Element {
-  text_run: {
-    text_element_style: any;
-    content: string;
-    link?: {
-      url: string;
-    };
-  };
-  [key: string]: any;
+const HEADING_SIZES = {
+  1: "32px", // h1
+  2: "28px", // h2
+  3: "24px", // h3
+  4: "20px", // h4
+  5: "18px", // h5
+  6: "16px", // h6
+  7: "14px", // h7
+  8: "13px", // h8
+  9: "12px", // h9
+};
+
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+interface HeadingBaseProps {
+  level: HeadingLevel;
 }
 
-interface BlockData {
-  [key: string]: {
-    elements: Element[];
-  };
-}
+const HeadingBase: React.FC<HeadingBaseProps> = ({ level }) => {
+  const { block } = useCurrentBlock();
+  const headingKey = `heading${level}` as keyof typeof block;
+  const headingData = block[headingKey] as typeof block.heading3;
 
-// Define the props for the Heading component
-interface HeadingProps {
-  blockData: BlockData;
-  level: number;
-}
+  if (!headingData?.elements) {
+    return null;
+  }
 
-function Heading({ blockData, level }: HeadingProps) {
-  const elements: Element[] = blockData[`heading${level}`].elements;
+  const align = headingData.style?.align || 1;
 
-  const staticStyle = css({
-    display: "inline-block",
-    wordBreak: "break-word",
-    padding: "0px",
-    margin: "0px",
+  const headingStyle = css({
+    fontSize: HEADING_SIZES[level],
+    fontWeight: "bold",
+    marginBottom: "16px",
+    marginTop: "24px",
+    textAlign:
+      align === 1
+        ? "left"
+        : align === 2
+          ? "center"
+          : align === 3
+            ? "right"
+            : "left",
   });
 
   return (
-    <div>
-      {elements.map((element, index) => {
-        //elements配列の中にtext_runを持たない(発言者mention_userプロパティを持つ)ものが存在するので
-        if (element?.text_run) {
-          const style = element.text_run.text_element_style;
-          const dynamicStyle = generateTextStyle(style);
-
-          //h7,h8,h9タグはhtmlでは存在しないので
-          const HeadingTag =
-            `h${level > 6 ? 6 : level}` as keyof JSX.IntrinsicElements;
-
-          //linkスタイルが存在する場合、リンクを張る
-          return (
-            <HeadingTag key={index} css={[staticStyle, dynamicStyle]}>
-              {style.link ? (
-                <a href={style.link.url} target="_blank">
-                  {element.text_run.content}
-                </a>
-              ) : (
-                element.text_run.content
-              )}
-            </HeadingTag>
-          );
+    <div css={headingStyle}>
+      {headingData.elements.map((element, index) => {
+        if (!element.text_run) {
+          return null;
         }
+
+        const style = css({
+          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
+          fontWeight: element.text_run.text_element_style?.bold
+            ? "bold"
+            : "normal",
+          fontStyle: element.text_run.text_element_style?.italic
+            ? "italic"
+            : "normal",
+          textDecoration:
+            [
+              element.text_run.text_element_style?.strikethrough &&
+                "line-through",
+              element.text_run.text_element_style?.underline && "underline",
+            ]
+              .filter(Boolean)
+              .join(" ") || "none",
+          fontFamily: element.text_run.text_element_style?.inline_code
+            ? "monospace"
+            : "inherit",
+          backgroundColor: element.text_run.text_element_style?.inline_code
+            ? "#f6f8fa"
+            : "transparent",
+          padding: element.text_run.text_element_style?.inline_code
+            ? "2px 4px"
+            : "0",
+          borderRadius: element.text_run.text_element_style?.inline_code
+            ? "3px"
+            : "0",
+        });
+
+        return (
+          <span key={index} css={style}>
+            {element.text_run.content}
+          </span>
+        );
       })}
     </div>
   );
-}
+};
 
-export const Heading1 = (props: HeadingProps) => (
-  <Heading {...props} level={1} />
-);
-export const Heading2 = (props: HeadingProps) => (
-  <Heading {...props} level={2} />
-);
-export const Heading3 = (props: HeadingProps) => (
-  <Heading {...props} level={3} />
-);
-export const Heading4 = (props: HeadingProps) => (
-  <Heading {...props} level={4} />
-);
-export const Heading5 = (props: HeadingProps) => (
-  <Heading {...props} level={5} />
-);
-export const Heading6 = (props: HeadingProps) => (
-  <Heading {...props} level={6} />
-);
-export const Heading7 = (props: HeadingProps) => (
-  <Heading {...props} level={7} />
-);
-export const Heading8 = (props: HeadingProps) => (
-  <Heading {...props} level={8} />
-);
-export const Heading9 = (props: HeadingProps) => (
-  <Heading {...props} level={9} />
-);
+export const Heading1: React.FC = () => <HeadingBase level={1} />;
+export const Heading2: React.FC = () => <HeadingBase level={2} />;
+export const Heading3: React.FC = () => <HeadingBase level={3} />;
+export const Heading4: React.FC = () => <HeadingBase level={4} />;
+export const Heading5: React.FC = () => <HeadingBase level={5} />;
+export const Heading6: React.FC = () => <HeadingBase level={6} />;
+export const Heading7: React.FC = () => <HeadingBase level={7} />;
+export const Heading8: React.FC = () => <HeadingBase level={8} />;
+export const Heading9: React.FC = () => <HeadingBase level={9} />;

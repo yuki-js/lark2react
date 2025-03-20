@@ -1,66 +1,117 @@
+import { css } from "@emotion/react";
+import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { useState, useEffect } from "react";
 import { getTenantAccessToken, getFile } from "../../utils/apiHelper";
-import { HORIZONTAL_ALIGN } from "../../styles/horizontalAlign";
 
-// Define the type for the blockData parameter
-interface ImageData {
-  token: string;
-  height: number;
-  width: number;
-  align: keyof typeof HORIZONTAL_ALIGN;
-}
+const imageWrapperStyle = css({
+  position: "relative",
+  marginBottom: "16px",
+  maxWidth: "100%",
+});
 
-interface BlockData {
-  image: ImageData;
-}
+const containerStyle = css({
+  position: "relative",
+  overflow: "hidden",
+  borderRadius: "4px",
+});
 
-// Define the props for the Image component
-interface ImageProps {
-  blockData: BlockData;
-}
+const imageStyle = css({
+  display: "block",
+  maxWidth: "100%",
+  height: "auto",
+  transition: "opacity 0.3s ease",
+});
 
-export function Image({ blockData }: ImageProps) {
-  const token = blockData.image.token;
-  const imageHeight = blockData.image.height;
-  const imageWidth = blockData.image.width;
-  const alignType = HORIZONTAL_ALIGN[blockData.image.align];
+const placeholderStyle = css({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#f0f0f0",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#666",
+  fontSize: "14px",
+});
 
+const errorStyle = css({
+  padding: "16px",
+  backgroundColor: "#fff3f3",
+  color: "#dc3545",
+  borderRadius: "4px",
+  fontSize: "14px",
+  textAlign: "center",
+});
+
+export const Image: React.FC = () => {
+  const { block } = useCurrentBlock();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
+    if (!block.image?.token) {
+      return;
+    }
     async function fetchData() {
+      setIsLoading(true);
+      setError(null);
       try {
         const tenantAccessToken = await getTenantAccessToken();
-        const blob = await getFile(token, tenantAccessToken);
+        const blob = await getFile(block.image?.token ?? "", tenantAccessToken);
         const url = URL.createObjectURL(blob);
         setImageUrl(url);
-
-        //メモリリークを防ぐため
-        return () => URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("API Error:", error);
+      } catch (err) {
+        console.error("API Error:", err);
+        setError("Failed to load image");
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
-  }, [token]);
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [block.image?.token]);
+
+  if (!block.image) {
+    return null;
+  }
+
+  const { width, height, token } = block.image;
+  if (!width || !height || !token) {
+    return null;
+  }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: alignType,
-      }}
-    >
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt="image"
-          height={imageHeight}
-          width={imageWidth}
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+    <div css={imageWrapperStyle}>
+      <div css={containerStyle}>
+        {isLoading && <div css={placeholderStyle}>Loading...</div>}
+        {error ? (
+          <div css={errorStyle}>{error}</div>
+        ) : (
+          <img
+            src={imageUrl}
+            alt=""
+            css={[imageStyle, { opacity: isLoading ? 0 : 1 }]}
+            onLoad={() => {
+              setIsLoading(false);
+              setError(null);
+            }}
+            onError={() => {
+              setIsLoading(false);
+              setError("Cannot show image");
+            }}
+            width={width}
+            height={height}
+          />
+        )}
+      </div>
     </div>
   );
-}
+};

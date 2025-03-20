@@ -1,84 +1,117 @@
 import { css } from "@emotion/react";
-import InputDocumentId from "./components/InputDocumentId";
+import { useEffect, useState } from "react";
 import { Converter } from "./components/Converter";
 import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
-import { useEffect, useState } from "react";
-import {
-  DocumentIdProvider,
-  useDocumentId,
-} from "./contexts/documentIdContext";
-import { useCommentIds, CommentIdsProvider } from "./contexts/commentIdsContext";
-import { CommentList } from "./components/blocks/Comment";
+import { Block } from "./contexts/BlockStoreContext";
+import { ApiResponse } from "./types/api";
 
 const containerStyle = css({
   display: "flex",
 });
 
-//DOCを表示する領域
 const mainContentStyle = css({
   flex: 3,
-  padding: 20,
+  padding: "20px",
 });
 
-//コメントを表示する領域
 const sidebarStyle = css({
   flex: 1,
-  padding: 20,
+  padding: "20px",
   backgroundColor: "#f9f9f9",
   borderLeft: "1px solid #ddd",
   overflowY: "auto",
 });
 
-function App() {
-  return (
-    <DocumentIdProvider>
-      <CommentIdsProvider>
-        <AppContent />
-      </CommentIdsProvider>
-    </DocumentIdProvider>
-  );
-}
+const headerStyle = css({
+  marginBottom: "24px",
+});
 
-function AppContent() {
-  const { documentId, setDocumentId } = useDocumentId();
-  const { commentIds } = useCommentIds();
+const inputStyle = css({
+  width: "100%",
+  padding: "8px 12px",
+  fontSize: "14px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  marginBottom: "16px",
+  "&:focus": {
+    outline: "none",
+    borderColor: "#1a73e8",
+    boxShadow: "0 0 0 2px rgba(26, 115, 232, 0.2)",
+  },
+});
 
-
-  const [items, setItems] = useState<any[]>([]);
+export default function App() {
+  const [documentId, setDocumentId] = useState<string>("");
+  const [items, setItems] = useState<Block[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
+      if (!documentId) {
+        setItems([]);
+        setError(null);
+        return;
+      }
+
       try {
         const tenantAccessToken = await getTenantAccessToken();
-        const json = await getDocumentBlocks(documentId, tenantAccessToken);
+        const json = (await getDocumentBlocks(
+          documentId,
+          tenantAccessToken,
+        )) as ApiResponse;
 
-        setItems(json.data.items);
+        // Ensure all required fields are present
+        const validatedItems = json.data.items.map((item) => ({
+          ...item,
+          parent_id: item.parent_id || "", // Ensure parent_id exists
+          block_id: item.block_id || "", // Ensure block_id exists
+          block_type: item.block_type || 1, // Default to Page type if missing
+        })) as Block[];
+
+        setItems(validatedItems);
+        setError(null);
       } catch (error) {
         setItems([]);
+        setError(
+          error instanceof Error ? error.message : "Failed to fetch document",
+        );
         console.error("API Error:", error);
       }
     }
 
-    if (documentId) {
-      fetchData();
-    }
-  }, [documentId]); // `documentId` が変更されたときのみ実行
+    fetchData();
+  }, [documentId]);
 
+  const handleDocumentIdChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDocumentId(event.target.value);
+  };
 
   return (
     <div>
-      <h1>Lark to React</h1>
-      <InputDocumentId setDocumentId={setDocumentId} />
+      <header css={headerStyle}>
+        <h1>Lark to React</h1>
+        <input
+          type="text"
+          value={documentId}
+          onChange={handleDocumentIdChange}
+          placeholder="Enter Document ID"
+          css={inputStyle}
+        />
+        {error && (
+          <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
+        )}
+      </header>
+
       <div css={containerStyle}>
-        <div css={mainContentStyle}>
+        <main css={mainContentStyle}>
           {items.length > 0 && <Converter items={items} />}
-        </div>
-        <div css={sidebarStyle}>
-          <CommentList commentIdList={commentIds} />
-        </div>
+        </main>
+        <aside css={sidebarStyle}>
+          {/* Comments section can be implemented here */}
+        </aside>
       </div>
     </div>
   );
 }
-
-export default App;

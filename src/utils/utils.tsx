@@ -29,7 +29,12 @@ export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
 }
 
 //グループ化するblockDataのblockType
-const TARGET_BLOCK_TYPES = new Set([12, 13]);
+import { BlockType } from "../types/block";
+
+const TARGET_BLOCK_TYPES = new Set([
+  BlockType.UnorderedList,
+  BlockType.OrderedList,
+]);
 
 //block_idから対応したfunction componentを取得
 //e.g. "Lqzudvi1DokvIqxBn2rj94udpob" -> Page()
@@ -48,13 +53,31 @@ export function id2Component(
     }
 
     const blockType = arr[0].block_type;
-    const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+    const Component = BLOCK_TYPE_TO_COMPONENT[blockType as BlockType];
 
-    return <Component blockDataArr={arr} hash={hash} />;
+    if (Component) {
+      return <Component blockDataArr={arr} hash={hash} />;
+    } else {
+      return (
+        <div
+          style={{
+            fontSize: "18px",
+            padding: "10px",
+            display: "inline-block",
+            borderRadius: "5px",
+            backgroundColor: "#f8d7da",
+            color: "#721c24",
+            margin: "10px 0",
+          }}
+        >
+          表示できません
+        </div>
+      );
+    }
   } else {
     const blockData = hash[blockIdArr[0]];
     const blockType = blockData.block_type;
-    const Component = BLOCK_TYPE_TO_COMPONENT[blockType];
+    const Component = BLOCK_TYPE_TO_COMPONENT[blockType as BlockType];
 
     //未実装のblock(コンポーネント)は、表示不可能と表示
     if (!Component) {
@@ -80,26 +103,31 @@ export function id2Component(
 }
 
 //親が持つ子要素をコンポーネントとして表示する
-interface BlockData {
-  [key: string]: any;
-}
+import { Block } from "../types/block";
 
-export function displayChildComponent(
-  blockData: BlockData,
-  hash: Record<string, BlockItem>,
-) {
-  if (blockData.children) {
-    const blockDataArr = groupingblockData(blockData, hash);
+type BlockData = Block;
 
-    return (
-      <div>
-        {blockDataArr.map((childIdArr, index) => (
-          <div key={index}>{id2Component(childIdArr, hash)}</div>
-        ))}
-      </div>
-    );
-  }
-}
+import { useMemo } from "react";
+
+export const DisplayChildComponent: React.FC<{
+  blockData: BlockData;
+  hash: Record<string, BlockItem>;
+}> = ({ blockData, hash }) => {
+  const memoizedBlockDataArr = useMemo(() => {
+    if (blockData.children) {
+      return groupingblockData(blockData, hash);
+    }
+    return [];
+  }, [blockData, hash]);
+
+  return (
+    <div>
+      {memoizedBlockDataArr.map((childIdArr, index) => (
+        <div key={index}>{id2Component(childIdArr, hash)}</div>
+      ))}
+    </div>
+  );
+};
 
 // 同じblockTypeが連続している場合、グループ化をする関数
 // 対象blockTypeは、TARGET_BLOCK_TYPES
