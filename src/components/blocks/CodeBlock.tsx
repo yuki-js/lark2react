@@ -27,6 +27,8 @@ const languageTagStyle = css({
 export const CodeBlock: React.FC = () => {
   const { block } = useCurrentBlock();
 
+  console.log(block);
+
   if (!block.code?.elements || !block.code.language) {
     return null;
   }
