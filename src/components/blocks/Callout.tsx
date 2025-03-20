@@ -3,6 +3,7 @@ import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { EMOJI } from "../../constants/emoji";
 import { CALLOUT_BACKGROUND_COLOR } from "../../styles/calloutBackgroundColor";
 import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
+import { BlockComponent } from "./BlockComponent";
 
 const calloutContainerStyle = css({
   display: "flex",
@@ -51,7 +52,9 @@ export const Callout: React.FC = () => {
     <div css={[calloutContainerStyle, customCalloutStyle]}>
       <div css={emojiStyle}>{emoji}</div>
       <div css={contentStyle}>
-        
+        {block.children?.map((childId) => (
+                <BlockComponent key={childId} blockId={childId} />
+        ))}
       </div>
     </div>
   );
