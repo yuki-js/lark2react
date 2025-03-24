@@ -31,7 +31,6 @@ const contentStyle = css({
   },
 });
 
-
 export const Callout: React.FC = () => {
   const { block } = useCurrentBlock();
 
@@ -40,7 +39,8 @@ export const Callout: React.FC = () => {
   }
 
   const emoji = EMOJI[block.callout.emoji_id];
-  const backgroundColor = CALLOUT_BACKGROUND_COLOR[block.callout.background_color];
+  const backgroundColor =
+    CALLOUT_BACKGROUND_COLOR[block.callout.background_color];
   const borderColor = CALLOUT_BORDER_COLOR[block.callout.border_color];
 
   const customCalloutStyle = css({
@@ -53,7 +53,7 @@ export const Callout: React.FC = () => {
       <div css={emojiStyle}>{emoji}</div>
       <div css={contentStyle}>
         {block.children?.map((childId) => (
-                <BlockComponent key={childId} blockId={childId} />
+          <BlockComponent key={childId} blockId={childId} />
         ))}
       </div>
     </div>

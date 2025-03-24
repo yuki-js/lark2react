@@ -8,9 +8,7 @@ const boxStyle = css({
   border: "1px solid #a9a9a9",
   borderRadius: "3px",
   marginBottom: "16px",
-  
 });
-
 
 const codeBlockStyle = css({
   padding: "16px",
@@ -34,12 +32,6 @@ export const CodeBlock: React.FC = () => {
   const { block } = useCurrentBlock();
 
   const codeLanguage = CODE_LANGUAGE[block.code.style.language];
-
-  console.log(block);
-
-  // if (!block.code?.elements || !block.code.language) {
-  //   return null;
-  // }
 
   const content = block.code.elements
     .map((element: Element) => element.text_run?.content || "")

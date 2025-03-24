@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
 
-
 export interface BlockItem {
   block_id: string;
   block_type: number;

@@ -4,6 +4,8 @@ import { Converter } from "./components/Converter";
 import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
 import { Block } from "./contexts/BlockStoreContext";
 import { ApiResponse } from "./types/api";
+import { CommentIdsProvider } from "./contexts/commentIdsContext";
+import { CommentList } from "./components/blocks/Comment";
 
 const containerStyle = css({
   display: "flex",
@@ -45,8 +47,6 @@ export default function App() {
   const [items, setItems] = useState<Block[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-
-
   useEffect(() => {
     async function fetchData() {
       if (!documentId) {
@@ -56,13 +56,11 @@ export default function App() {
       }
 
       try {
-        
         const tenantAccessToken = await getTenantAccessToken();
         const json = (await getDocumentBlocks(
           documentId,
           tenantAccessToken,
         )) as ApiResponse;
-
 
         // Ensure all required fields are present
         const validatedItems = json.data.items.map((item) => ({
@@ -93,29 +91,32 @@ export default function App() {
   };
 
   return (
-    <div>
-      <header css={headerStyle}>
-        <h1>Lark to React</h1>
-        <input
-          type="text"
-          value={documentId}
-          onChange={handleDocumentIdChange}
-          placeholder="Enter Document ID"
-          css={inputStyle}
-        />
-        {error && (
-          <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
-        )}
-      </header>
+    <CommentIdsProvider>
+      <div>
+        <header css={headerStyle}>
+          <h1>Lark to React</h1>
+          <input
+            type="text"
+            value={documentId}
+            onChange={handleDocumentIdChange}
+            placeholder="Enter Document ID"
+            css={inputStyle}
+          />
+          {error && (
+            <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
+          )}
+        </header>
 
-      <div css={containerStyle}>
-        <main css={mainContentStyle}>
-          {items.length > 0 && <Converter items={items} />}
-        </main>
-        <aside css={sidebarStyle}>
-          {/* Comments section can be implemented here */}
-        </aside>
+        <div css={containerStyle}>
+          <main css={mainContentStyle}>
+            {items.length > 0 && <Converter items={items} />}
+          </main>
+          <aside css={sidebarStyle}>
+            {/* Comments section can be implemented here */}
+            <CommentList />
+          </aside>
+        </div>
       </div>
-    </div>
+    </CommentIdsProvider>
   );
 }
