@@ -1,8 +1,6 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { TextElement, TextStyle } from "../../types/block";
-import { useCommentIds } from "../../contexts/commentIdsContext";
-import { useEffect, useMemo, useCallback, useRef } from "react";
 import { useManageCommentIds } from "../../hooks/useManageCommentIds";
 
 const textContainerStyle = css({});

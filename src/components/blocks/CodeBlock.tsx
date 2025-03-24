@@ -7,11 +7,12 @@ const boxStyle = css({
   backgroundColor: "#f5f5f5",
   border: "1px solid #a9a9a9",
   borderRadius: "3px",
+  marginTop: "16px",
   marginBottom: "16px",
 });
 
 const codeBlockStyle = css({
-  padding: "16px",
+  padding: "8px 8px 8px 8px",
   fontFamily: "monospace",
   fontSize: "14px",
   lineHeight: "1.5",
@@ -23,8 +24,7 @@ const languageTagStyle = css({
   display: "inline-block",
   padding: "6px 6px",
   borderRadius: "3px",
-  fontSize: "14px",
-  marginBottom: "8px",
+  fontSize: "12px",
   color: "gray",
 });
 
