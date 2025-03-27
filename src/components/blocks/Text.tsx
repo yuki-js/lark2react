@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { TextElement, TextStyle } from "../../types/block";
-import { useManageCommentIds } from "../../hooks/useManageCommentIds";
 
 const textContainerStyle = css({});
 
@@ -20,8 +19,6 @@ export const Text: React.FC<{
             ? "right"
             : "left",
   });
-
-  useManageCommentIds(elements);
 
   return (
     <div css={[textContainerStyle, containerStyle]}>

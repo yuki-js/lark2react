@@ -1,24 +1,40 @@
-import { useCommentIds } from "../../contexts/commentIdsContext";
+import React, { useEffect } from "react";
+import { useCommentContext } from "../../contexts/CommentContext";
 
 interface CommentProps {
   commentId: string;
 }
 
-export function Comment({ commentId }: CommentProps) {
-  
-  return <div>Comment ID: {commentId}</div>;
+export function Comment({ commentId, quote }: CommentProps) {
+  return (
+    <div>
+      <strong>Comment ID:</strong> {commentId}
+      <br />
+      <strong>Quote:</strong> {quote}
+    </div>
+  );
 }
 
 export function CommentList() {
-  const { commentIds } = useCommentIds();
+  const { comments, fetchComments } = useCommentContext();
 
-  if (!commentIds) {
+  useEffect(() => {
+    const fileToken = "Lqzudvi1DokvIqxBn2rj94udpob"; // Replace with your file token
+    fetchComments(fileToken);
+  }, [fetchComments]);
+
+  if (comments.length === 0) {
     return <div>No comments available</div>;
   }
+
   return (
     <div>
-      {commentIds.map((commentId, index) => (
-        <Comment key={index} commentId={commentId} />
+      {comments.map((comment) => (
+        <Comment
+          key={comment.comment_id}
+          commentId={comment.comment_id}
+          quote={comment.quote}
+        />
       ))}
     </div>
   );

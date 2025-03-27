@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { Converter } from "./components/Converter";
-import { getDocumentBlocks, getTenantAccessToken, getCommentContent } from "./utils/apiHelper";
+import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
 import { Block } from "./contexts/BlockStoreContext";
 import { ApiResponse } from "./types/api";
-import { CommentIdsProvider } from "./contexts/commentIdsContext";
 import { CommentList } from "./components/blocks/Comment";
+import { CommentProvider } from "./contexts/CommentContext";
+
 
 const containerStyle = css({
   display: "flex",
@@ -47,7 +48,6 @@ export default function App() {
   const [items, setItems] = useState<Block[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
     async function fetchData() {
       if (!documentId) {
@@ -58,10 +58,6 @@ export default function App() {
 
       try {
         const tenantAccessToken = await getTenantAccessToken();
-
-        const comment = await getCommentContent("Lqzudvi1DokvIqxBn2rj94udpob", tenantAccessToken);
-        console.log("comment");
-        console.log(comment);
 
         const json = (await getDocumentBlocks(
           documentId,
@@ -97,7 +93,6 @@ export default function App() {
   };
 
   return (
-    <CommentIdsProvider>
       <div>
         <header css={headerStyle}>
           <h1>Lark to React</h1>
@@ -118,11 +113,11 @@ export default function App() {
             {items.length > 0 && <Converter items={items} />}
           </main>
           <aside css={sidebarStyle}>
-            {/* Comments section can be implemented here */}
-            <CommentList />
+            <CommentProvider>
+              <CommentList />
+            </CommentProvider>
           </aside>
         </div>
       </div>
-    </CommentIdsProvider>
   );
 }

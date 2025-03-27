@@ -104,8 +104,10 @@ export async function getFile(fileToken: string, accessToken: string) {
   }
 }
 
-
-export async function getCommentContent(fileToken: string, accessToken: string) {
+export async function getCommentContent(
+  fileToken: string,
+  accessToken: string,
+) {
   const url = `/get_comment_api/${fileToken}/comments/?file_type=docx`;
 
   try {

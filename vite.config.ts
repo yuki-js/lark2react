@@ -35,6 +35,6 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/get_comment_api/, ""),
       },
-    }
+    },
   },
 });
