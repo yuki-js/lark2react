@@ -103,3 +103,26 @@ export async function getFile(fileToken: string, accessToken: string) {
     throw error;
   }
 }
+
+
+export async function getCommentContent(fileToken: string, accessToken: string) {
+  const url = `/get_comment_api/${fileToken}/comments/?file_type=docx`;
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // Return the comment content from the response
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(JSON.stringify(error.response?.data, null, 4));
+    } else {
+      console.error(error);
+    }
+    throw error;
+  }
+}

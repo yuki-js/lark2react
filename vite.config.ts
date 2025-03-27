@@ -29,6 +29,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/get_file_api/, ""),
       },
-    },
+      "/get_comment_api": {
+        target: "https://open.larksuite.com/open-apis/drive/v1/files/",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/get_comment_api/, ""),
+      },
+    }
   },
 });

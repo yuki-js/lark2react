@@ -5,6 +5,7 @@ interface CommentProps {
 }
 
 export function Comment({ commentId }: CommentProps) {
+  
   return <div>Comment ID: {commentId}</div>;
 }
 
