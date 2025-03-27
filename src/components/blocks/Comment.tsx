@@ -21,7 +21,7 @@ export function CommentList() {
   useEffect(() => {
     const fileToken = "Lqzudvi1DokvIqxBn2rj94udpob"; // Replace with your file token
     fetchComments(fileToken);
-  }, [fetchComments]);
+  }, []);
 
   if (comments.length === 0) {
     return <div>No comments available</div>;
