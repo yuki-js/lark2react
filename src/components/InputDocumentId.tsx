@@ -2,10 +2,6 @@ import React from "react";
 import { css } from "@emotion/react";
 import { useDocumentContext } from "../contexts/DocumentContext";
 
-const headerStyle = css({
-  marginBottom: "24px",
-});
-
 const inputStyle = css({
   width: "100%",
   padding: "8px 12px",
@@ -20,22 +16,20 @@ const inputStyle = css({
   },
 });
 
-export function InputDocumentId() {
-  const { documentId, setDocumentId } = useDocumentContext();
+export const InputDocumentId: React.FC = () => {
+  const { documentId, setDocumentId } = useDocumentContext(); // Contextから値を取得
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDocumentId(event.target.value);
+    setDocumentId(event.target.value); // ContextのdocumentIdを更新
   };
 
   return (
-    <header css={headerStyle}>
-      <input
-        type="text"
-        value={documentId}
-        onChange={handleChange}
-        placeholder="Enter Document ID"
-        css={inputStyle}
-      />
-    </header>
+    <input
+      type="text"
+      value={documentId}
+      onChange={handleChange}
+      placeholder="Enter Document ID"
+      css={inputStyle}
+    />
   );
-}
+};

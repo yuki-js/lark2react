@@ -6,7 +6,8 @@ import { Block } from "./contexts/BlockStoreContext";
 import { ApiResponse } from "./types/api";
 import { CommentList } from "./components/blocks/Comment";
 import { CommentProvider } from "./contexts/CommentContext";
-
+import { InputDocumentId } from "./components/InputDocumentId";
+import { useDocumentContext, DocumentProvider } from "./contexts/DocumentContext";
 
 const containerStyle = css({
   display: "flex",
@@ -43,8 +44,9 @@ const inputStyle = css({
   },
 });
 
-export default function App() {
-  const [documentId, setDocumentId] = useState<string>("");
+function AppContent() {
+  const { documentId } = useDocumentContext();
+
   const [items, setItems] = useState<Block[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -86,23 +88,13 @@ export default function App() {
     fetchData();
   }, [documentId]);
 
-  const handleDocumentIdChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setDocumentId(event.target.value);
-  };
+  
 
   return (
       <div>
         <header css={headerStyle}>
           <h1>Lark to React</h1>
-          <input
-            type="text"
-            value={documentId}
-            onChange={handleDocumentIdChange}
-            placeholder="Enter Document ID"
-            css={inputStyle}
-          />
+          <InputDocumentId />
           {error && (
             <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
           )}
@@ -119,5 +111,14 @@ export default function App() {
           </aside>
         </div>
       </div>
+  );
+}
+
+
+export default function App() {
+  return (
+    <DocumentProvider>
+      <AppContent />
+    </DocumentProvider>
   );
 }

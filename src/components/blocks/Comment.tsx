@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useCommentContext } from "../../contexts/CommentContext";
+import { useDocumentContext } from "../../contexts/DocumentContext";
 
 interface CommentProps {
   commentId: string;
@@ -17,11 +18,15 @@ export function Comment({ commentId, quote }: CommentProps) {
 
 export function CommentList() {
   const { comments, fetchComments } = useCommentContext();
+  const { documentId } = useDocumentContext();
 
   useEffect(() => {
-    const fileToken = "Lqzudvi1DokvIqxBn2rj94udpob"; // Replace with your file token
-    fetchComments(fileToken);
-  }, []);
+    if (documentId) {
+      const fileToken = documentId ; // Replace with your file token
+      fetchComments(fileToken);
+    }
+    
+  }, [documentId]);
 
   if (comments.length === 0) {
     return <div>No comments available</div>;
