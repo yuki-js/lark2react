@@ -3,11 +3,27 @@ import { useCommentContext } from "../../contexts/CommentContext";
 import { useDocumentContext } from "../../contexts/DocumentContext";
 import { css } from "@emotion/react";
 
+export interface CommentProps {
+  comment: {
+    comment_id: string;
+    quote: string;
+    reply_list?: {
+      replies: Reply[];
+    };
+  };
+}
 
-interface CommentProps {
-  comment_id: string;
-  quote: string;
-  reply_list?: any;
+export interface Reply {
+  content: {
+    elements: Element[];
+  };
+  reply_id: string;
+}
+
+export interface Element {
+  text_run?: {
+    text: string;
+  };
 }
 
 
@@ -39,9 +55,9 @@ export function Comment({ comment }: CommentProps) {
   return (
     <div css={containerStyle}>
       <div css={quoteStyle} >{comment.quote}</div> 
-      {comment.reply_list?.replies.map((reply: any, i: number) => (
+      {comment.reply_list?.replies.map((reply: Reply, i: number) => (
         <div key={i} css={replyStyle}>
-          {reply.content.elements.map((element: any, j: number) => (
+          {reply.content.elements.map((element: Element, j: number) => (
             <span key={j}>
               {element.text_run?.text || "No text available"}
             </span>

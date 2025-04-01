@@ -42,11 +42,22 @@ export interface TextElementStyle {
   italic?: boolean;
   strikethrough?: boolean;
   underline?: boolean;
+  comment_ids?: string[];
+  link?: Link;
 }
+
+export interface Link {
+  url: string; 
+}
+
+
 
 export interface Element {
   text_run: TextRun;
 }
+
+
+
 
 export interface TextElement extends Element {
   mention_user?: unknown; // object(MentionUser)
@@ -104,3 +115,5 @@ export interface BlockContext {
   level: number;
   document: Document;
 }
+
+

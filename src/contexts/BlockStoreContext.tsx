@@ -11,7 +11,6 @@ interface TextElementStyle {
 interface TextRun {
   content: string;
   text_element_style?: TextElementStyle;
-  comment_ids?: string[];
 }
 
 export interface Element {

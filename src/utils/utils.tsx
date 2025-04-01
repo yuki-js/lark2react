@@ -2,20 +2,11 @@ import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
 import { css } from "@emotion/react";
 import { FONT_COLOR } from "../styles/fontColor";
 import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
+import {TextElementStyle} from "../types/block";
 
 export interface BlockItem {
   block_id: string;
   block_type: number;
-}
-
-interface TextStyle {
-  text_color: number;
-  background_color: number;
-  bold: boolean;
-  inline_code: boolean;
-  italic: boolean;
-  strikethrough: boolean;
-  underline: boolean;
 }
 
 export function genHashBlockId(items: BlockItem[]): Record<string, BlockItem> {
@@ -190,7 +181,7 @@ export const generateTextStyle = ({
   italic,
   strikethrough,
   underline,
-}: TextStyle) => {
+}: TextElementStyle) => {
   const strikethroughParam = strikethrough ? "line-through" : "none";
   const underlineParam = underline ? "underline" : "none";
 
