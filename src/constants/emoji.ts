@@ -1,4 +1,4 @@
-export const EMOJI = {
+export const EMOJI: Record<string, string> = {
   "grinning" : "😀",
   "grin" : "😁",
   "joy" : "😂",

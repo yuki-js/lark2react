@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useCommentContext } from "../../contexts/CommentContext";
 import { useDocumentContext } from "../../contexts/DocumentContext";
 import { css } from "@emotion/react";

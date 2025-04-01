@@ -31,7 +31,9 @@ const languageTagStyle = css({
 export const CodeBlock: React.FC = () => {
   const { block } = useCurrentBlock();
 
-  const codeLanguage = CODE_LANGUAGE[block.code.style.language];
+  const codeLanguage = block.code?.style?.language
+  ? CODE_LANGUAGE[block.code.style.language]
+  : "Unknown";
 
   const content = block.code.elements
     .map((element: Element) => element.text_run?.content || "")
