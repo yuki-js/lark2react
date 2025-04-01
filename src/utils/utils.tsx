@@ -173,33 +173,7 @@ function groupingblockData(
   return blockDataArr;
 }
 
-export const generateTextStyle = ({
-  text_color,
-  background_color,
-  bold,
-  inline_code,
-  italic,
-  strikethrough,
-  underline,
-}: TextElementStyle) => {
-  const strikethroughParam = strikethrough ? "line-through" : "none";
-  const underlineParam = underline ? "underline" : "none";
 
-  return css({
-    color: FONT_COLOR[text_color] || "black",
-    fontWeight: bold ? "bold" : "normal",
-    fontFamily: inline_code ? "monospace" : "inherit",
-    fontStyle: italic ? "italic" : "normal",
-    backgroundColor: FONT_BACKGROUND_COLOR[background_color],
-    textDecoration:
-      [
-        strikethroughParam === "line-through" && "line-through",
-        underlineParam === "underline" && "underline",
-      ]
-        .filter(Boolean)
-        .join(" ") || "none",
-  });
-};
 
 //共有されたリンク(URL)から、document_idを抽出する。
 export function extractDocId(url: string): string {
