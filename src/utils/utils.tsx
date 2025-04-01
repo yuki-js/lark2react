@@ -1,8 +1,5 @@
 import { BLOCK_TYPE_TO_COMPONENT } from "./blockTypeMapping";
-import { css } from "@emotion/react";
-import { FONT_COLOR } from "../styles/fontColor";
-import { FONT_BACKGROUND_COLOR } from "../styles/fontBackgroundColor";
-import {TextElementStyle} from "../types/block";
+
 
 export interface BlockItem {
   block_id: string;

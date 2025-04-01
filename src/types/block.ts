@@ -31,7 +31,6 @@ export interface TextStyle {
 export interface TextRun {
   content: string;
   text_element_style?: TextElementStyle;
-  comment_ids?: string[];
 }
 
 export interface TextElementStyle {
@@ -69,40 +68,60 @@ export interface TextElement extends Element {
   undefined_element?: unknown; // object(UndefinedElement)
 }
 
+
+
+interface BlockStyle {
+  align?: number;
+  folded?: boolean;
+  done?: boolean;
+  sequence?: number | "auto";
+}
+
+interface BlockContent {
+  elements: Element[];
+  style?: BlockStyle;
+}
+
+interface ImageContent {
+  token: string;
+  width: number;
+  height: number;
+}
+
 export interface Block {
   block_id: string;
-  block_type: BlockType;
-  page?: {
-    elements: Element[];
-  };
-  text?: {
-    elements: TextElement[];
-    style?: TextStyle;
-  };
-  heading?: {
-    elements: Element[];
-  };
-  code?: {
+  block_type: number;
+  parent_id: string;
+  children?: string[];
+  page?: BlockContent;
+  text?: BlockContent;
+  heading1?: BlockContent;
+  heading2?: BlockContent;
+  heading3?: BlockContent;
+  heading4?: BlockContent;
+  heading5?: BlockContent;
+  heading6?: BlockContent;
+  heading7?: BlockContent;
+  heading8?: BlockContent;
+  heading9?: BlockContent;
+  bullet?: BlockContent;
+  ordered?: BlockContent;
+  code?: BlockContent & {
     language: string;
-    elements: Element[];
   };
-  todo?: {
-    done: boolean;
-    elements: Element[];
+  todo?: BlockContent & {
+    style?: BlockStyle & {
+      done?: boolean;
+    };
   };
   callout?: {
+    background_color: number;
+    border_color: number;
     emoji_id: string;
-    elements: Element[];
   };
-  quote?: {
-    elements: Element[];
-  };
-  image?: {
-    token: string;
-    width: number;
-    height: number;
-  };
-  children?: string[];
+  image?: ImageContent;
+  quote?: BlockContent;
+  comment_ids?: string[];
 }
 
 export interface Document {
