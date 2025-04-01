@@ -77,7 +77,7 @@ interface BlockStyle {
   sequence?: number | "auto";
 }
 
-interface BlockContent {
+export interface BlockContent {
   elements: Element[];
   style?: BlockStyle;
 }

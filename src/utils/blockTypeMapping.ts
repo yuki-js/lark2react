@@ -21,9 +21,11 @@ import { Callout } from "../components/blocks/Callout";
 import { Image } from "../components/blocks/Image";
 
 import { BlockType } from "../types/block";
+import { BlockContent } from "../types/block";
+
 
 type BlockTypeToComponent = {
-  [key in BlockType]?: React.ComponentType;
+  [key in BlockType]?: React.ComponentType<BlockContent>;
 };
 
 export const BLOCK_TYPE_TO_COMPONENT: BlockTypeToComponent = {
