@@ -107,7 +107,9 @@ export interface Block {
   bullet?: BlockContent;
   ordered?: BlockContent;
   code?: BlockContent & {
-    language: string;
+    style?: {
+      language: number;
+    };
   };
   todo?: BlockContent & {
     style?: BlockStyle & {

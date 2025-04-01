@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { Block, useBlockStore } from "./BlockStoreContext";
+import { useBlockStore } from "./BlockStoreContext";
+import { Block } from "../types/block";
 
 interface CurrentBlockContext {
   block: Block;

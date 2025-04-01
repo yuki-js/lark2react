@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { Element } from "../../contexts/BlockStoreContext";
 import { CODE_LANGUAGE } from "../../constants/codeLanguage";
+import { Element } from "../../types/block";
 
 const boxStyle = css({
   backgroundColor: "#f5f5f5",
@@ -35,7 +35,7 @@ export const CodeBlock: React.FC = () => {
   ? CODE_LANGUAGE[block.code.style.language]
   : "Unknown";
 
-  const content = block.code.elements
+  const content = block.code?.elements
     .map((element: Element) => element.text_run?.content || "")
     .join("");
 

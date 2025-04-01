@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { Converter } from "./components/Converter";
 import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
-import { Block } from "./contexts/BlockStoreContext";
+import { Block } from "./types/block";
 import { ApiResponse } from "./types/api";
 import { CommentList } from "./components/blocks/Comment";
 import { CommentProvider } from "./contexts/CommentContext";

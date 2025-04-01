@@ -1,5 +1,6 @@
 import { BlockComponent } from "./blocks/BlockComponent";
-import { Block, BlockStoreProvider } from "../contexts/BlockStoreContext";
+import { BlockStoreProvider } from "../contexts/BlockStoreContext";
+import { Block } from "../types/block";
 
 interface ConverterProps {
   items: Block[];

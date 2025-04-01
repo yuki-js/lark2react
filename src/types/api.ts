@@ -1,4 +1,4 @@
-import { Block } from "../contexts/BlockStoreContext";
+import { Block } from './block';
 
 export interface ApiResponse {
   data: {

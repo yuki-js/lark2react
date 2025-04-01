@@ -61,7 +61,6 @@ export const Text: React.FC<{
           <span
             key={index}
             css={style}
-            data-comment-ids={element.text_run.comment_ids?.join(",")}
           >
             {element.text_run.content}
           </span>

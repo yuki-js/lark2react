@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { Element } from "../../contexts/BlockStoreContext";
+import { Element } from "../../types/block";
 
 const todoContainerStyle = css({
   display: "flex",
