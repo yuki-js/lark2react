@@ -27,6 +27,7 @@ export interface TextStyle {
   language?: string; // enum CodeLanguage
   wrap?: boolean;
 }
+
 export interface TextRun {
   content: string;
   text_element_style?: TextElementStyle;
