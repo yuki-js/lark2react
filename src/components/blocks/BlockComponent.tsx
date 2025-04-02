@@ -86,15 +86,18 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
   if (!Component) {
     return <UnsupportedBlock type={block.block_type} />;
   }
-  const showDebugInfo = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log("Block ID:", blockId);
-    console.log("Block Data:", block);
-    console.log("Parent Block Data:", blocks[block.parent_id]);
-  };
+
+  // Debugging function to show block ID and data
+  // const showDebugInfo = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   console.log("Block ID:", blockId);
+  //   console.log("Block Data:", block);
+  //   console.log("Parent Block Data:", blocks[block.parent_id]);
+  // };
+
   return (
-    <div onClick={showDebugInfo}>
+    <div>
       <CurrentBlockProvider blockId={blockId}>
         <ErrorBoundary>
           <Component />

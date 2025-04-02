@@ -32,8 +32,8 @@ export const CodeBlock: React.FC = () => {
   const { block } = useCurrentBlock();
 
   const codeLanguage = block.code?.style?.language
-  ? CODE_LANGUAGE[block.code.style.language]
-  : "Unknown";
+    ? CODE_LANGUAGE[block.code.style.language]
+    : "Unknown";
 
   const content = block.code?.elements
     .map((element: Element) => element.text_run?.content || "")

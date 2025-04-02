@@ -8,6 +8,8 @@ export const QuoteContainer: React.FC = () => {
   const quoteContainerStyle = css({
     borderLeft: "4px solid lightgray",
     paddingLeft: "16px",
+    marginTop: "8px",
+    marginBottom: "8px",
   });
 
   return (

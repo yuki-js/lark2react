@@ -1,25 +1,3 @@
-export enum BlockType {
-  Page = 1,
-  Text = 2,
-  Heading1 = 3,
-  Heading2 = 4,
-  Heading3 = 5,
-  Heading4 = 6,
-  Heading5 = 7,
-  Heading6 = 8,
-  Heading7 = 9,
-  Heading8 = 10,
-  Heading9 = 11,
-  UnorderedList = 12,
-  OrderedList = 13,
-  CodeBlock = 14,
-  Todo = 17,
-  Callout = 19,
-  Divider = 22,
-  Image = 27,
-  QuoteContainer = 34,
-}
-
 export interface TextStyle {
   align?: number; // enum Align
   done?: boolean;
@@ -46,17 +24,12 @@ export interface TextElementStyle {
 }
 
 export interface Link {
-  url: string; 
+  url: string;
 }
-
-
 
 export interface Element {
   text_run: TextRun;
 }
-
-
-
 
 export interface TextElement extends Element {
   mention_user?: unknown; // object(MentionUser)
@@ -67,8 +40,6 @@ export interface TextElement extends Element {
   equation?: unknown; // object(Equation)
   undefined_element?: unknown; // object(UndefinedElement)
 }
-
-
 
 interface BlockStyle {
   align?: number;
@@ -136,5 +107,3 @@ export interface BlockContext {
   level: number;
   document: Document;
 }
-
-

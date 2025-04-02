@@ -7,7 +7,10 @@ import { ApiResponse } from "./types/api";
 import { CommentList } from "./components/blocks/Comment";
 import { CommentProvider } from "./contexts/CommentContext";
 import { InputDocumentId } from "./components/InputDocumentId";
-import { useDocumentContext, DocumentProvider } from "./contexts/DocumentContext";
+import {
+  useDocumentContext,
+  DocumentProvider,
+} from "./contexts/DocumentContext";
 
 const containerStyle = css({
   display: "flex",
@@ -29,7 +32,6 @@ const sidebarStyle = css({
 const headerStyle = css({
   marginBottom: "24px",
 });
-
 
 function AppContent() {
   const { documentId } = useDocumentContext();
@@ -75,32 +77,29 @@ function AppContent() {
     fetchData();
   }, [documentId]);
 
-  
-
   return (
-      <div>
-        <header css={headerStyle}>
-          <h1>Lark to React</h1>
-          <InputDocumentId />
-          {error && (
-            <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
-          )}
-        </header>
+    <div>
+      <header css={headerStyle}>
+        <h1>Lark to React</h1>
+        <InputDocumentId />
+        {error && (
+          <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
+        )}
+      </header>
 
-        <div css={containerStyle}>
-          <main css={mainContentStyle}>
-            {items.length > 0 && <Converter items={items} />}
-          </main>
-          <aside css={sidebarStyle}>
-            <CommentProvider>
-              <CommentList />
-            </CommentProvider>
-          </aside>
-        </div>
+      <div css={containerStyle}>
+        <main css={mainContentStyle}>
+          {items.length > 0 && <Converter items={items} />}
+        </main>
+        <aside css={sidebarStyle}>
+          <CommentProvider>
+            <CommentList />
+          </CommentProvider>
+        </aside>
       </div>
+    </div>
   );
 }
-
 
 export default function App() {
   return (

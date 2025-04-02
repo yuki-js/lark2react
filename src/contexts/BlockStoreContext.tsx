@@ -1,7 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { Block } from "../types/block";
 
-
 interface BlockStore {
   blocks: Record<string, Block>;
   rootId: string;

@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { TextElement, TextStyle } from "../../types/block";
+import { containsUrl } from "../../utils/utils";
 
 const textContainerStyle = css({});
 
@@ -57,12 +58,26 @@ export const Text: React.FC<{
             : "0",
         });
 
+        //文字列にリンクが紐づいているor文字列がhttps://で始まる場合はリンクとして扱う
+        let url = element.text_run.text_element_style?.link?.url;
+        let isUrl = false;
+        if (url) {
+          url = decodeURIComponent(url);
+          isUrl = true;
+        } else if (containsUrl(element.text_run.content)) {
+          url = element.text_run.content;
+          isUrl = true;
+        }
+
         return (
-          <span
-            key={index}
-            css={style}
-          >
-            {element.text_run.content}
+          <span key={index} css={style}>
+            {isUrl ? (
+              <a href={url} target="_blank">
+                {element.text_run.content}
+              </a>
+            ) : (
+              element.text_run.content
+            )}
           </span>
         );
       })}

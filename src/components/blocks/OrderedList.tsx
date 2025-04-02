@@ -5,8 +5,6 @@ import { Text } from "./Text";
 
 import { css } from "@emotion/react";
 
-
-
 export const OrderedList: React.FC = () => {
   const { block } = useCurrentBlock();
   const blockStore = useBlockStore();
