@@ -24,7 +24,6 @@ const mainContentStyle = css({
 const sidebarStyle = css({
   flex: 1,
   padding: "20px",
-  backgroundColor: "#f9f9f9",
   borderLeft: "1px solid #ddd",
   overflowY: "auto",
 });
