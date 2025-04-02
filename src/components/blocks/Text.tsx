@@ -28,6 +28,16 @@ export const Text: React.FC<{
           return null;
         }
 
+        //コメントが紐づけられている場合は、文字列にマーカーを付与
+        const comment = element.text_run.text_element_style?.comment_ids;
+        const commentStyle = comment
+        ? {
+            textDecoration: "underline", 
+            textDecorationColor: "#ffeb3b", 
+            textDecorationThickness: "2px", 
+          }
+        : {};
+
         const style = css({
           color: element.text_run.text_element_style?.bold ? "#000" : "#333",
           fontWeight: element.text_run.text_element_style?.bold
@@ -56,6 +66,7 @@ export const Text: React.FC<{
           borderRadius: element.text_run.text_element_style?.inline_code
             ? "3px"
             : "0",
+          ...commentStyle,
         });
 
         //文字列にリンクが紐づいているor文字列がhttps://で始まる場合はリンクとして扱う
@@ -68,6 +79,8 @@ export const Text: React.FC<{
           url = element.text_run.content;
           isUrl = true;
         }
+
+        
 
         return (
           <span key={index} css={style}>
