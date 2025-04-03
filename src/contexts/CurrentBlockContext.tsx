@@ -4,7 +4,6 @@ import { Block } from "../types/block";
 
 interface CurrentBlockContext {
   block: Block;
-  parentBlock?: Block;
 }
 
 const CurrentBlockContext = createContext<CurrentBlockContext | null>(null);
@@ -36,10 +35,8 @@ export const CurrentBlockProvider: React.FC<CurrentBlockProviderProps> = ({
     throw new Error(`Block with id ${blockId} not found`);
   }
 
-  const parentBlock = block.parent_id ? blocks[block.parent_id] : undefined;
-
   return (
-    <CurrentBlockContext.Provider value={{ block, parentBlock }}>
+    <CurrentBlockContext.Provider value={{ block }}>
       {children}
     </CurrentBlockContext.Provider>
   );
