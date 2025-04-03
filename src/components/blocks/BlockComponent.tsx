@@ -24,6 +24,7 @@ import { Divider } from "./Divider";
 import { Image } from "./Image";
 import { QuoteContainer } from "./QuoteContainer";
 import { css } from "@emotion/react";
+import { Comment } from "./Comment";
 
 const BLOCK_COMPONENTS: Record<number, React.FC> = {
   1: Page, // Page
@@ -96,7 +97,7 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
   //   console.log("Parent Block Data:", blocks[block.parent_id]);
   // };
 
-  return (
+  const inner = (
     <div>
       <CurrentBlockProvider blockId={blockId}>
         <ErrorBoundary>
@@ -105,6 +106,10 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
       </CurrentBlockProvider>
     </div>
   );
+  if (block.comment_ids) {
+    return <Comment commentIds={block.comment_ids}>{inner}</Comment>;
+  }
+  return inner;
 };
 
 export const BlockComponent = memo(BlockComponentBase);
