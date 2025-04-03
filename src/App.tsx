@@ -48,16 +48,7 @@ export default function App() {
 
     // extract the document ID from the URL
     const url = event.target.value;
-    const regex =
-      /^https:\/\/[a-zA-Z0-9-]+\.([a-zA-Z0-9-]+\.)?(larksuite\.com|feishu\.cn)\/docx\/([a-zA-Z0-9]+)(\?.*)?$/; // now supports multiple regions and domains
-    const match = url.match(regex);
-    if (match) {
-      const extractedId = match[3];
-      setDocumentId(extractedId);
-      return;
-    } else {
-      setDocumentId("");
-    }
+    setDocumentId(url);
   };
 
   return (
