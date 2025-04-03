@@ -1,5 +1,3 @@
-import { ENV_INFO } from "../env";
-
 const TOKEN_KEY = "tenant_access_token";
 const TOKEN_TIMESTAMP_KEY = "tenant_access_token_timestamp";
 const TOKEN_EXPIRATION_TIME = 2 * 60 * 60 * 1000;
@@ -59,8 +57,8 @@ async function fetchNewToken(): Promise<string> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      app_id: ENV_INFO.app_id,
-      app_secret: ENV_INFO.app_secret,
+      app_id: import.meta.env.APP_ID,
+      app_secret: import.meta.env.APP_SECRET,
     }),
   });
 
