@@ -70,7 +70,7 @@ export default function App() {
           <Converter documentId={documentId} />
         </main>
         <aside css={sidebarStyle}>
-          <CommentList fileToken={documentId} />
+          <CommentList documentId={documentId} />
         </aside>
       </div>
     </div>

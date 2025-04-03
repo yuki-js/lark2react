@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
-import { getCommentContent } from "../../utils/apiHelper";
+import { useState, useEffect } from "react";
+import { getCommentContent } from "../../apis";
 import { CommentCard } from "./CommentCard";
 import { CommentData } from "../../types/api";
 
@@ -7,33 +7,31 @@ type Props = {
   /**
    * The file token for the document, namely the document ID.
    */
-  fileToken: string;
+  documentId: string;
 };
 
-export function CommentList({ fileToken }: Props) {
+export function CommentList({ documentId: fileToken }: Props) {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchComments = useCallback(async () => {
-    if (!fileToken || isLoading) return;
+  useEffect(() => {
+    (async () => {
+      if (!fileToken || isLoading) return;
 
-    setIsLoading(true);
-    try {
-      const response = await getCommentContent(fileToken);
-      setComments(response.data.items);
-    } catch (error) {
-      console.error("Failed to fetch comments:", error);
-      setComments([]);
-    } finally {
-      setIsLoading(false);
-    }
+      setIsLoading(true);
+      try {
+        const response = await getCommentContent(fileToken);
+        setComments(response.data.items);
+      } catch (error) {
+        console.error("Failed to fetch comments:", error);
+        setComments([]);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
     // isLoadingの状態に依存するとループになってしまうため
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileToken]);
-
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
 
   if (isLoading) {
     return <div>Loading comments...</div>;
@@ -48,10 +46,10 @@ export function CommentList({ fileToken }: Props) {
   }
 
   return (
-    <div>
+    <>
       {comments.map((comment) => (
         <CommentCard key={comment.comment_id} commentData={comment} />
       ))}
-    </div>
+    </>
   );
 }
