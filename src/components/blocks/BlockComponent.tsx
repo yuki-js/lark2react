@@ -2,51 +2,9 @@ import React, { memo } from "react";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { CurrentBlockProvider } from "../../contexts/CurrentBlockContext";
 import { useBlockStore } from "../../contexts/BlockStoreContext";
-import { Page } from "./Page";
-import { TextBlock } from "./Text";
-import {
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Heading5,
-  Heading6,
-  Heading7,
-  Heading8,
-  Heading9,
-} from "./Heading";
-import { UnorderedList } from "./UnorderedList";
-import { OrderedList } from "./OrderedList";
-import { CodeBlock } from "./CodeBlock";
-import { Todo } from "./Todo";
-import { Callout } from "./Callout";
-import { Divider } from "./Divider";
-import { Image } from "./Image";
-import { QuoteContainer } from "./QuoteContainer";
 import { css } from "@emotion/react";
 import { Comment } from "./Comment";
-
-const BLOCK_COMPONENTS: Record<number, React.FC> = {
-  1: Page, // Page
-  2: TextBlock, // Text
-  3: Heading1, // Heading1
-  4: Heading2, // Heading2
-  5: Heading3, // Heading3
-  6: Heading4, // Heading4
-  7: Heading5, // Heading5
-  8: Heading6, // Heading6
-  9: Heading7, // Heading7
-  10: Heading8, // Heading8
-  11: Heading9, // Heading9
-  12: UnorderedList, // UnorderedList
-  13: OrderedList, // OrderedList
-  14: CodeBlock, // CodeBlock
-  17: Todo, // Todo
-  19: Callout, // Callout
-  22: Divider, // Divider
-  27: Image, // Image
-  34: QuoteContainer, // QuoteContainer
-};
+import { BLOCK_COMPONENTS } from "../../constants/blockComponents";
 
 const unsupportedBlockStyle = css({
   fontSize: "14px",
@@ -88,17 +46,23 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
     return <UnsupportedBlock type={block.block_type} />;
   }
 
-  // Debugging function to show block ID and data
-  // const showDebugInfo = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   console.log("Block ID:", blockId);
-  //   console.log("Block Data:", block);
-  //   console.log("Parent Block Data:", blocks[block.parent_id]);
-  // };
+  // Development-only debug tool
+  const showDebugInfo = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (import.meta.env.DEV) {
+      e.stopPropagation();
+      e.preventDefault();
+      console.group(`Block Debug Info: ${blockId}`);
+      console.log("Block Data:", block);
+      console.log("Parent Block Data:", blocks[block.parent_id]);
+      console.groupEnd();
+    }
+  };
 
   const inner = (
-    <div>
+    <div
+      style={{ display: "contents" }}
+      onClick={import.meta.env.DEV ? showDebugInfo : undefined}
+    >
       <CurrentBlockProvider blockId={blockId}>
         <ErrorBoundary>
           <Component />
@@ -106,6 +70,7 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
       </CurrentBlockProvider>
     </div>
   );
+
   if (block.comment_ids) {
     return <Comment commentIds={block.comment_ids}>{inner}</Comment>;
   }

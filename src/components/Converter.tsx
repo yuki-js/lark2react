@@ -11,6 +11,7 @@ interface ConverterProps {
 
 export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
   const [items, setItems] = useState<Block[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
       }
 
       try {
+        setIsLoading(true);
         const json = (await getDocumentBlocks(documentId)) as ApiResponse;
 
         const validatedItems = json.data.items.map((item) => ({
@@ -38,29 +40,55 @@ export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
         setError(
           error instanceof Error ? error.message : "Failed to fetch document",
         );
-        console.error("API Error:", error);
+        console.error("Document fetch error:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchData();
   }, [documentId]);
 
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          padding: "20px",
+          textAlign: "center",
+          color: "#666",
+        }}
+      >
+        Loading document...
+      </div>
+    );
+  }
+
   if (error) {
-    return <div style={{ color: "#dc3545" }}>{error}</div>;
+    return (
+      <div
+        style={{
+          padding: "20px",
+          color: "#dc3545",
+          border: "1px solid #dc3545",
+          borderRadius: "4px",
+          backgroundColor: "#fff",
+        }}
+      >
+        {error}
+      </div>
+    );
   }
 
-  // Find the root block (usually a Page block with no parent)
-  const rootId =
-    items.find((block) => block.block_type === 1)?.block_id ||
-    items[0]?.block_id;
+  // Find the root block (Page block with no parent, or fallback to first block)
+  const rootBlock =
+    items.find((block) => block.block_type === 1 && !block.parent_id) ||
+    items[0];
 
-  if (!rootId) {
-    return null;
-  }
+  if (!rootBlock) return null;
 
   return (
     <BlockStoreProvider items={items}>
-      <BlockComponent blockId={rootId} />
+      <BlockComponent blockId={rootBlock.block_id} />
     </BlockStoreProvider>
   );
 };
