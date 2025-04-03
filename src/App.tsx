@@ -1,9 +1,6 @@
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Converter } from "./components/Converter";
-import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
-import { Block } from "./types/block";
-import { ApiResponse } from "./types/api";
 import { CommentList } from "./components/blocks/Comment";
 
 const containerStyle = css({
@@ -49,47 +46,6 @@ export default function App() {
     setDocumentId(event.target.value);
   };
 
-  const [items, setItems] = useState<Block[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      if (!documentId) {
-        setItems([]);
-        setError(null);
-        return;
-      }
-
-      try {
-        const tenantAccessToken = await getTenantAccessToken();
-
-        const json = (await getDocumentBlocks(
-          documentId,
-          tenantAccessToken,
-        )) as ApiResponse;
-
-        // Ensure all required fields are present
-        const validatedItems = json.data.items.map((item) => ({
-          ...item,
-          parent_id: item.parent_id || "", // Ensure parent_id exists
-          block_id: item.block_id || "", // Ensure block_id exists
-          block_type: item.block_type || 1, // Default to Page type if missing
-        })) as Block[];
-
-        setItems(validatedItems);
-        setError(null);
-      } catch (error) {
-        setItems([]);
-        setError(
-          error instanceof Error ? error.message : "Failed to fetch document",
-        );
-        console.error("API Error:", error);
-      }
-    }
-
-    fetchData();
-  }, [documentId]);
-
   return (
     <div>
       <header css={headerStyle}>
@@ -101,14 +57,11 @@ export default function App() {
           placeholder="Enter Document ID"
           css={inputStyle}
         />
-        {error && (
-          <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
-        )}
       </header>
 
       <div css={containerStyle}>
         <main css={mainContentStyle}>
-          {items.length > 0 && <Converter items={items} />}
+          <Converter documentId={documentId} />
         </main>
         <aside css={sidebarStyle}>
           <CommentList fileToken={documentId} />

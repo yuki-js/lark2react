@@ -1,16 +1,7 @@
-import { useEffect } from "react";
-import { useCommentContext } from "../../contexts/CommentContext";
-import { css } from "@emotion/react";
+import { useEffect, useState, useCallback } from "react";
+import { getCommentContent, getTenantAccessToken } from "../../utils/apiHelper";
 
-export interface CommentProps {
-  comment: {
-    comment_id: string;
-    quote: string;
-    reply_list?: {
-      replies: Reply[];
-    };
-  };
-}
+import { css } from "@emotion/react";
 
 export interface Reply {
   content: {
@@ -25,7 +16,19 @@ export interface Element {
   };
 }
 
-export function Comment({ comment }: CommentProps) {
+export interface CommentData {
+  comment_id: string;
+  quote: string;
+  reply_list?: {
+    replies: Reply[];
+  };
+}
+
+export function Comment({
+  commentData: comment,
+}: {
+  commentData: CommentData;
+}) {
   const containerStyle = css({
     padding: "16px",
     marginBottom: "8px",
@@ -67,14 +70,36 @@ interface CommentListProps {
 }
 
 export function CommentList({ fileToken }: CommentListProps) {
-  const { comments, fetchComments } = useCommentContext();
+  const [comments, setComments] = useState<CommentData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchComments = useCallback(async () => {
+    if (!fileToken || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      const accessToken = await getTenantAccessToken();
+      const response = await getCommentContent(fileToken, accessToken);
+      setComments(response.data.items);
+    } catch (error) {
+      console.error("Failed to fetch comments:", error);
+      setComments([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [fileToken, isLoading]);
 
   useEffect(() => {
-    if (fileToken) {
-      // Fetch comments when fileToken changes
-      fetchComments(fileToken);
-    }
-  }, [fileToken, fetchComments]);
+    fetchComments();
+  }, [fetchComments]);
+
+  if (isLoading) {
+    return <div>Loading comments...</div>;
+  }
+
+  if (!fileToken) {
+    return null;
+  }
 
   if (comments.length === 0) {
     return <div>No comments available</div>;
@@ -83,7 +108,7 @@ export function CommentList({ fileToken }: CommentListProps) {
   return (
     <div>
       {comments.map((comment) => (
-        <Comment key={comment.comment_id} comment={comment} />
+        <Comment key={comment.comment_id} commentData={comment} />
       ))}
     </div>
   );
