@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useCommentContext } from "../../contexts/CommentContext";
-import { useDocumentContext } from "../../contexts/DocumentContext";
 import { css } from "@emotion/react";
 
 export interface CommentProps {
@@ -63,16 +62,19 @@ export function Comment({ comment }: CommentProps) {
   );
 }
 
-export function CommentList() {
+interface CommentListProps {
+  fileToken: string;
+}
+
+export function CommentList({ fileToken }: CommentListProps) {
   const { comments, fetchComments } = useCommentContext();
-  const { documentId } = useDocumentContext();
 
   useEffect(() => {
-    if (documentId) {
-      const fileToken = documentId; // Replace with your file token
+    if (fileToken) {
+      // Fetch comments when fileToken changes
       fetchComments(fileToken);
     }
-  }, [documentId]);
+  }, [fileToken, fetchComments]);
 
   if (comments.length === 0) {
     return <div>No comments available</div>;

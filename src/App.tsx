@@ -5,12 +5,6 @@ import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
 import { Block } from "./types/block";
 import { ApiResponse } from "./types/api";
 import { CommentList } from "./components/blocks/Comment";
-import { CommentProvider } from "./contexts/CommentContext";
-import { InputDocumentId } from "./components/InputDocumentId";
-import {
-  useDocumentContext,
-  DocumentProvider,
-} from "./contexts/DocumentContext";
 
 const containerStyle = css({
   display: "flex",
@@ -32,8 +26,28 @@ const headerStyle = css({
   marginBottom: "24px",
 });
 
-function AppContent() {
-  const { documentId } = useDocumentContext();
+const inputStyle = css({
+  width: "100%",
+  padding: "8px 12px",
+  fontSize: "14px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  marginBottom: "16px",
+  "&:focus": {
+    outline: "none",
+    borderColor: "#1a73e8",
+    boxShadow: "0 0 0 2px rgba(26, 115, 232, 0.2)",
+  },
+});
+
+export default function App() {
+  const [documentId, setDocumentId] = useState("");
+
+  const handleDocumentIdChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDocumentId(event.target.value);
+  };
 
   const [items, setItems] = useState<Block[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +94,13 @@ function AppContent() {
     <div>
       <header css={headerStyle}>
         <h1>Lark to React</h1>
-        <InputDocumentId />
+        <input
+          type="text"
+          value={documentId}
+          onChange={handleDocumentIdChange}
+          placeholder="Enter Document ID"
+          css={inputStyle}
+        />
         {error && (
           <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
         )}
@@ -91,19 +111,9 @@ function AppContent() {
           {items.length > 0 && <Converter items={items} />}
         </main>
         <aside css={sidebarStyle}>
-          <CommentProvider>
-            <CommentList />
-          </CommentProvider>
+          <CommentList fileToken={documentId} />
         </aside>
       </div>
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <DocumentProvider>
-      <AppContent />
-    </DocumentProvider>
   );
 }
