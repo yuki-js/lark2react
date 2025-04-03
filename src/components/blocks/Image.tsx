@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { useState, useEffect } from "react";
-import { getFile } from "../../utils/apiHelper";
+import { getFile } from "../../apis";
 
 const imageWrapperStyle = css({
   position: "relative",

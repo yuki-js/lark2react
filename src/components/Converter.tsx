@@ -3,7 +3,7 @@ import { BlockComponent } from "./blocks/BlockComponent";
 import { BlockStoreProvider } from "../contexts/BlockStoreContext";
 import { Block } from "../types/block";
 import { ApiResponse } from "../types/api";
-import { getDocumentBlocks } from "../utils/apiHelper";
+import { getDocumentBlocks } from "../apis";
 
 interface ConverterProps {
   documentId: string;
