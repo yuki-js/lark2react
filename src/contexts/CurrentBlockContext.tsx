@@ -8,6 +8,8 @@ interface CurrentBlockContext {
 
 const CurrentBlockContext = createContext<CurrentBlockContext | null>(null);
 
+// 大した処理をしていないのでeslintを無効化
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCurrentBlock = () => {
   const context = useContext(CurrentBlockContext);
   if (!context) {

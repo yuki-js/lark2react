@@ -8,6 +8,8 @@ interface BlockStore {
 
 const BlockStoreContext = createContext<BlockStore | null>(null);
 
+// 大した処理をしていないのでeslintを無効化
+// eslint-disable-next-line react-refresh/only-export-components
 export const useBlockStore = () => {
   const context = useContext(BlockStoreContext);
   if (!context) {

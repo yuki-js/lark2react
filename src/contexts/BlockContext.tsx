@@ -30,6 +30,8 @@ export const BlockProvider: React.FC<BlockProviderProps> = ({
   );
 };
 
+// 大した処理をしていないのでeslintを無効化
+// eslint-disable-next-line react-refresh/only-export-components
 export const useBlock = (): IBlockContext => {
   const context = useContext(BlockContext);
   if (!context) {
