@@ -43,7 +43,21 @@ export default function App() {
   const handleDocumentIdChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setDocumentId(event.target.value);
+    // example uri: https://aoki-app.jp.larksuite.com/docx/Q5Oqd7WljoQL6Nx4bdVjOASbpue?from=from_copylink
+    // extracted Q5Oqd7WljoQL6Nx4bdVjOASbpue
+
+    // extract the document ID from the URL
+    const url = event.target.value;
+    const regex =
+      /^https:\/\/[a-zA-Z0-9-]+\.([a-zA-Z0-9-]+\.)?(larksuite\.com|feishu\.cn)\/docx\/([a-zA-Z0-9]+)(\?.*)?$/; // now supports multiple regions and domains
+    const match = url.match(regex);
+    if (match) {
+      const extractedId = match[3];
+      setDocumentId(extractedId);
+      return;
+    } else {
+      setDocumentId("");
+    }
   };
 
   return (
@@ -52,9 +66,9 @@ export default function App() {
         <h1>Lark to React</h1>
         <input
           type="text"
-          value={documentId}
+          value={documentId} // note: URL形式をコピーしたら勝手に変形するけどまあデモだしご愛嬌
           onChange={handleDocumentIdChange}
-          placeholder="Enter Document ID"
+          placeholder="Enter Lark document URL"
           css={inputStyle}
         />
       </header>
