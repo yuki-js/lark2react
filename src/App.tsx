@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { Converter } from "./components/Converter";
-import { CommentList } from "./components/blocks/Comment";
+import { CommentList } from "./components/blocks/CommentList";
 import { extractDocId } from "./utils/utils";
 
 const containerStyle = css({

@@ -11,3 +11,38 @@ export interface ApiResponse {
     >;
   };
 }
+
+type CommentReply = {
+  content: {
+    elements: ReplyElement[];
+  };
+  reply_id: string;
+};
+
+export type CommentData = {
+  comment_id: string;
+  quote: string;
+  reply_list?: {
+    replies: CommentReply[];
+  };
+};
+
+type ReplyElement =
+  | {
+      type: "text_run";
+      text_run: {
+        text: string;
+      };
+    }
+  | {
+      type: "docs_link";
+      docs_link: {
+        url: string;
+      };
+    }
+  | {
+      type: "person";
+      person: {
+        user_id: string;
+      };
+    };
