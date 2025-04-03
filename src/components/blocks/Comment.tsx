@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { getCommentContent, getTenantAccessToken } from "../../utils/apiHelper";
+import { getCommentContent } from "../../utils/apiHelper";
 
 import { css } from "@emotion/react";
 
@@ -78,8 +78,7 @@ export function CommentList({ fileToken }: CommentListProps) {
 
     setIsLoading(true);
     try {
-      const accessToken = await getTenantAccessToken();
-      const response = await getCommentContent(fileToken, accessToken);
+      const response = await getCommentContent(fileToken);
       setComments(response.data.items);
     } catch (error) {
       console.error("Failed to fetch comments:", error);

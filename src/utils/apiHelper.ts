@@ -49,8 +49,7 @@ export async function getDocumentBlocks(documentId: string) {
   });
 }
 
-// トークンをAPIから取得する関数
-export async function fetchNewToken(): Promise<string> {
+async function fetchNewToken(): Promise<string> {
   const baseUrl = getApiBaseUrl();
   const url = `${baseUrl}/auth/v3/tenant_access_token/internal`;
 

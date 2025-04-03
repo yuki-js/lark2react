@@ -3,7 +3,7 @@ import { BlockComponent } from "./blocks/BlockComponent";
 import { BlockStoreProvider } from "../contexts/BlockStoreContext";
 import { Block } from "../types/block";
 import { ApiResponse } from "../types/api";
-import { getDocumentBlocks, getTenantAccessToken } from "../utils/apiHelper";
+import { getDocumentBlocks } from "../utils/apiHelper";
 
 interface ConverterProps {
   documentId: string;
@@ -22,11 +22,7 @@ export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
       }
 
       try {
-        const tenantAccessToken = await getTenantAccessToken();
-        const json = (await getDocumentBlocks(
-          documentId,
-          tenantAccessToken,
-        )) as ApiResponse;
+        const json = (await getDocumentBlocks(documentId)) as ApiResponse;
 
         const validatedItems = json.data.items.map((item) => ({
           ...item,

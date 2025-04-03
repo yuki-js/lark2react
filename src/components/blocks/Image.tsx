@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { useState, useEffect } from "react";
-import { getTenantAccessToken, getFile } from "../../utils/apiHelper";
+import { getFile } from "../../utils/apiHelper";
 
 const imageWrapperStyle = css({
   position: "relative",
@@ -59,8 +59,7 @@ export const Image: React.FC = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const tenantAccessToken = await getTenantAccessToken();
-        const blob = await getFile(block.image?.token ?? "", tenantAccessToken);
+        const blob = await getFile(block.image?.token ?? "");
         const url = URL.createObjectURL(blob);
         setImageUrl(url);
       } catch (err) {
