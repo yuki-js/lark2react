@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { Converter } from "./components/Converter";
 import { CommentList } from "./components/blocks/Comment";
+import { extractDocId } from "./utils/utils";
 
 const containerStyle = css({
   display: "flex",
@@ -48,7 +49,7 @@ export default function App() {
 
     // extract the document ID from the URL
     const url = event.target.value;
-    setDocumentId(url);
+    setDocumentId(extractDocId(url));
   };
 
   return (
