@@ -24,7 +24,7 @@ export interface CommentData {
   };
 }
 
-export function Comment({
+export function CommentCard({
   commentData: comment,
 }: {
   commentData: CommentData;
@@ -86,7 +86,9 @@ export function CommentList({ fileToken }: CommentListProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [fileToken, isLoading]);
+    // isLoadingの状態に依存するとループになってしまうため
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileToken]);
 
   useEffect(() => {
     fetchComments();
@@ -107,7 +109,7 @@ export function CommentList({ fileToken }: CommentListProps) {
   return (
     <div>
       {comments.map((comment) => (
-        <Comment key={comment.comment_id} commentData={comment} />
+        <CommentCard key={comment.comment_id} commentData={comment} />
       ))}
     </div>
   );
