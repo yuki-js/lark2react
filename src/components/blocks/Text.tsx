@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { TextElement, TextStyle } from "../../types/block";
 import { containsUrl } from "../../utils/utils";
+import { Comment } from "../Comment";
 
 const textContainerStyle = css({});
 
@@ -27,16 +28,6 @@ export const Text: React.FC<{
         if (!element.text_run) {
           return null;
         }
-
-        //コメントが紐づけられている場合は、文字列にマーカーを付与
-        const comment = element.text_run.text_element_style?.comment_ids;
-        const commentStyle = comment
-        ? {
-            textDecoration: "underline", 
-            textDecorationColor: "#ffeb3b", 
-            textDecorationThickness: "2px", 
-          }
-        : {};
 
         const style = css({
           color: element.text_run.text_element_style?.bold ? "#000" : "#333",
@@ -66,7 +57,6 @@ export const Text: React.FC<{
           borderRadius: element.text_run.text_element_style?.inline_code
             ? "3px"
             : "0",
-          ...commentStyle,
         });
 
         //文字列にリンクが紐づいているor文字列がhttps://で始まる場合はリンクとして扱う
@@ -80,9 +70,7 @@ export const Text: React.FC<{
           isUrl = true;
         }
 
-        
-
-        return (
+        const inner = (
           <span key={index} css={style}>
             {isUrl ? (
               <a href={url} target="_blank">
@@ -93,6 +81,19 @@ export const Text: React.FC<{
             )}
           </span>
         );
+
+        //コメントが紐づけられている場合は、文字列にマーカーを付与
+        const comment = element.text_run.text_element_style?.comment_ids;
+
+        if (Array.isArray(comment) && comment.length > 0) {
+          return (
+            <Comment commentIds={comment} key={index}>
+              {inner}
+            </Comment>
+          );
+        }
+
+        return inner;
       })}
     </div>
   );

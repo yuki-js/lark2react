@@ -1,5 +1,5 @@
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { BlockComponent } from "./BlockComponent";
+import { BlockComponent } from "../BlockComponent";
 import { Text } from "./Text";
 
 import { css } from "@emotion/react";

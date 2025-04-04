@@ -1,16 +1,8 @@
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Converter } from "./components/Converter";
-import { getDocumentBlocks, getTenantAccessToken } from "./utils/apiHelper";
-import { Block } from "./types/block";
-import { ApiResponse } from "./types/api";
-import { CommentList } from "./components/blocks/Comment";
-import { CommentProvider } from "./contexts/CommentContext";
-import { InputDocumentId } from "./components/InputDocumentId";
-import {
-  useDocumentContext,
-  DocumentProvider,
-} from "./contexts/DocumentContext";
+import { CommentList } from "./components/CommentList";
+import { extractDocId } from "./utils/utils";
 
 const containerStyle = css({
   display: "flex",
@@ -32,78 +24,55 @@ const headerStyle = css({
   marginBottom: "24px",
 });
 
-function AppContent() {
-  const { documentId } = useDocumentContext();
+const inputStyle = css({
+  width: "100%",
+  padding: "8px 12px",
+  fontSize: "14px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  marginBottom: "16px",
+  "&:focus": {
+    outline: "none",
+    borderColor: "#1a73e8",
+    boxShadow: "0 0 0 2px rgba(26, 115, 232, 0.2)",
+  },
+});
 
-  const [items, setItems] = useState<Block[]>([]);
-  const [error, setError] = useState<string | null>(null);
+export default function App() {
+  const [documentId, setDocumentId] = useState("");
 
-  useEffect(() => {
-    async function fetchData() {
-      if (!documentId) {
-        setItems([]);
-        setError(null);
-        return;
-      }
+  const handleDocumentIdChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    // example uri: https://aoki-app.jp.larksuite.com/docx/Q5Oqd7WljoQL6Nx4bdVjOASbpue?from=from_copylink
+    // extracted Q5Oqd7WljoQL6Nx4bdVjOASbpue
 
-      try {
-        const tenantAccessToken = await getTenantAccessToken();
-
-        const json = (await getDocumentBlocks(
-          documentId,
-          tenantAccessToken,
-        )) as ApiResponse;
-
-        // Ensure all required fields are present
-        const validatedItems = json.data.items.map((item) => ({
-          ...item,
-          parent_id: item.parent_id || "", // Ensure parent_id exists
-          block_id: item.block_id || "", // Ensure block_id exists
-          block_type: item.block_type || 1, // Default to Page type if missing
-        })) as Block[];
-
-        setItems(validatedItems);
-        setError(null);
-      } catch (error) {
-        setItems([]);
-        setError(
-          error instanceof Error ? error.message : "Failed to fetch document",
-        );
-        console.error("API Error:", error);
-      }
-    }
-
-    fetchData();
-  }, [documentId]);
+    // extract the document ID from the URL
+    const url = event.target.value;
+    setDocumentId(extractDocId(url));
+  };
 
   return (
     <div>
       <header css={headerStyle}>
         <h1>Lark to React</h1>
-        <InputDocumentId />
-        {error && (
-          <div css={css({ color: "#dc3545", marginTop: "8px" })}>{error}</div>
-        )}
+        <input
+          type="text"
+          value={documentId} // note: URL形式をコピーしたら勝手に変形するけどまあデモだしご愛嬌
+          onChange={handleDocumentIdChange}
+          placeholder="Enter Lark document URL"
+          css={inputStyle}
+        />
       </header>
 
       <div css={containerStyle}>
         <main css={mainContentStyle}>
-          {items.length > 0 && <Converter items={items} />}
+          <Converter documentId={documentId} />
         </main>
         <aside css={sidebarStyle}>
-          <CommentProvider>
-            <CommentList />
-          </CommentProvider>
+          <CommentList documentId={documentId} />
         </aside>
       </div>
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <DocumentProvider>
-      <AppContent />
-    </DocumentProvider>
   );
 }
