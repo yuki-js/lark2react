@@ -2,6 +2,11 @@ const TOKEN_KEY = "tenant_access_token";
 const TOKEN_TIMESTAMP_KEY = "tenant_access_token_timestamp";
 const TOKEN_EXPIRATION_TIME = 2 * 60 * 60 * 1000;
 
+const FILE_CACHE_PREFIX = "file_cache_";
+const FILE_CACHE_TIMESTAMP_PREFIX = "file_cache_timestamp_";
+const FILE_CACHE_EXPIRATION = 24 * 60 * 60 * 1000; // 24時間
+const FILE_CACHE_MIME_PREFIX = "file_cache_mime_";
+
 // APIのベースURLを環境に応じて取得する関数
 export function getApiBaseUrl(): string {
   const isDevelopment = import.meta.env.DEV;
@@ -70,6 +75,29 @@ async function fetchNewToken(): Promise<string> {
 }
 
 export async function getFile(fileToken: string): Promise<Blob> {
+  // キャッシュをチェック
+  const cachedData = localStorage.getItem(FILE_CACHE_PREFIX + fileToken);
+  const cachedTimestamp = localStorage.getItem(
+    FILE_CACHE_TIMESTAMP_PREFIX + fileToken,
+  );
+  const cachedMimeType = localStorage.getItem(
+    FILE_CACHE_MIME_PREFIX + fileToken,
+  );
+
+  if (cachedData && cachedTimestamp && cachedMimeType) {
+    const timestamp = parseInt(cachedTimestamp, 10);
+    if (Date.now() - timestamp < FILE_CACHE_EXPIRATION) {
+      // キャッシュが有効な場合はBase64からBlobに変換して返す
+      const byteString = atob(cachedData);
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([arrayBuffer], { type: cachedMimeType });
+    }
+  }
+
   const baseUrl = getApiBaseUrl();
   const url = `${baseUrl}/drive/v1/medias/${fileToken}/download`;
   const accessToken = await getValidAccessToken();
@@ -87,7 +115,26 @@ export async function getFile(fileToken: string): Promise<Blob> {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  return await response.blob();
+  const blob = await response.blob();
+
+  // Blobをbase64に変換してキャッシュ
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  await new Promise((resolve) => {
+    reader.onloadend = () => {
+      const base64data = reader.result as string;
+      const base64Content = base64data.split(",")[1];
+      localStorage.setItem(FILE_CACHE_PREFIX + fileToken, base64Content);
+      localStorage.setItem(
+        FILE_CACHE_TIMESTAMP_PREFIX + fileToken,
+        Date.now().toString(),
+      );
+      localStorage.setItem(FILE_CACHE_MIME_PREFIX + fileToken, blob.type);
+      resolve(null);
+    };
+  });
+
+  return blob;
 }
 
 export async function getCommentContent(fileToken: string) {
