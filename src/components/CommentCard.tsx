@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { CommentData } from "../../types/api";
+import { CommentData } from "../types/api";
 
 export function CommentCard({
   commentData: comment,

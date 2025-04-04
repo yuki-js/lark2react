@@ -3,7 +3,7 @@ import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { EMOJI } from "../../constants/emoji";
 import { CALLOUT_BACKGROUND_COLOR } from "../../styles/calloutBackgroundColor";
 import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
-import { BlockComponent } from "./BlockComponent";
+import { BlockComponent } from "../BlockComponent";
 
 const calloutContainerStyle = css({
   display: "flex",

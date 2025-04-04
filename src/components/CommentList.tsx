@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getCommentContent } from "../../apis";
+import { getCommentContent } from "../apis";
 import { CommentCard } from "./CommentCard";
-import { CommentData } from "../../types/api";
+import { CommentData } from "../types/api";
 
 type Props = {
   /**

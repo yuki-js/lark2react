@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BlockComponent } from "./blocks/BlockComponent";
+import { BlockComponent } from "./BlockComponent";
 import { BlockStoreProvider } from "../contexts/BlockStoreContext";
 import { Block } from "../types/block";
 import { ApiResponse } from "../types/api";

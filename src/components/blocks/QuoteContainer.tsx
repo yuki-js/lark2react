@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
-import { BlockComponent } from "./BlockComponent";
+import { BlockComponent } from "../BlockComponent";
 
 export const QuoteContainer: React.FC = () => {
   const { block } = useCurrentBlock();

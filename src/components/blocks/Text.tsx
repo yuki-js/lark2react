@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
 import { TextElement, TextStyle } from "../../types/block";
 import { containsUrl } from "../../utils/utils";
-import { Comment } from "./Comment";
+import { Comment } from "../Comment";
 
 const textContainerStyle = css({});
 
