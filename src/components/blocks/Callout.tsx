@@ -7,6 +7,7 @@ import { BlockComponent } from "../BlockComponent";
 
 const calloutContainerStyle = css({
   display: "flex",
+  alignItems: "flex-start",
   padding: "16px",
   backgroundColor: "#f5f6f7",
   borderRadius: "4px",

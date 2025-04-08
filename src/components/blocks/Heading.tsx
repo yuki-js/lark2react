@@ -33,8 +33,7 @@ const HeadingBase: React.FC<HeadingBaseProps> = ({ level }) => {
   const headingStyle = css({
     fontSize: HEADING_SIZES[level],
     fontWeight: "bold",
-    marginBottom: "16px",
-    marginTop: "24px",
+    marginBottom: "12px",
     textAlign:
       align === 1
         ? "left"
