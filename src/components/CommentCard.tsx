@@ -36,13 +36,15 @@ export function CommentCard({
         <div key={i} css={replyStyle}>
           {reply.content.elements.map((element, j) => (
             <span key={j}>
-              {element.type === "text_run"
-                ? element.text_run.text
-                : element.type === "docs_link"
-                  ? element.docs_link.url
-                  : element.type === "person"
-                    ? <Mention />
-                    : ""}
+              {element.type === "text_run" ? (
+                element.text_run.text
+              ) : element.type === "docs_link" ? (
+                element.docs_link.url
+              ) : element.type === "person" ? (
+                <Mention user_id={element.person.user_id} />
+              ) : (
+                ""
+              )}
             </span>
           ))}
         </div>
