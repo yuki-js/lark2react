@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { CommentData } from "../types/api";
+import { Mention } from "./Mention";
 
 export function CommentCard({
   commentData: comment,
@@ -40,7 +41,7 @@ export function CommentCard({
                 : element.type === "docs_link"
                   ? element.docs_link.url
                   : element.type === "person"
-                    ? `@${element.person.user_id}`
+                    ? <Mention />
                     : ""}
             </span>
           ))}

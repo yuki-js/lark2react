@@ -48,12 +48,11 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
 
   // Development-only debug tool
   const showDebugInfo = (e: React.MouseEvent<HTMLDivElement>) => {
-    
     // クリックされた要素が <a> タグの場合は処理をスキップ
     if ((e.target as HTMLElement).tagName === "A") {
       return;
     }
-    
+
     if (import.meta.env.DEV) {
       e.stopPropagation();
       e.preventDefault();
