@@ -62,12 +62,15 @@ async function fetchNewToken(): Promise<string> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      app_id: import.meta.env.APP_ID,
-      app_secret: import.meta.env.APP_SECRET,
+      app_id: import.meta.env.VITE_APP_ID,
+      app_secret: import.meta.env.VITE_APP_SECRET,
     }),
   });
 
   const newToken = response.tenant_access_token;
+  if (!newToken) {
+    throw new Error("Failed to fetch new token");
+  }
   localStorage.setItem(TOKEN_KEY, newToken);
   localStorage.setItem(TOKEN_TIMESTAMP_KEY, Date.now().toString());
 
