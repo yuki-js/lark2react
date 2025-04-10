@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { CODE_LANGUAGE } from "../../constants/codeLanguage";
 import { Element } from "../../types/block";
 
@@ -28,9 +28,7 @@ const languageTagStyle = css({
   color: "gray",
 });
 
-export const CodeBlock: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const CodeBlock: BlockInnerComponent = ({ block }) => {
   const codeLanguage = block.code?.style?.language
     ? CODE_LANGUAGE[block.code.style.language]
     : "Unknown";

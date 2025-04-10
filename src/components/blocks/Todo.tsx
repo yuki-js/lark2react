@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { Element } from "../../types/block";
 import { containsUrl } from "../../utils/utils";
 
@@ -49,9 +49,7 @@ const doneTextStyle = css({
   color: "#666",
 });
 
-export const Todo: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const Todo: BlockInnerComponent = ({ block }) => {
   if (!block.todo?.elements) {
     return null;
   }

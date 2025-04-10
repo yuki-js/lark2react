@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 
 const HEADING_SIZES = {
   1: "32px", // h1
@@ -15,12 +15,9 @@ const HEADING_SIZES = {
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-interface HeadingBaseProps {
+const HeadingBase: BlockInnerComponent<{
   level: HeadingLevel;
-}
-
-const HeadingBase: React.FC<HeadingBaseProps> = ({ level }) => {
-  const { block } = useCurrentBlock();
+}> = ({ block, level }) => {
   const headingKey = `heading${level}` as const;
   const headingData = block[headingKey];
 
@@ -92,12 +89,30 @@ const HeadingBase: React.FC<HeadingBaseProps> = ({ level }) => {
   );
 };
 
-export const Heading1: React.FC = () => <HeadingBase level={1} />;
-export const Heading2: React.FC = () => <HeadingBase level={2} />;
-export const Heading3: React.FC = () => <HeadingBase level={3} />;
-export const Heading4: React.FC = () => <HeadingBase level={4} />;
-export const Heading5: React.FC = () => <HeadingBase level={5} />;
-export const Heading6: React.FC = () => <HeadingBase level={6} />;
-export const Heading7: React.FC = () => <HeadingBase level={7} />;
-export const Heading8: React.FC = () => <HeadingBase level={8} />;
-export const Heading9: React.FC = () => <HeadingBase level={9} />;
+export const Heading1: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={1} />
+);
+export const Heading2: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={2} />
+);
+export const Heading3: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={3} />
+);
+export const Heading4: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={4} />
+);
+export const Heading5: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={5} />
+);
+export const Heading6: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={6} />
+);
+export const Heading7: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={7} />
+);
+export const Heading8: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={8} />
+);
+export const Heading9: BlockInnerComponent = ({ block }) => (
+  <HeadingBase block={block} level={9} />
+);

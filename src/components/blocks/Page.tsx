@@ -1,9 +1,7 @@
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { BlockComponent } from "../BlockComponent";
 
-export const Page: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const Page: BlockInnerComponent = ({ block }) => {
   return (
     <div>
       {block.children?.map((childId) => (
