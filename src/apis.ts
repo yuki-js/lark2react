@@ -68,7 +68,7 @@ async function fetchNewToken(): Promise<string> {
   });
 
   const newToken = response.tenant_access_token;
-  console.log(import.meta.env.VITE_APP_ID);
+  
   if (!newToken) {
     throw new Error("Failed to fetch new token");
   }
