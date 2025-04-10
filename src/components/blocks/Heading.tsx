@@ -18,8 +18,8 @@ type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 const HeadingBase: BlockInnerComponent<{
   level: HeadingLevel;
 }> = ({ block, level }) => {
-  const headingKey = `heading${level}` as keyof typeof block;
-  const headingData = block[headingKey] as typeof block.heading3;
+  const headingKey = `heading${level}` as const;
+  const headingData = block[headingKey];
 
   if (!headingData?.elements) {
     return null;
