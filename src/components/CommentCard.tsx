@@ -41,7 +41,7 @@ export function CommentCard({
               ) : element.type === "docs_link" ? (
                 element.docs_link.url
               ) : element.type === "person" ? (
-                <Mention user_id={element.person.user_id} />
+                <Mention userId={element.person.user_id} />
               ) : (
                 ""
               )}
