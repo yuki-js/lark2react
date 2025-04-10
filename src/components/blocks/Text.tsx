@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { TextElement, TextStyle } from "../../types/block";
 import { containsUrl } from "../../utils/utils";
 import { Comment } from "../Comment";
@@ -99,9 +99,7 @@ export const Text: React.FC<{
   );
 };
 
-export const TextBlock: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const TextBlock: BlockInnerComponent = ({ block }) => {
   return (
     <Text
       elements={block.text?.elements as unknown as TextElement[]} // todo: safer way

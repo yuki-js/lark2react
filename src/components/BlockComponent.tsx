@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { CurrentBlockProvider } from "../contexts/CurrentBlockContext";
 import { useBlockStore } from "../contexts/BlockStoreContext";
 import { css } from "@emotion/react";
 import { Comment } from "./Comment";
@@ -68,11 +67,9 @@ const BlockComponentBase: React.FC<BlockComponentProps> = ({ blockId }) => {
       style={{ display: "contents" }}
       onClick={import.meta.env.DEV ? showDebugInfo : undefined}
     >
-      <CurrentBlockProvider blockId={blockId}>
-        <ErrorBoundary>
-          <Component />
-        </ErrorBoundary>
-      </CurrentBlockProvider>
+      <ErrorBoundary>
+        <Component block={block} />
+      </ErrorBoundary>
     </div>
   );
 

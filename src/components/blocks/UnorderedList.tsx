@@ -1,4 +1,4 @@
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { BlockComponent } from "../BlockComponent";
 import { Text } from "./Text";
 
@@ -22,9 +22,7 @@ const sty = css({
   },
 });
 
-export const UnorderedList: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const UnorderedList: BlockInnerComponent = ({ block }) => {
   if (!block.bullet?.elements) {
     return null;
   }

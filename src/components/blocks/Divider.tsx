@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { BlockInnerComponent } from "../../types";
 
 const dividerStyle = css({
   height: "1px",
@@ -8,6 +9,6 @@ const dividerStyle = css({
   width: "100%",
 });
 
-export const Divider: React.FC = () => {
+export const Divider: BlockInnerComponent = () => {
   return <hr css={dividerStyle} />;
 };
