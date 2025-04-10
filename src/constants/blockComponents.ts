@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Page } from "../components/blocks/Page";
 import { TextBlock } from "../components/blocks/Text";
 import {
@@ -20,8 +19,9 @@ import { Callout } from "../components/blocks/Callout";
 import { Divider } from "../components/blocks/Divider";
 import { Image } from "../components/blocks/Image";
 import { QuoteContainer } from "../components/blocks/QuoteContainer";
+import { BlockInnerComponent } from "../types";
 
-export const BLOCK_COMPONENTS: Record<number, FC> = {
+export const BLOCK_COMPONENTS: Record<number, BlockInnerComponent> = {
   1: Page, // Page
   2: TextBlock, // Text
   3: Heading1, // Heading1

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { EMOJI } from "../../constants/emoji";
 import { CALLOUT_BACKGROUND_COLOR } from "../../styles/calloutBackgroundColor";
 import { CALLOUT_BORDER_COLOR } from "../../styles/calloutBorderColor";
@@ -32,9 +32,7 @@ const contentStyle = css({
   },
 });
 
-export const Callout: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const Callout: BlockInnerComponent = ({ block }) => {
   if (!block.callout?.emoji_id) {
     return null;
   }

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { useState, useEffect } from "react";
 import { getFile } from "../../apis";
 
@@ -45,8 +45,7 @@ const errorStyle = css({
   textAlign: "center",
 });
 
-export const Image: React.FC = () => {
-  const { block } = useCurrentBlock();
+export const Image: BlockInnerComponent = ({ block }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState("");

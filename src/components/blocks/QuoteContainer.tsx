@@ -1,10 +1,8 @@
 import { css } from "@emotion/react";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { BlockComponent } from "../BlockComponent";
 
-export const QuoteContainer: React.FC = () => {
-  const { block } = useCurrentBlock();
-
+export const QuoteContainer: BlockInnerComponent = ({ block }) => {
   const quoteContainerStyle = css({
     borderLeft: "4px solid lightgray",
     paddingLeft: "16px",

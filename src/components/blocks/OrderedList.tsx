@@ -1,12 +1,11 @@
 import { useBlockStore } from "../../contexts/BlockStoreContext";
-import { useCurrentBlock } from "../../contexts/CurrentBlockContext";
+import { BlockInnerComponent } from "../../types";
 import { BlockComponent } from "../BlockComponent";
 import { Text } from "./Text";
 
 import { css } from "@emotion/react";
 
-export const OrderedList: React.FC = () => {
-  const { block } = useCurrentBlock();
+export const OrderedList: BlockInnerComponent = ({ block }) => {
   const blockStore = useBlockStore();
 
   if (!block.ordered?.elements) {
