@@ -1,6 +1,6 @@
-//FIXME 将来的にuser_idから氏名を取得して表示させる
-//今のところ固定値"@mention"を表示
+// FIXME 将来的にuser_idから氏名を取得して表示させる
+// FIXME @mentionのスタイルを設定する
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Mention({ user_id }: { user_id: string }): React.FC {
+export function Mention(_props: { userId: string }) {
   return <div>@mention</div>;
 }
