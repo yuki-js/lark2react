@@ -21,8 +21,8 @@ interface HeadingBaseProps {
 
 const HeadingBase: React.FC<HeadingBaseProps> = ({ level }) => {
   const { block } = useCurrentBlock();
-  const headingKey = `heading${level}` as keyof typeof block;
-  const headingData = block[headingKey] as typeof block.heading3;
+  const headingKey = `heading${level}` as const;
+  const headingData = block[headingKey];
 
   if (!headingData?.elements) {
     return null;
