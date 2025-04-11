@@ -60,24 +60,23 @@ interface ImageContent {
 }
 
 interface Table {
-  cells: string[]
-  property: TableProperty; 
+  cells: string[];
+  property: TableProperty;
 }
 
 interface TableProperty {
-  row_size: number; 
-  column_size: number; 
-  column_width?: number[]; 
-  header_row?: boolean; 
-  header_column?: boolean; 
-  merge_info?: TableMergeInfo[]; 
+  row_size: number;
+  column_size: number;
+  column_width?: number[];
+  header_row?: boolean;
+  header_column?: boolean;
+  merge_info?: TableMergeInfo[];
 }
 
 interface TableMergeInfo {
-  row_span: number; 
-  col_span: number; 
+  row_span: number;
+  col_span: number;
 }
-
 
 export interface Block {
   block_id: string;
