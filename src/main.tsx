@@ -12,7 +12,7 @@ const globalStyles = css`
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, sans-serif;
+      "Helvetica Neue", system-ui, sans-serif;
     line-height: 1.5;
     color: #24292e;
   }
