@@ -15,7 +15,6 @@ const sty = css({
     height: "8px",
     borderRadius: "50%",
     backgroundColor: "#000",
-    margin: "0 auto",
     position: "absolute",
     top: "0.5em",
     left: "0px",

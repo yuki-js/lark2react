@@ -11,6 +11,7 @@ const calloutContainerStyle = css({
   padding: "16px",
   backgroundColor: "#f5f6f7",
   borderRadius: "4px",
+  marginTop: "16px",
   marginBottom: "16px",
   gap: "12px",
 });

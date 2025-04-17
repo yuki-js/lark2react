@@ -26,7 +26,6 @@ export const OrderedList: BlockInnerComponent = ({ block }) => {
     "::before": {
       content: `"${seq}"`,
       display: "block",
-      margin: "0 auto",
       position: "absolute",
       top: "0em",
       left: "0px",

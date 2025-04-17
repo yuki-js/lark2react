@@ -5,15 +5,14 @@ import { containsUrl } from "../../utils/utils";
 
 const todoContainerStyle = css({
   display: "flex",
-  alignItems: "flex-start",
-  marginBottom: "8px",
+  alignItems: "center",
   gap: "8px",
 });
 
 const checkboxStyle = css({
   width: "16px",
   height: "16px",
-  marginTop: "4px",
+  
   appearance: "none",
   border: "2px solid #666",
   borderRadius: "3px",

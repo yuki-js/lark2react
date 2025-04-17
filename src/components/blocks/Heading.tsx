@@ -30,8 +30,8 @@ const HeadingBase: BlockInnerComponent<{
   const headingStyle = css({
     fontSize: HEADING_SIZES[level],
     fontWeight: "bold",
-    marginTop: "12px",
-    marginBottom: "12px",
+    paddingTop: "12px",
+    paddingBottom: "12px",
     textAlign:
       align === 1
         ? "left"
