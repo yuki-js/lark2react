@@ -44,7 +44,8 @@ export const Callout: BlockInnerComponent = ({ block }) => {
 
   const customCalloutStyle = css({
     backgroundColor,
-    borderLeft: `4px solid ${borderColor}`,
+    border: `1px solid ${borderColor}`,
+    borderRadius: "8px",
   });
 
   return (
