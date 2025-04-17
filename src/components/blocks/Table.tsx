@@ -26,12 +26,13 @@ export const Table: BlockInnerComponent = ({ block }) => {
     verticalAlign: "top",
   });
 
-  const rowSize = block.table?.property.row_size;
-  const columnSize = block.table?.property.column_size;
-  const columnWidth = block.table?.property.column_width; //array of numbers
-  const headerRow = block.table?.property.header_row;
-  //const headerColumn = block.table?.property.header_column;
-  //const mergeInfo = block.table?.property.merge_info;
+  const tableProperty = block.table?.property;
+  const rowSize = tableProperty.row_size;
+  const columnSize = tableProperty.column_size;
+  const columnWidth = tableProperty.column_width; //array of numbers
+  const headerRow = tableProperty.header_row;
+  //const headerColumn = tableProperty.header_column;
+  //const mergeInfo = tableProperty.merge_info;
 
   // 一次元配列を行ごとに分割
   const cells = block.table?.cells || [];
