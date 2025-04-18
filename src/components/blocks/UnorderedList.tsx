@@ -22,13 +22,15 @@ const sty = css({
 });
 
 export const UnorderedList: BlockInnerComponent = ({ block }) => {
-  if (!block.bullet?.elements) {
+  const bullet = block.bullet;
+
+  if (!bullet?.elements) {
     return null;
   }
 
   return (
     <div css={sty}>
-      <Text {...block.bullet} />
+      <Text {...bullet} />
       {block.children?.map((childId) => (
         <BlockComponent key={childId} blockId={childId} />
       ))}

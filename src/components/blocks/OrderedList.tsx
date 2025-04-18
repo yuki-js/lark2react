@@ -8,11 +8,13 @@ import { css } from "@emotion/react";
 export const OrderedList: BlockInnerComponent = ({ block }) => {
   const blockStore = useBlockStore();
 
-  if (!block.ordered?.elements) {
+  const ordered = block.ordered;
+
+  if (!ordered?.elements) {
     return null;
   }
 
-  let seq = block.ordered.style?.sequence;
+  let seq = ordered.style?.sequence;
   if (seq === "auto") {
     seq =
       blockStore.blocks[block.parent_id].children!.findIndex(
@@ -34,7 +36,7 @@ export const OrderedList: BlockInnerComponent = ({ block }) => {
 
   return (
     <div css={sty}>
-      <Text {...block.ordered} />
+      <Text {...ordered} />
       {block.children?.map((childId) => (
         <BlockComponent key={childId} blockId={childId} />
       ))}

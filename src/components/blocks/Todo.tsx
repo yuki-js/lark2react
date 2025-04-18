@@ -12,7 +12,7 @@ const todoContainerStyle = css({
 const checkboxStyle = css({
   width: "16px",
   height: "16px",
-  
+
   appearance: "none",
   border: "2px solid #666",
   borderRadius: "3px",
@@ -49,12 +49,14 @@ const doneTextStyle = css({
 });
 
 export const Todo: BlockInnerComponent = ({ block }) => {
-  if (!block.todo?.elements) {
+  const todo = block.todo;
+
+  if (!todo?.elements) {
     return null;
   }
 
-  const isDone = block.todo.style?.done || false;
-  const align = block.todo.style?.align || 1;
+  const isDone = todo.style?.done || false;
+  const align = todo.style?.align || 1;
 
   const containerStyle = css({
     textAlign:
@@ -71,44 +73,35 @@ export const Todo: BlockInnerComponent = ({ block }) => {
     <div css={[todoContainerStyle, containerStyle]}>
       <input type="checkbox" checked={isDone} css={checkboxStyle} readOnly />
       <div css={[contentStyle, isDone && doneTextStyle]}>
-        {block.todo.elements.map((element: Element, index: number) => {
+        {todo.elements.map((element: Element, index: number) => {
           if (!element.text_run) {
             return null;
           }
 
+          const textElementStyle = element.text_run.text_element_style;
+
           const style = css({
-            color: element.text_run.text_element_style?.bold ? "#000" : "#333",
-            fontWeight: element.text_run.text_element_style?.bold
-              ? "bold"
-              : "normal",
-            fontStyle: element.text_run.text_element_style?.italic
-              ? "italic"
-              : "normal",
+            color: textElementStyle?.bold ? "#000" : "#333",
+            fontWeight: textElementStyle?.bold ? "bold" : "normal",
+            fontStyle: textElementStyle?.italic ? "italic" : "normal",
             textDecoration:
               [
                 isDone && "line-through",
-                element.text_run.text_element_style?.strikethrough &&
-                  "line-through",
-                element.text_run.text_element_style?.underline && "underline",
+                textElementStyle?.strikethrough && "line-through",
+                textElementStyle?.underline && "underline",
               ]
                 .filter(Boolean)
                 .join(" ") || "none",
-            fontFamily: element.text_run.text_element_style?.inline_code
-              ? "monospace"
-              : "inherit",
-            backgroundColor: element.text_run.text_element_style?.inline_code
+            fontFamily: textElementStyle?.inline_code ? "monospace" : "inherit",
+            backgroundColor: textElementStyle?.inline_code
               ? "#f6f8fa"
               : "transparent",
-            padding: element.text_run.text_element_style?.inline_code
-              ? "2px 4px"
-              : "0",
-            borderRadius: element.text_run.text_element_style?.inline_code
-              ? "3px"
-              : "0",
+            padding: textElementStyle?.inline_code ? "2px 4px" : "0",
+            borderRadius: textElementStyle?.inline_code ? "3px" : "0",
           });
 
           //文字列にリンクが紐づいているor文字列がhttps://で始まる場合はリンクとして扱う
-          let url = element.text_run.text_element_style?.link?.url;
+          let url = textElementStyle?.link?.url;
           let isUrl = false;
           if (url) {
             url = decodeURIComponent(url);
