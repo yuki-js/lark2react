@@ -24,16 +24,27 @@ export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
 
       try {
         setIsLoading(true);
-        const json = (await getDocumentBlocks(documentId)) as ApiResponse;
+        let allItems: Block[] = [];
+        let pageToken: string | undefined = "";
 
-        const validatedItems = json.data.items.map((item) => ({
-          ...item,
-          parent_id: item.parent_id || "",
-          block_id: item.block_id || "",
-          block_type: item.block_type || 1,
-        })) as Block[];
+        do {
+          const json = (await getDocumentBlocks(
+            documentId,
+            pageToken,
+          )) as ApiResponse;
 
-        setItems(validatedItems);
+          const validatedItems = json.data.items.map((item) => ({
+            ...item,
+            parent_id: item.parent_id || "",
+            block_id: item.block_id || "",
+            block_type: item.block_type || 1,
+          })) as Block[];
+
+          allItems = [...allItems, ...validatedItems];
+          pageToken = json.data.page_token; // 次のページのトークンを取得
+        } while (pageToken); // page_token が存在する限りループ
+
+        setItems(allItems);
         setError(null);
       } catch (error) {
         setItems([]);
