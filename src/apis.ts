@@ -39,9 +39,9 @@ async function getValidAccessToken(): Promise<string> {
   return await fetchNewToken();
 }
 
-export async function getDocumentBlocks(documentId: string) {
+export async function getDocumentBlocks(documentId: string, pageToken: string=""): Promise<any> {
   const baseUrl = getApiBaseUrl();
-  const url = `${baseUrl}/docx/v1/documents/${documentId}/blocks?document_revision_id=-1&page_size=500`;
+  const url = `${baseUrl}/docx/v1/documents/${documentId}/blocks?document_revision_id=-1&page_size=500&page_token=${pageToken}`;  
   const accessToken = await getValidAccessToken();
 
   return await handleFetch(url, {
