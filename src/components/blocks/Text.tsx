@@ -29,38 +29,29 @@ export const Text: React.FC<{
           return null;
         }
 
+        const textElementStyle = element.text_run.text_element_style;
+
         const style = css({
-          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
-          fontWeight: element.text_run.text_element_style?.bold
-            ? "bold"
-            : "normal",
-          fontStyle: element.text_run.text_element_style?.italic
-            ? "italic"
-            : "normal",
+          color: textElementStyle?.bold ? "#000" : "#333",
+          fontWeight: textElementStyle?.bold ? "bold" : "normal",
+          fontStyle: textElementStyle?.italic ? "italic" : "normal",
           textDecoration:
             [
-              element.text_run.text_element_style?.strikethrough &&
-                "line-through",
-              element.text_run.text_element_style?.underline && "underline",
+              textElementStyle?.strikethrough && "line-through",
+              textElementStyle?.underline && "underline",
             ]
               .filter(Boolean)
               .join(" ") || "none",
-          fontFamily: element.text_run.text_element_style?.inline_code
-            ? "monospace"
-            : "inherit",
-          backgroundColor: element.text_run.text_element_style?.inline_code
+          fontFamily: textElementStyle?.inline_code ? "monospace" : "inherit",
+          backgroundColor: textElementStyle?.inline_code
             ? "#f6f8fa"
             : "transparent",
-          padding: element.text_run.text_element_style?.inline_code
-            ? "2px 4px"
-            : "0",
-          borderRadius: element.text_run.text_element_style?.inline_code
-            ? "3px"
-            : "0",
+          padding: textElementStyle?.inline_code ? "2px 4px" : "0",
+          borderRadius: textElementStyle?.inline_code ? "3px" : "0",
         });
 
         //文字列にリンクが紐づいているor文字列がhttps://で始まる場合はリンクとして扱う
-        let url = element.text_run.text_element_style?.link?.url;
+        let url = textElementStyle?.link?.url;
         let isUrl = false;
         if (url) {
           url = decodeURIComponent(url);
@@ -83,7 +74,7 @@ export const Text: React.FC<{
         );
 
         //コメントが紐づけられている場合は、文字列にマーカーを付与
-        const comment = element.text_run.text_element_style?.comment_ids;
+        const comment = textElementStyle?.comment_ids;
 
         if (Array.isArray(comment) && comment.length > 0) {
           return (

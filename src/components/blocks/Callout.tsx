@@ -11,6 +11,7 @@ const calloutContainerStyle = css({
   padding: "16px",
   backgroundColor: "#f5f6f7",
   borderRadius: "4px",
+  marginTop: "16px",
   marginBottom: "16px",
   gap: "12px",
 });
@@ -33,14 +34,15 @@ const contentStyle = css({
 });
 
 export const Callout: BlockInnerComponent = ({ block }) => {
-  if (!block.callout?.emoji_id) {
+  const callout = block.callout;
+
+  if (!callout?.emoji_id) {
     return null;
   }
 
-  const emoji = EMOJI[block.callout.emoji_id];
-  const backgroundColor =
-    CALLOUT_BACKGROUND_COLOR[block.callout.background_color];
-  const borderColor = CALLOUT_BORDER_COLOR[block.callout.border_color];
+  const emoji = EMOJI[callout.emoji_id];
+  const backgroundColor = CALLOUT_BACKGROUND_COLOR[callout.background_color];
+  const borderColor = CALLOUT_BORDER_COLOR[callout.border_color];
 
   const customCalloutStyle = css({
     backgroundColor,

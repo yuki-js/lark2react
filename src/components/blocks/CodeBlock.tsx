@@ -29,11 +29,12 @@ const languageTagStyle = css({
 });
 
 export const CodeBlock: BlockInnerComponent = ({ block }) => {
-  const codeLanguage = block.code?.style?.language
-    ? CODE_LANGUAGE[block.code.style.language]
+  const code = block.code;
+  const codeLanguage = code?.style?.language
+    ? CODE_LANGUAGE[code.style.language]
     : "Unknown";
 
-  const content = block.code?.elements
+  const content = code?.elements
     .map((element: Element) => element.text_run?.content || "")
     .join("");
 

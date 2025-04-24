@@ -5,7 +5,6 @@ import { getFile } from "../../apis";
 
 const imageWrapperStyle = css({
   position: "relative",
-  marginBottom: "16px",
   maxWidth: "100%",
 });
 

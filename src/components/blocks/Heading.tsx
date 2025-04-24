@@ -30,8 +30,8 @@ const HeadingBase: BlockInnerComponent<{
   const headingStyle = css({
     fontSize: HEADING_SIZES[level],
     fontWeight: "bold",
-    marginTop: "12px",
-    marginBottom: "12px",
+    paddingTop: "12px",
+    paddingBottom: "12px",
     textAlign:
       align === 1
         ? "left"
@@ -49,34 +49,25 @@ const HeadingBase: BlockInnerComponent<{
           return null;
         }
 
+        const textElementStyle = element.text_run.text_element_style;
+
         const style = css({
-          color: element.text_run.text_element_style?.bold ? "#000" : "#333",
-          fontWeight: element.text_run.text_element_style?.bold
-            ? "bold"
-            : "normal",
-          fontStyle: element.text_run.text_element_style?.italic
-            ? "italic"
-            : "normal",
+          color: textElementStyle?.bold ? "#000" : "#333",
+          fontWeight: textElementStyle?.bold ? "bold" : "normal",
+          fontStyle: textElementStyle?.italic ? "italic" : "normal",
           textDecoration:
             [
-              element.text_run.text_element_style?.strikethrough &&
-                "line-through",
-              element.text_run.text_element_style?.underline && "underline",
+              textElementStyle?.strikethrough && "line-through",
+              textElementStyle?.underline && "underline",
             ]
               .filter(Boolean)
               .join(" ") || "none",
-          fontFamily: element.text_run.text_element_style?.inline_code
-            ? "monospace"
-            : "inherit",
-          backgroundColor: element.text_run.text_element_style?.inline_code
+          fontFamily: textElementStyle?.inline_code ? "monospace" : "inherit",
+          backgroundColor: textElementStyle?.inline_code
             ? "#f6f8fa"
             : "transparent",
-          padding: element.text_run.text_element_style?.inline_code
-            ? "2px 4px"
-            : "0",
-          borderRadius: element.text_run.text_element_style?.inline_code
-            ? "3px"
-            : "0",
+          padding: textElementStyle?.inline_code ? "2px 4px" : "0",
+          borderRadius: textElementStyle?.inline_code ? "3px" : "0",
         });
 
         return (

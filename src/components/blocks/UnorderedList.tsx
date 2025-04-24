@@ -15,7 +15,6 @@ const sty = css({
     height: "8px",
     borderRadius: "50%",
     backgroundColor: "#000",
-    margin: "0 auto",
     position: "absolute",
     top: "0.5em",
     left: "0px",
@@ -23,13 +22,15 @@ const sty = css({
 });
 
 export const UnorderedList: BlockInnerComponent = ({ block }) => {
-  if (!block.bullet?.elements) {
+  const bullet = block.bullet;
+
+  if (!bullet?.elements) {
     return null;
   }
 
   return (
     <div css={sty}>
-      <Text {...block.bullet} />
+      <Text {...bullet} />
       {block.children?.map((childId) => (
         <BlockComponent key={childId} blockId={childId} />
       ))}
