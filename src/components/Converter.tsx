@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { BlockComponent } from "./BlockComponent";
 import { BlockStoreProvider } from "../contexts/BlockStoreContext";
 import { Block } from "../types/block";
-import { ApiResponse } from "../types/api";
-import { getDocumentBlocks } from "../apis";
+import { fetchAllDocumentBlocks } from "../apis";
 
 interface ConverterProps {
   documentId: string;
@@ -24,26 +23,7 @@ export const Converter: React.FC<ConverterProps> = ({ documentId }) => {
 
       try {
         setIsLoading(true);
-        let allItems: Block[] = [];
-        let pageToken: string | undefined = "";
-
-        do {
-          const json = (await getDocumentBlocks(
-            documentId,
-            pageToken,
-          )) as ApiResponse;
-
-          const validatedItems = json.data.items.map((item) => ({
-            ...item,
-            parent_id: item.parent_id || "",
-            block_id: item.block_id || "",
-            block_type: item.block_type || 1,
-          })) as Block[];
-
-          allItems = [...allItems, ...validatedItems];
-          pageToken = json.data.page_token; // 次のページのトークンを取得
-        } while (pageToken); // page_token が存在する限りループ
-
+        const allItems = await fetchAllDocumentBlocks(documentId);
         setItems(allItems);
         setError(null);
       } catch (error) {

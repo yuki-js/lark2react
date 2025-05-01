@@ -9,6 +9,7 @@ export interface ApiResponse {
         parent_id?: string;
       }
     >;
+    page_token?: string;
   };
 }
 

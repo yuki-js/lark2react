@@ -1,3 +1,6 @@
+import { Block } from "./types/block";
+import { ApiResponse } from "./types/api";
+
 const TOKEN_KEY = "tenant_access_token";
 const TOKEN_TIMESTAMP_KEY = "tenant_access_token_timestamp";
 const TOKEN_EXPIRATION_TIME = 2 * 60 * 60 * 1000;
@@ -53,6 +56,30 @@ export async function getDocumentBlocks(
       Authorization: `Bearer ${accessToken}`,
     },
   });
+}
+
+export async function fetchAllDocumentBlocks(
+  documentId: string,
+): Promise<Block[]> {
+  let allItems: Block[] = [];
+  let pageToken: string | undefined = "";
+
+  do {
+    const json = (await getDocumentBlocks(
+      documentId,
+      pageToken,
+    )) as ApiResponse;
+    const validatedItems = json.data.items.map((item) => ({
+      ...item,
+      parent_id: item.parent_id || "",
+      block_id: item.block_id || "",
+      block_type: item.block_type || 1,
+    })) as Block[];
+    allItems = [...allItems, ...validatedItems];
+    pageToken = json.data.page_token;
+  } while (pageToken);
+
+  return allItems;
 }
 
 async function fetchNewToken(): Promise<string> {
